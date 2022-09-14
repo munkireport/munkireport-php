@@ -86,21 +86,29 @@ jobs:
 
       - name: Create ZIP archive without tests or js deps
         run: |
-          zip -r munkireport-php.zip . -x node_modules/\* \*/node_modules/\* .git/\*
+          zip -r munkireport-php-${{ github.ref_name }}.zip . -x tests/\* node_modules/\* \*/node_modules/\* .git/\*
+
+#      - name: Create .tar.gz archive without tests or js deps
+#        run: |
+#          -
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: munkireport-php
-          path: munkireport-php.zip
+          name: munkireport-php-${{ github.ref_name }}
+          path: munkireport-php-${{ github.ref_name }}.zip
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "munkireport-php.zip"
+          artifacts: "munkireport-php-${{ github.ref_name }}.zip"
           draft: true
           prerelease: true
           name: Munkireport ${{ github.ref_name }}
-          bodyFile: build/changelog-template.md
+          body: |
+            ### [${{ github.ref_name }}](https://github.com/munkireport/munkireport-php/compare/oldtag...${{ github.ref_name }}) (Jan 01, 2022)
+
+            DRAFT. Please enter changes here.
+
           token: ${{ secrets.GITHUB_TOKEN }}
 
   container-image:
