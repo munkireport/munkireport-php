@@ -11,9 +11,9 @@ use Illuminate\Support\Str;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
-     * The policy mappings for the application.
+     * The model to policy mappings for the application.
      *
-     * @var array
+     * @var array<class-string, class-string>
      */
     protected $policies = [
         // These policies implement the Authorization behaviour specified in the wiki article about access to delete/view
