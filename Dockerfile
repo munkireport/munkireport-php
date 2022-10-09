@@ -3,7 +3,7 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install && npm run production
 
-FROM php:7.4-apache
+FROM php:8.1-apache
 LABEL maintainer="MunkiReport PHP Team <munkireport@noreply.users.github.com>"
 LABEL architecture="x86_64" \
 	  io.k8s.display-name="MunkiReport" \

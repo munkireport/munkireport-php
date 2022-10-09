@@ -1,6 +1,9 @@
 version: '3'
 services:
   munkireport:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     image: munkireport/munkireport-php:latest
     restart: always
     environment:
@@ -11,7 +14,7 @@ services:
       - CONNECTION_PORT=3306
       - CONNECTION_DATABASE=munkireport
       - CONNECTION_USERNAME=munkireport
-      - CONNECTION_PASSWORD=
+      - CONNECTION_PASSWORD=munkireport
       - AUTH_METHODS=LOCAL
       - PUID=1000
       - PGID=1000
@@ -21,7 +24,7 @@ services:
     depends_on:
       - db
     ports:
-      - 80:80
+      - 8080:8080  # You should avoid privileged ports, here and in kubernetes
     volumes:
       - ./munkireport-db/:/var/munkireport/app/db
       - ./user//:/var/munkireport/local/users
@@ -29,10 +32,10 @@ services:
     image: mariadb:latest
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=munkireport
-      - MYSQL_USER=munkireport
-      - MYSQL_PASSWORD=
+      - MARIADB_RANDOM_ROOT_PASSWORD=true
+      - MARIADB_DATABASE=munkireport
+      - MARIADB_USER=munkireport
+      - MARIADB_PASSWORD=munkireport
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin

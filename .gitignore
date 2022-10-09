@@ -16,6 +16,7 @@ vendor/*
 composer.lock
 .env
 composer.local.*
+docker-compose.yml
 
 local/users/*.yml
 local/dashboards/*.yml

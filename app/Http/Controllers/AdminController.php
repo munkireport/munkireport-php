@@ -212,6 +212,8 @@ class AdminController extends Controller
      *       "unitid": 1
      *   }
      *
+     * @todo This is currently not fully compatible with MunkiReport 5.6.5 because it does not return empty strings for
+     *       unset values, or empty arrays for unset collections.
      **/
     public function get_bu_data(): JsonResponse
     {

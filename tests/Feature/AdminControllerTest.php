@@ -14,15 +14,36 @@ class AdminControllerTest extends AuthorizationTestCase
 
     /**
      *  POST /admin/save_machine_group
+     *
+     *  Using the Business Units interface in MunkiReport 5.6.5 to add a new machine group to a business unit does not
+     *  invoke this endpoint. It uses /admin/save_business_unit with iteminfo[] populated using the new machine group(s).
+     *
+     *  This endpoint is only used for the "Update" part of CRUD.
+     *
+     *  Example:
+     *
+     *  Request (application/x-www-form-urlencoded)
+     *
+     *  POST /admin/save_machine_group
+     *
+     *  groupid    "2"
+     *  name    "New+Machine+Group2"
+     *  key    "1CBD77DF-711F-4BC2-B9D6-264EE660C065"
+     *  business_unit    "1"
+     *
+     *  Response (application/json;charset=utf-8)
+     *
+     *  {"groupid":2,"name":"New Machine Group2","business_unit":1,"keys":["1CBD77DF-711F-4BC2-B9D6-264EE660C065"]}
      */
     public function testSaveMachineGroup()
     {
         $response = $this->actingAs($this->adminUser)
             ->post('/admin/save_machine_group', [
-            'groupid' => '',
-            'name' => 'fixture machine group name',
-            'key' => '12B652B7-1028-FB9B-EA8B-27D7E6378794',
-        ]);
+                'groupid' => '',
+                'name' => 'fixture machine group name',
+                'key' => '12B652B7-1028-FB9B-EA8B-27D7E6378794',
+                'business_unit' => '1',
+            ]);
         // $response->dump();
         $response->assertJsonMissing(['error' => 'Groupid is missing']);
         $response->assertJsonPath('groupid', 1);
@@ -36,33 +57,56 @@ class AdminControllerTest extends AuthorizationTestCase
 
     /**
      *  GET /admin/get_mg_data
+     *
+     *  In MunkiReport 5.6.5 this endpoint is called upon page load of the business units admin interface, along with
+     *  get_bu_data etc to populate the page. The controller accepts a single parameter of groupid, but that is never
+     *  used by the frontend.
+     *
+     *  Example:
+     *
+     *  Request:
+     *
+     *  GET /index.php?/admin/get_mg_data= (application/json;charset=utf-8)
+     *
+     *  Response:
+     *
+     *  [{"name":"Default Group","groupid":1,"keys":["2A53229A-731C-50D3-D303-49864F2DCF50"]},{"name":"New Machine Group2","groupid":2,"keys":["1CBD77DF-711F-4BC2-B9D6-264EE660C065"]},{"groupid":0,"name":"Group 0","cnt":1}]
      */
     public function testGetMgData()
     {
         // $machineGroup = factory(MachineGroup::class)->create();
         $response = $this->actingAs($this->adminUser)
-                         ->get('/admin/get_mg_data');
+            ->get('/admin/get_mg_data');
         $response->assertOk();
         $this->assertIsArray($response->json());
         $response->assertJsonStructure([
             '*' => [
                 'name',
                 'groupid',
-                'keys',  // not present for the default group
-                'cnt',  // not always present if zero machines
+                //'keys',  // if the group is the default one, this key is not present
+                //'cnt',  // if the group has zero machines, the `cnt` key is not present
             ]
         ]);
     }
 
     /**
      *  /admin/remove_machine_group
+     *
+     *  In MunkiReport 5.6.5 this is invoked by editing a machine group using the unassigned groups edit button in the lower section
+     *  of the business units UI, and clicking the delete button inside the edit dialog. This is never called using a POST verb
+     *
+     *  Request:
+     *
+     *  GET /admin/remove_machine_group/2
+     *
+     *  Response (application/json;charset=utf-8):
+     *
+     *  {"success":true,"successs":0}
      */
     public function testRemoveMachineGroup()
     {
         $response = $this->actingAs($this->adminUser)
-            ->post('/admin/remove_machine_group', [
-                'groupid' => 1
-            ]);
+            ->get('/admin/remove_machine_group/1');
         $response->assertStatus(200);
     }
 
@@ -72,16 +116,16 @@ class AdminControllerTest extends AuthorizationTestCase
     public function testSaveBusinessUnit()
     {
         $response = $this->actingAs($this->adminUser)
-                         ->post('/admin/save_business_unit', [
-                            'unitid' => 'new',
-                            'users[]' => '#',
-                            'archivers[]' => '#',
-                            'managers[]' => '#',
-                            'machine_groups[]' => '#',
-                            'name' => 'testSaveBusinessUnit',
-                            'address' => 'testSaveBusinessUnitAddr',
-                            'link' => 'http://test.save.business.unit.example.com',
-                        ]);
+            ->post('/admin/save_business_unit', [
+                'unitid' => 'new',
+                'users[]' => '#',
+                'archivers[]' => '#',
+                'managers[]' => '#',
+                'machine_groups[]' => '#',
+                'name' => 'testSaveBusinessUnit',
+                'address' => 'testSaveBusinessUnitAddr',
+                'link' => 'http://test.save.business.unit.example.com',
+            ]);
 
         $response
             ->assertStatus(200)
@@ -137,6 +181,18 @@ class AdminControllerTest extends AuthorizationTestCase
 
     /**
      *  GET /admin/get_bu_data
+     *
+     *  Called on page load in MunkiReport 5.6.5 to get all business units.
+     *  Business Units without a link/location still return an empty string.
+     *  Empty arrays are returned for users/managers/archivers etc.
+     *
+     *  Request
+     *
+     *  GET /admin/get_bu_data (application/json;charset=utf-8)
+     *
+     *  Response (application/json;charset=utf-8):
+     *
+     *  [{"users":["@users_group","user"],"managers":["@managers_group","managers"],"archivers":["@archivers_group","archivers"],"machine_groups":[1,2],"name":"Example","unitid":1,"address":"Somewhere, someplace","link":"http:\/\/somewhere.com","groupid":"1"}]
      */
     public function testGetBuData()
     {

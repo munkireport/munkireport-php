@@ -1,13 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "dev": "npm run development",
-    "development": "mix",
-    "hot": "mix watch --hot",
-    "prod": "npm run production",
-    "production": "mix --production",
-    "watch": "mix watch",
-    "watch-poll": "mix watch -- --watch-options-poll=1000"
+    "dev": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "@panter/vue-i18next": "^0.15.2",
@@ -16,6 +11,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
+    "axios": "^0.21",
     "bootstrap": "^4.6.1",
     "bootstrap-4-autocomplete": "^1.3.2",
     "bootstrap-markdown": "^2.10.0",
@@ -27,6 +23,7 @@
     "datatables.net-buttons-bs4": "^1.7.1",
     "date-fns": "^2.28.0",
     "graphql": "^15.0.0",
+    "graphql-tag": "^2.12.6",
     "i18next": "^20.6.1",
     "i18next-fetch-backend": "^3.0.0",
     "jquery": "^3.6.0",
@@ -36,28 +33,29 @@
     "moment": "^2.29.1",
     "nvd3": "^1.8.6",
     "popper.js": "^1.16.1",
-    "typeahead.js": "^0.11.1",
-    "typescript": "^4.5.4",
-    "uiv": "^1.4.1",
-    "vue": "^2.6.14",
-    "vue-apollo": "^3.0.0-beta.11",
-    "vue-grid-layout": "^2.3.12",
-    "vue-params": "^0.9.4",
-    "vue-router": "^3.5.3",
-    "vue-typeahead-bootstrap": "^2.12.0",
-    "whatwg-fetch": "^3.6.2",
-    "axios": "^0.21",
-    "graphql-tag": "^2.12.6",
-    "laravel-mix": "^6.0.39",
-    "lodash": "^4.17.21",
     "resolve-url-loader": "^3.1.4",
     "sass": "^1.48.0",
     "sass-loader": "^8.0.0",
+    "typeahead.js": "^0.11.1",
+    "typescript": "^4.5.4",
+    "uiv": "^1.4.1",
+    "vue": "^3.2.25",
+    "vue-apollo": "^3.0.0-beta.11",
     "vue-cli-plugin-apollo": "~0.22.2",
+    "vue-grid-layout": "^2.3.12",
     "vue-loader": "^15.9.8",
-    "vue-template-compiler": "^2.6.14"
+    "vue-params": "^0.9.4",
+    "vue-router": "^3.5.3",
+    "vue-template-compiler": "^2.6.14",
+    "vue-typeahead-bootstrap": "^2.12.0",
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
-
+    "@vitejs/plugin-vue": "^3.1.2",
+    "axios": "^0.27",
+    "laravel-vite-plugin": "^0.6.0",
+    "lodash": "^4.17.19",
+    "postcss": "^8.1.14",
+    "vite": "^3.0.0"
   }
 }
