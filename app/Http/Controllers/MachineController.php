@@ -42,8 +42,8 @@ class MachineController extends Controller
      **/
     public function get_model_stats(string $summary = ""): JsonResponse
     {
-        $machine = Machine::selectRaw('count(*) AS count, machine_desc AS label')
-            ->filter()
+        $machine = Machine::with('reportdata')->selectRaw('count(*) AS count, machine_desc AS label')
+            ->filter() // If the filter scope refers to columns that arent part of selectRaw, the filter just throws an error
             ->groupBy('machine_desc')
             ->orderBy('count', 'desc')
             ->get()

@@ -1,5 +1,5 @@
-import Dashboard from './views/Dashboard';
-import BusinessUnits from './business-units/BusinessUnits';
+import Dashboard from './views/Dashboard.vue';
+import BusinessUnits from './business-units/BusinessUnits.vue';
 
 export default [
   { path: '/dashboards/:slug', component: Dashboard, },

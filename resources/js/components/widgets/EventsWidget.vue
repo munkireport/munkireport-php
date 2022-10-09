@@ -18,7 +18,7 @@
 <script>
 import 'whatwg-fetch';
 import gql from 'graphql-tag';
-import ScrollBoxWidget from './ScrollBoxWidget';
+import ScrollBoxWidget from './ScrollBoxWidget.vue';
 import { fromUnixTime } from 'date-fns';
 
 export default {

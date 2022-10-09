@@ -18,7 +18,7 @@ class TagControllerTest extends AuthorizationTestCase
         $response = $this->actingAs($this->user)
             ->get("/module/tag/retrieve/{$reportData->serial_number}");
         $response->assertOk();
-        $response->assertJsonStructure(['*']);
+        $response->assertJsonStructure(['*' => []]);
 
     }
 

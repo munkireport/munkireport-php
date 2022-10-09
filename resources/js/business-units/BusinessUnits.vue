@@ -44,9 +44,9 @@
 
 <script>
 import gql from 'graphql-tag';
-import BusinessUnit from './BusinessUnit';
-import ListDetailView from '../components/ListDetailView';
-import BusinessUnitsListView from './BusinessUnitsListView';
+import BusinessUnit from './BusinessUnit.vue';
+import ListDetailView from '../components/ListDetailView.vue';
+import BusinessUnitsListView from './BusinessUnitsListView.vue';
 
 import CREATE_BUSINESS_UNIT from './CreateBusinessUnit.graphql';
 import DESTROY_BUSINESS_UNIT from './DestroyBusinessUnit.graphql';

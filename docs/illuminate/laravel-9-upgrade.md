@@ -10,4 +10,4 @@ https://laravel.com/docs/9.x/upgrade
   - Reconcile `public/` just small syntax items.
   - Reconcile `routes/` very minor.
   - Database factories moved to `fake()` helper instead of faker method
-
+- Migrate webpack to Vite via https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrating-from-laravel-mix-to-vite

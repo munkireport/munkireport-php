@@ -7,7 +7,7 @@
 <script>
 import 'whatwg-fetch';
 import gql from 'graphql-tag';
-import ButtonWidget from './ButtonWidget';
+import ButtonWidget from './ButtonWidget.vue';
 
 export default {
   name: "DiskReportWidget",

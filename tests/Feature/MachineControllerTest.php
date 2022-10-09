@@ -36,6 +36,12 @@ class MachineControllerTest extends AuthorizationTestCase
 
     }
 
+    /**
+     * Currently failing because the Compatibility\Scopes\FilterScope requires reportdata to be joined to the query
+     * which it isnt.
+     *
+     * @return void
+     */
     public function test_get_model_stats()
     {
         $response = $this->actingAs($this->user)

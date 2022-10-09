@@ -75,7 +75,7 @@ MunkiReport makes use of these fine software packages:
 * [Datatables](http://datatables.net) table display
 * [nvd3](https://github.com/nvd3-community/nvd3) for graphs
 * [Moment.js](http://momentjs.com) for displaying time
-* [Bootstrap 3.0](http://getbootstrap.com) the main webframework
+* [Bootstrap 4.6](http://getbootstrap.com) the main webframework
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons
 * [adLDAP](https://github.com/Adldap2/Adldap2) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
