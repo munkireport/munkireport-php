@@ -63,7 +63,7 @@ $page = url()->current();
         <div class="navbar-nav mr-auto">
             @if(config('_munkireport.alpha_features.dashboards', false))
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/app') }}/#/dashboards/default">
+                    <a class="nav-link" href="/dashboards">
                         <i class="fa fa-th-large"></i>
                         <span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
                     </a>

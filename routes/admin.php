@@ -34,7 +34,11 @@ Route::middleware(['auth', 'can:global'])->group(function () {
 
     Route::get('/database/migrate', 'DatabaseController@migrate');
 
-    Route::get('/business_units/{id?}', 'BusinessUnitsController@index');
+    // BU v2 Alpha
+    if (config('_munkireport.alpha_features.business_units_v2', false)) {
+        Route::get('/business-units/{id?}', 'BusinessUnitsController@index');
+    }
+
     Route::get('/unit/get_data', 'UnitController@get_data');
 
     Route::get('/module_marketplace', 'ModuleMarketplaceController@index');

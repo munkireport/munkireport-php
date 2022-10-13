@@ -1,11 +1,13 @@
-require('./bootstrap');
+import './bootstrap';
 
-window.Vue = require('vue');
+import Vue from 'vue';
+window.Vue = Vue;
 import * as uiv from 'uiv';
+import Profile from './views/Profile.vue';
 
 Vue.use(uiv);
 
-Vue.component('profile', require('./views/Profile.vue').default);
+Vue.component('profile', Profile);
 
 const page = new Vue({
   el: '#page'
