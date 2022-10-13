@@ -1,4 +1,4 @@
-require('./bootstrap');
+import './bootstrap';
 import * as uiv from 'uiv';
 
 Vue.use(uiv);

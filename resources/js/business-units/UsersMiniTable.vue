@@ -13,14 +13,13 @@
       <td v-text="user.name"></td>
       <td v-text="user.email"></td>
       <td v-text="user.role"></td>
-      <td class="text-right"><a title="remove user from business unit" href="#" @click.prevent="$emit('removed', user)"><BIconXSquareFill /></a></td>
+      <td class="text-right"><a title="remove user from business unit" href="#" @click.prevent="$emit('removed', user)"><div>BIconXSquareFill</div></a></td>
     </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import { BIconXSquareFill } from 'bootstrap-vue'
 
 export default {
   name: "UsersMiniTable",
@@ -33,7 +32,6 @@ export default {
     }
   },
   components: {
-    BIconXSquareFill,
   },
   methods: {
   }

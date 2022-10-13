@@ -8,7 +8,7 @@
       >
         <template v-slot:item="slotProps">
           <router-link
-              :to="'/business_units/' + slotProps.item.id"
+              :to="'/business-units/' + slotProps.item.id"
               class="list-group-item list-group-item-action"
               v-bind:class="{ active: slotProps.item.id === $route.params.id }"
           >
@@ -43,7 +43,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag';
 import BusinessUnit from './BusinessUnit.vue';
 import ListDetailView from '../components/ListDetailView.vue';
 import BusinessUnitsListView from './BusinessUnitsListView.vue';

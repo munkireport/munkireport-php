@@ -10,7 +10,7 @@
         <li v-if="dashboards.length > 0" class="nav-item dropdown" :class="{ 'active': false }">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="dashboardsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-th-large"></i>
-            <span v-wait-for-t>{{ $t("nav.main.dashboard_plural") }}</span>
+            <span class="visible-lg-inline">{{ $t("nav.main.dashboard_plural") }}</span>
             <b class="caret"></b>
           </a>
           <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
@@ -23,14 +23,14 @@
         <li v-else class="nav-item" :class="{ 'active': true }">
           <a class="nav-link" href="#">
             <i class="fa fa-th-large"></i>
-            <span v-wait-for-t>{{ $t("nav.main.dashboard") }}</span>
+            <span class="visible-lg-inline">{{ $t("nav.main.dashboard") }}</span>
           </a>
         </li>
 
         <li class="nav-item dropdown" :class="{ 'active': false }">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-bar-chart-o"></i>
-            <span v-wait-for-t>{{ $t("nav.main.reports") }}</span>
+            <span class="visible-lg-inline">{{ $t("nav.main.reports") }}</span>
             <b class="caret"></b>
           </a>
           <div class="report dropdown-menu" aria-labelledby="dashboardsMenuLink">
@@ -41,7 +41,7 @@
         <li class="nav-item dropdown" :class="{ 'active': false }">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="listingMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-list-alt"></i>
-            <span v-wait-for-t>{{ $t("nav.main.listings") }}</span>
+            <span class="visible-lg-inline">{{ $t("nav.main.listings") }}</span>
             <b class="caret"></b>
           </a>
           <div class="listing dropdown-menu" aria-labelledby="listingMenuLink">
@@ -53,7 +53,7 @@
         <li class="nav-item dropdown" :class="{ 'active': false }">
         <a class="nav-link dropdown-toggle" href="#" role="button" id="adminMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-list-alt"></i>
-          <span v-wait-for-t>{{ $t("nav.main.admin") }}</span>
+          <span class="visible-lg-inline">{{ $t("nav.main.admin") }}</span>
           <b class="caret"></b>
         </a>
         <div class="admin dropdown-menu" aria-labelledby="adminMenuLink">
@@ -102,7 +102,7 @@
             <form action="/auth/logout" method="POST">
               <button type="submit" class="dropdown-item">
                 <i class="fa fa-power-off"></i>
-                <span v-wait-for-t>{{ $t("nav.user.logout") }}</span>
+                <span>{{ $t("nav.user.logout") }}</span>
               </button>
             </form>
           </div>
@@ -119,7 +119,10 @@
 </template>
 
 <script>
-import _ from 'whatwg-fetch';
+// import { fetch } from 'whatwg-fetch';
+
+
+// import {setI18nLanguage} from '../i18n';
 
 export default {
   name: "Navigation",
@@ -142,19 +145,19 @@ export default {
   },
   methods: {
     changeLanguage(lang) {
-      this.$i18n.i18next.changeLanguage(lang);
+      // setI18nLanguage(this.$i18n, lang);
     }
   },
   mounted() {
-    fetch('/locales')
-        .then((res) => res.json())
-        .then((data) => {
-      this.locales = data;
-    })
-    .catch((e) => {
-      console.error(e);
-      // TODO: display alert banner
-    });
+    // fetch('/locales')
+    //     .then((res) => res.json())
+    //     .then((data) => {
+    //   this.locales = data;
+    // })
+    // .catch((e) => {
+    //   console.error(e);
+    //   // TODO: display alert banner
+    // });
   }
 }
 </script>

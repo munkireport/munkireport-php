@@ -1,23 +1,15 @@
-import Vue from 'vue';
+import {createApp} from 'vue'
+import {createRouter, createWebHistory} from 'vue-router'
 
-import i18next from 'i18next';
-import Fetch from 'i18next-fetch-backend';
-import VueI18Next from '@panter/vue-i18next';
+import {createApolloProvider} from '@vue/apollo-option'
+import {ApolloClient} from 'apollo-client';
+import {createHttpLink} from 'apollo-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 
-import VueRouter from 'vue-router';
-
-import VueApollo from 'vue-apollo';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
-
+import {loadLocaleMessages, setI18nLanguage, setupI18n, SUPPORT_LOCALES} from './i18n';
 
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '../sass/app.scss'
-
 
 import routes from './routes';
 
@@ -30,71 +22,45 @@ const httpLink = createHttpLink({
 });
 
 const cache = new InMemoryCache();
-
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
 });
-
-Vue.use(VueI18Next);
-Vue.use(VueApollo);
-Vue.use(VueRouter);
-Vue.use(BootstrapVue);
-Vue.use(IconsPlugin);
-
-const apolloProvider = new VueApollo({
+const apolloProvider = createApolloProvider({
   defaultClient: apolloClient,
 });
 
-const I18nOptions = {
-  debug: true, // mr.debug
-  fallbackLng: 'en',
-  ns: ['translation', 'event'],
-  backend: {
-    loadPath: '/locales/{{lng}}/{{ns}}.json',
-    allowMultiLoading: false,
-  },
-  interpolation: {
-    // To satisfy i18n interpolation used in MunkiReport v5
-    // prefix: '__',
-    // suffix: '__',
-  }
-};
+const i18n = setupI18n({});
 
-i18next
-  .use(Fetch)
-  .init(I18nOptions);
-
-const i18n = new VueI18Next(i18next);
-
-
-const router = new VueRouter({
-    routes
+const router = createRouter({
+  history: createWebHistory(),
+  routes
 })
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+router.beforeEach(async (to, from, next) => {
+  const paramsLocale = 'en'; //to.params.locale
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+  // use locale if paramsLocale is not in SUPPORT_LOCALES
+  if (!SUPPORT_LOCALES.includes(paramsLocale)) {
+    return next(`/${locale}`)
+  }
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('App', require('./components/App.vue').default);
+  // load locale messages
+  if (!i18n.global.availableLocales.includes(paramsLocale)) {
+    await loadLocaleMessages(i18n, paramsLocale)
+  }
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+  // set i18n language
+  setI18nLanguage(i18n, paramsLocale)
 
-const app = new Vue({
-    el: '#app',
-    router,
-    i18n,
-    apolloProvider,
-});
+  return next()
+})
+
+import App from './components/App.vue';
+const app = createApp(App);
+
+app.use(i18n);
+app.use(apolloProvider);
+app.use(router);
+
+app.mount('#app');

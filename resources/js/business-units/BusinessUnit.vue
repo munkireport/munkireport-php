@@ -45,9 +45,8 @@
 </template>
 
 <script>
-import gql from 'graphql-tag';
-import UserRoleAssignmentInput from "./UserRoleAssignmentInput";
-import UsersMiniTable from "./UsersMiniTable";
+import UserRoleAssignmentInput from "./UserRoleAssignmentInput.vue";
+import UsersMiniTable from "./UsersMiniTable.vue";
 import UPDATE_BUSINESS_UNIT_RELATIONSHIPS from './UpdateBusinessUnitRelationships.graphql';
 import READ_BUSINESS_UNIT from './BusinessUnit.graphql';
 

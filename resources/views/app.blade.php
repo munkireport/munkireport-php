@@ -7,7 +7,7 @@
 @endpush
 
 @push('scripts')
-    @vite(['/js/manifest.js', '/js/vendor.js', '/js/app.js'])
+    @vite(['resources/js/app.js'])
 @endpush
 
 @section('content')
