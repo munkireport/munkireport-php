@@ -9,35 +9,43 @@ services:
     environment:
       - MODULES=applications, directory_service, disk_report, displays_info, extensions, filevault_status, homebrew, homebrew_info, ibridge, installhistory, inventory, localadmin, managedinstalls, mdm_status, munkiinfo, munkireport, munkireportinfo, network, power, printer, profile, security, softwareupdate, sophos, supported_os, timemachine, usage_stats, user_sessions, warranty, wifi
       - SITENAME=Munkireport
+      # Old-style (MunkiReport v5) Database Config
       - CONNECTION_DRIVER=mysql
-      - CONNECTION_HOST=db
+      - CONNECTION_HOST=mariadb
       - CONNECTION_PORT=3306
       - CONNECTION_DATABASE=munkireport
       - CONNECTION_USERNAME=munkireport
       - CONNECTION_PASSWORD=munkireport
+
+      # New-style (Laravel) Database Config
+#      - DB_CONNECTION=mysql
+#      - DB_HOST=mariadb
+#      - DB_USERNAME=munkireport
+#      - DB_PASSWORD=munkireport
+#      - DB_DATABASE=munkireport
       - AUTH_METHODS=LOCAL
       - PUID=1000
       - PGID=1000
       - CLIENT_PASSPHRASES=
-      - APP_URL=https://localhost
+      - APP_URL=http://localhost:8080
       - TZ=Europe/Berlin
     depends_on:
-      - db
+      - mariadb
     ports:
       - 8080:8080  # You should avoid privileged ports, here and in kubernetes
     volumes:
       - ./munkireport-db/:/var/munkireport/app/db
       - ./user//:/var/munkireport/local/users
-  db:
-    image: mariadb:latest
+  mariadb:
+    image: mariadb:10.10
     restart: always
     environment:
-      - MARIADB_RANDOM_ROOT_PASSWORD=true
       - MARIADB_DATABASE=munkireport
       - MARIADB_USER=munkireport
       - MARIADB_PASSWORD=munkireport
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Berlin
+      - MARIADB_ROOT_PASSWORD=munkireport
     volumes:
-      - ./db/:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql
+
+volumes:
+  mariadb-data:
