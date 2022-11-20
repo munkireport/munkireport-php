@@ -1,4 +1,4 @@
-# v6 Upgrade Guide #
+# v5.x to v6.0 Upgrade Guide #
 
 ## Deprecated Features ##
 

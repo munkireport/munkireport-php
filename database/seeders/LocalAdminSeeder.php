@@ -8,15 +8,25 @@ class LocalAdminSeeder extends Seeder
 {
     public function run()
     {
-        $admin = new \App\User([
-            'name' => 'Administrator',
-            'email' => 'admin@localhost',
-            'role' => 'admin',
-            'password' => 'dummyvalue',
-            'display_name' => 'Administrator',
-        ]);
-        $admin->saveOrFail();
-        $resetToken = Password::createToken($admin);
-        $this->command->info("Reset the `admin@localhost` password at https://<public url>/password/reset/{$resetToken}");
+        $existingAdmin = \App\User::where('email', 'admin@localhost');
+
+        if (!$existingAdmin->exists()) {
+
+            $admin = new \App\User([
+                'name' => 'Administrator',
+                'email' => 'admin@localhost',
+                'role' => 'admin',
+                'password' => 'dummyvalue',
+                'display_name' => 'Administrator',
+            ]);
+            $admin->saveOrFail();
+            $resetToken = Password::createToken($admin);
+            $appUrl = env('APP_URL', 'http://localhost:8080');
+            $this->command->info(
+                "Reset the `admin@localhost` password at {$appUrl}/password/reset/{$resetToken}"
+            );
+        } else {
+            $this->command->info("A local administrator account already exists, not providing password reset link");
+        }
     }
 }
