@@ -1,7 +1,7 @@
 FROM node:lts as frontend
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN npm install && npm run production
+RUN npm install && npm run build
 
 FROM php:8.1-apache
 LABEL maintainer="MunkiReport PHP Team <munkireport@noreply.users.github.com>"
