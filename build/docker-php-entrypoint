@@ -7,9 +7,10 @@ else
   echo "APP_KEY supplied. Not generating an APP_KEY."
 fi
 
-echo "Sleeping 10 seconds for MariaDB"  # TODO put a health check in
-sleep 10
+echo "Sleeping 2 seconds for MariaDB"  # TODO put a health check in
+sleep 2
 
+php please config:debug
 php please migrate --force
 php please db:seed
 

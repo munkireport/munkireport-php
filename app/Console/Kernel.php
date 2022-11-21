@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        Commands\ConfigDebugCommand::class,
         Commands\MigrateCommand::class,
         Commands\ModuleCommand::class,
         Commands\MunkiReportMakeMigrationCommand::class,
