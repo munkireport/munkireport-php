@@ -51,6 +51,7 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.0",
+        "league/flysystem": "^3.0.16",
         "munkireport/applications": "dev-master",
         "munkireport/appusage": "dev-master",
         "munkireport/ard": "dev-py3",
