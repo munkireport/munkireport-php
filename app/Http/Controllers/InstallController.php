@@ -133,9 +133,9 @@ class InstallController extends Controller
         $listing = $filesystem->listContents('', true)
             ->filter(function (StorageAttributes $attributes) {
                 return $attributes->isFile()
-                    && basename($attributes->path())[0] !== '.'; /*
-                    && strpos($attributes->path(), '@') !== false // Don't accept @ in path - Synology I'm looking at you
-                    && strpos($attributes->path(), '.AppleDouble') !== false; // What year is it?*/
+                    && basename($attributes->path())[0] !== '.'
+                    && strpos($attributes->path(), '@') == false // Don't accept @ in path - Synology I'm looking at you
+                    && strpos($attributes->path(), '.AppleDouble') == false; // What year is it?
             });
 
         foreach($listing as $item) {
