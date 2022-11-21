@@ -15,6 +15,14 @@ REPORT_BROKEN_CLIENT_SCRIPT="<?php echo config('_munkireport.report_broken_clien
 # Exit status
 ERR=0
 
+# Determine best usable python3 (ripped from outset - thanks chilcote).
+MRPHP_PYTHON="${MUNKIPATH}/munkireport-python3"
+ORG_PYTHON=/usr/local/bin/python3
+MACADMINS_PYTHON=/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3
+MUNKI_MUNKI_PYTHON=/usr/local/munki/munki-python
+MUNKI_PYTHON=/usr/local/munki/python
+SYSTEM_PYTHON=/usr/bin/python3
+
 # Packaging
 BUILDPKG=0
 IDENTIFIER="com.github.munkireport"
@@ -172,6 +180,27 @@ fi
 
 chmod a+x "${INSTALLROOT}/usr/local/munki/"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
 chmod a+x "${INSTALLROOT}/usr/local/munkireport/munkireport-runner"
+
+# Symlink best available Python3
+# Delete existing symlink
+[[ -L "${MRPHP_PYTHON}" ]] && /bin/rm "${MRPHP_PYTHON}"
+
+if [[ -L "${MACADMINS_PYTHON}" ]]; then
+    echo "Using Python 3.x installation (macadmins-python) at ${MACADMINS_PYTHON}"
+    /bin/ln -s "${MACADMINS_PYTHON}" "${MRPHP_PYTHON}"
+elif [[ -L "${ORG_PYTHON}" ]]; then
+    echo "Using Python 3.x installation (python.org) at ${ORG_PYTHON}"
+    /bin/ln -s "${ORG_PYTHON}" "${MRPHP_PYTHON}"
+elif [[ -L "${MUNKI_MUNKI_PYTHON}" ]]; then
+    echo "Using Python 3.x installation at ${MUNKI_MUNKI_PYTHON}"
+    /bin/ln -s "${MUNKI_MUNKI_PYTHON}" "${MRPHP_PYTHON}"
+elif [[ -L "${MUNKI_PYTHON}" ]]; then
+    echo "Using Python 3.x installation at ${MUNKI_PYTHON}"
+    /bin/ln -s "${MUNKI_PYTHON}" "${MRPHP_PYTHON}"
+else
+    echo "Using Python 3.x installation (system python) at ${SYSTEM_PYTHON}, It is recommended to distribute MacAdmins python or python.org packages"
+    /bin/ln -s "${SYSTEM_PYTHON}" "${MRPHP_PYTHON}"
+fi
 
 echo "Configuring munkireport"
 #### Configure Munkireport ####

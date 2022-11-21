@@ -6,8 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\StorageAttributes;
 use munkireport\lib\Modules;
 
 
@@ -128,25 +127,31 @@ class InstallController extends Controller
 
     public function get_paths()
     {
-        $adapter = new Local(PUBLIC_ROOT.'assets/client_installer/payload/');
-        $filesystem = new Filesystem($adapter);
-        $contents = $filesystem->listContents('', true);
-        foreach($contents as $fileObj){
-            if($this->is_regular_file($fileObj)){
-                echo "/" . $fileObj['path'] . ";/" . $this->get_target_path($fileObj) . "\n";
-            }
+
+        $adapter = new \League\Flysystem\Local\LocalFilesystemAdapter(PUBLIC_ROOT.'assets/client_installer/payload/');
+        $filesystem = new \League\Flysystem\Filesystem($adapter);
+        $listing = $filesystem->listContents('', true)
+            ->filter(function (StorageAttributes $attributes) {
+                return $attributes->isFile()
+                    && basename($attributes->path())[0] !== '.'; /*
+                    && strpos($attributes->path(), '@') !== false // Don't accept @ in path - Synology I'm looking at you
+                    && strpos($attributes->path(), '.AppleDouble') !== false; // What year is it?*/
+            });
+
+        foreach($listing as $item) {
+            echo "/" . $item->path() . ";/" . $this->get_target_path($item) . "\n";
         }
     }
 
     private function get_target_path(&$fileObj)
     {
-        if($fileObj['filename'] == 'postflight'){
-            return $fileObj['dirname'] . '/' . config('_munkireport.postflight_script');
+        if(basename($fileObj->path()) == 'postflight'){
+            return dirname($fileObj->path()) . '/' . config('_munkireport.postflight_script');
         }
-        if($fileObj['filename'] == 'report_broken_client'){
-            return $fileObj['dirname'] . '/' . config('_munkireport.report_broken_client_script');
+        if(basename($fileObj->path()) == 'report_broken_client'){
+            return dirname($fileObj->path()) . '/' . config('_munkireport.report_broken_client_script');
         }
-        return $fileObj['path'];
+        return $fileObj->path();
     }
 
     private function is_regular_file($fileObj)
