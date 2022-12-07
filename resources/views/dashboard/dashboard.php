@@ -7,7 +7,7 @@
 	<div class="row pt-4">
         <?php
         foreach ($row as $item => $data) {
-            if(array_key_exists('widget', $data)) {
+            if(is_array($data) && array_key_exists('widget', $data)) {
                 $widget->view($this, $data['widget'], $data);
             } else {
                 $widget->view($this, $item, $data);
