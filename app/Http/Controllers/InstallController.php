@@ -125,6 +125,15 @@ class InstallController extends Controller
         return response($contents, 200, ['Content-Type' => 'text/xml;charset=UTF-8']);
     }
 
+    /**
+     * Get source and destination paths of files contained within the client installer payload.
+     *
+     * This provides the installer shell script with a way to install files outside of a .pkg style distribution by just
+     * curl'ing every file within the client installer payload.
+     *
+     * @return void
+     * @throws \League\Flysystem\FilesystemException
+     */
     public function get_paths()
     {
 
@@ -152,25 +161,5 @@ class InstallController extends Controller
             return dirname($fileObj->path()) . '/' . config('_munkireport.report_broken_client_script');
         }
         return $fileObj->path();
-    }
-
-    private function is_regular_file($fileObj)
-    {
-        if($fileObj['type'] != 'file'){
-            return false;
-        }
-        if($fileObj['basename'][0] == '.'){
-            return false;
-        }
-        // Don't accept @ in path - Synology I'm looking at you
-        if(strpos($fileObj['path'], '@') !== false){
-            return false;
-        }
-        // Skip .AppleDouble directories
-        if(strpos($fileObj['path'], '.AppleDouble') !== false){
-            return false;
-        }
-
-        return true;
     }
 }
