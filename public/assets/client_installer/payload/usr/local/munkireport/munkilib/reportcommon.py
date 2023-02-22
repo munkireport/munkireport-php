@@ -4,6 +4,7 @@ from . import display
 from . import prefs
 from . import constants
 from . import FoundationPlist
+from . import munkilog
 from munkilib.gurl import Gurl
 # from munkilib.purl import Purl
 from munkilib.phpserialize import *
@@ -38,7 +39,8 @@ from SystemConfiguration import SCDynamicStoreCopyConsoleUser
 # pylint: enable=E0611
 
 # our preferences "bundle_id"
-BUNDLE_ID = "MunkiReport"
+# BUNDLE_ID = "MunkiReport"
+BUNDLE_ID = constants.BUNDLE_ID
 
 
 class CurlError(Exception):
@@ -70,6 +72,12 @@ def display_detail(msg, *args):
 def finish_run():
     remove_run_file()    
     display_detail("## Finished run")
+
+#    # Reset our errors and warnings files, rotate main log if needed
+#    munkilog.reset_errors()
+#    munkilog.reset_warnings()
+    munkilog.rotate_main_log()
+
     exit(0)
 
 def remove_run_file():
@@ -85,7 +93,17 @@ def curl(url, values):
     options["content_type"] = "application/x-www-form-urlencoded"
     options["body"] = urlencode(values)
     options["logging_function"] = display_detail
+
+    # Get connection timeout
     options["connection_timeout"] = 60
+    if pref("scriptTimeOut"):
+        options["connection_timeout"] = int(pref("HttpConnectionTimeout"))
+
+    # Get follow_redirects
+    options["follow_redirects"] = False
+    if pref("FollowHTTPRedirects"):
+        options["follow_redirects"] = int(pref("FollowHTTPRedirects"))
+
     if pref("UseMunkiAdditionalHttpHeaders"):
         custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
         if custom_headers:
@@ -101,6 +119,23 @@ def curl(url, values):
                 -1,
                 "UseMunkiAdditionalHttpHeaders defined, "
                 "but not found in Munki preferences",
+            )
+
+    if pref("UseAdditionalHttpHeaders"):
+        custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
+        if custom_headers:
+            options["additional_headers"] = dict()
+            for header in custom_headers:
+                m = re.search(r"^(?P<header_name>.*?): (?P<header_value>.*?)$", header)
+                if m:
+                    options["additional_headers"][m.group("header_name")] = m.group(
+                        "header_value"
+                    )
+        else:
+            raise CurlError(
+                -1,
+                "UseAdditionalHttpHeaders defined, "
+                "but not found in MunkiReport preferences",
             )
 
     # Build Purl with initial settings
@@ -355,6 +390,17 @@ def process(serial, items):
 
     if result.get("info", "") != "":
         display_detail("Server info: %s" % result["info"])
+
+
+    # Override any module that are force updated
+    if ForceUpload == "FORCE_UPLOAD_ALL":
+        for i in items.keys():
+            display_detail("Forcing update for all modules!")
+            result[i] = 1
+    elif ForceUpload:
+        for i in ForceUpload.split(' '):
+            display_detail("Forcing update for %s!" % (i))
+            result[i] = 1
 
     # Retrieve hashes that need updating
     total_size = 0
