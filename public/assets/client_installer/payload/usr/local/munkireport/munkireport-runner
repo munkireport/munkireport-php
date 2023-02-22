@@ -5,9 +5,8 @@
 from munkilib import reportcommon
 from munkilib import FoundationPlist
 from munkilib import prefs
-# from munkilib import osutils
+from munkilib import osutils
 from munkilib import munkilog
-# from munkilib import keychain
 
 import hashlib
 import sys
