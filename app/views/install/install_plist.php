@@ -45,13 +45,13 @@
 	<string>uninstall_script</string>
 	<key>uninstall_script</key>
 	<string>#!/bin/sh
-rm -rf /usr/local/munki/preflight \
-  /usr/local/munki/preflight.d \
-  /usr/local/munki/postflight \
-  /usr/local/munki/postflight.d \
+rm -rf /usr/local/munki/postflight \
   /usr/local/munki/report_broken_client \
   /usr/local/munki/munkilib/reportcommon.py* \
   /usr/local/munki/munkireport-* \
+  /usr/local/munkireport/ \
+  /Library/MunkiReport/ \
+  /Library/LaunchDaemons/com.github.munkireport.runner.plist \
   /Library/Preferences/MunkiReport.plist
 exit 0</string>
 	<key>version</key>

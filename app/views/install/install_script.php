@@ -12,6 +12,7 @@ TARGET_VOLUME=''
 CURL=("<?php echo implode('" "', conf('curl_cmd'))?>")
 POSTFLIGHT_SCRIPT="<?php echo conf('postflight_script'); ?>"
 REPORT_BROKEN_CLIENT_SCRIPT="<?php echo conf('report_broken_client_script'); ?>"
+SETBASEURL=1
 # Exit status
 ERR=0
 
@@ -38,17 +39,17 @@ echo \"/usr/local/munkireport\" > /private/etc/paths.d/munkireport
 # Check if we already have a symlink to MunkiReport's Python 3
 if [[ ! -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
 
-	# Check if we have Mac Admin Python 3 installed
-	if [[ -f \"/usr/local/bin/managed_python3\" ]] ; then
-		# Make symlink to Mac Admin Python's symlink
-		/bin/ln -s \"/usr/local/munkireport/munkireport-python3\" \"/usr/local/bin/managed_python3\"
-	else
+	# # Check if we have Mac Admin Python 3 installed
+	# if [[ -f \"/usr/local/bin/managed_python3\" ]] ; then
+	# 	# Make symlink to Mac Admin Python's symlink
+	# 	/bin/ln -s \"/usr/local/munkireport/munkireport-python3\" \"/usr/local/bin/managed_python3\"
+	# else
 		echo \"\"
 		echo \"No Python 3 detected! MunkiReport requires Python 3\"
 		echo \"Please download and install it from:\"
 		echo \"https://github.com/MagerValp/MunkiReport-Python/releases/latest\"
 		echo \"\"
-	fi
+	# fi
 fi
 
 "
@@ -69,6 +70,7 @@ Usage: ${PROG} [OPTIONS]
   -h       Display this help message
   -r PATH  Path to installer result plist
   -v VERS  Override version number
+  -u       Do not set the base url in the post install script
 
 Example:
   * Install munkireport client scripts into the default location.
@@ -81,7 +83,7 @@ Example:
         $PROG -b ${BASEURL} \\
               -m ~/Desktop/munkireport-$VERSION/usr/local/munkireport/ \\
               -p ~/Desktop/munkireport-$VERSION/Library/Preferences/MunkiReport \\
-              -n
+              -u
 
   * Create a package installer for munkireport.
 
@@ -104,7 +106,7 @@ function resetreportpref {
 	PREF_CMDS=( "${PREF_CMDS[@]}" "/usr/bin/defaults write \"\${TARGET}\"${PREFPATH} ReportItems -dict" )
 }
 
-while getopts b:m:p:r:c:v:i:h flag; do
+while getopts b:m:p:r:c:v:u:i:h flag; do
 	case $flag in
 		b)
 			BASEURL="$OPTARG"
@@ -124,6 +126,10 @@ while getopts b:m:p:r:c:v:i:h flag; do
 		v)
 			VERSION="$OPTARG"
 			;;
+		u)
+			SETBASEURL="$OPTARG"
+			SETBASEURL=0
+			;;
 		i)
 			PKGDEST="$OPTARG"
 			# Create temp directory
@@ -133,7 +139,6 @@ while getopts b:m:p:r:c:v:i:h flag; do
 			TARGET_VOLUME='$3'
 			PREFPATH="/Library/Preferences/MunkiReport"
 			BUILDPKG=1
-
 			;;
 		h|?)
 			usage
@@ -206,7 +211,9 @@ echo "Configuring munkireport"
 #### Configure Munkireport ####
 
 # Set BaseUrl preference
-setpref 'BaseUrl' "${BASEURL}"
+if [ $SETBASEURL = 1 ]; then
+	setpref 'BaseUrl' "${BASEURL}"
+fi
 
 # Reset ReportItems array
 resetreportpref
