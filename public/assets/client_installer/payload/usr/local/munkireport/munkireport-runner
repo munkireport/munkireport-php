@@ -38,7 +38,7 @@ def main():
     options, dummy_arguments = parser.parse_args()
   
     if options.version:
-        print get_version()
+        print (get_version())
         exit(0)
 
     # Check to see if we're root
@@ -49,8 +49,8 @@ def main():
     # Print MunkiReport's current config
     if options.show_config:
         prefs.print_config()
-        print '\nModules enabled:'
-        print reportcommon.pref('ReportItems') 
+        print ('\nModules enabled:')
+        print (reportcommon.pref('ReportItems'))
         exit(0)
 
     # Check to see if another instance of this script is running
@@ -88,7 +88,7 @@ def main():
     # Reset our errors and warnings files, rotate main log if needed
     munkilog.reset_errors()
     munkilog.reset_warnings()
-    reportcommon.display_error('test error')
+    # reportcommon.display_error('test error')
 
     # Main MunkiReport runner block vvv
     reportcommon.display_detail("## Starting MunkiReport run")

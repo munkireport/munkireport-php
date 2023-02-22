@@ -67,7 +67,8 @@ from Security import (errSecSuccess,
                       SecIdentityGetTypeID,
                       SecItemCopyMatching)
 
-from asn1crypto.x509 import Certificate, Name
+# Disabled since we don't have this python module
+# from asn1crypto.x509 import Certificate, Name
 
 
 # patch the credentialWithIdentity:certificates:persistence: signature
@@ -704,28 +705,29 @@ class Gurl(NSObject):
                 # (identity_refs is None, crashes if we fall through to loop)
                 return
 
-            # loop through results to find cert that matches issuer
-            for identity_ref in identity_refs:
-                status, cert_ref = SecIdentityCopyCertificate(identity_ref, None)
-                if status != errSecSuccess:
-                    continue
-                cert_data = SecCertificateCopyData(cert_ref)
-                cert = Certificate.load(cert_data.bytes().tobytes())
-                issuer_dict = dict(cert.native["tbs_certificate"]["issuer"])
-                if issuer_dict in expected_issuer_dicts:
-                    self.log("Found matching identity")
-                    break
-            else:
-                self.log('Could not find matching identity')
-                if completionHandler:
-                    completionHandler(
-                        NSURLSessionAuthChallengeCancelAuthenticationChallenge,
-                        None
-                    )
-                else:
-                    challenge.sender().cancelAuthenticationChallenge_(challenge)
-                # return since didn't find matching identity
-                return
+            # Disabled since we don't have this python module
+            # # loop through results to find cert that matches issuer
+            # for identity_ref in identity_refs:
+            #     status, cert_ref = SecIdentityCopyCertificate(identity_ref, None)
+            #     if status != errSecSuccess:
+            #         continue
+            #     cert_data = SecCertificateCopyData(cert_ref)
+            #     cert = Certificate.load(cert_data.bytes().tobytes())
+            #     issuer_dict = dict(cert.native["tbs_certificate"]["issuer"])
+            #     if issuer_dict in expected_issuer_dicts:
+            #         self.log("Found matching identity")
+            #         break
+            # else:
+            #     self.log('Could not find matching identity')
+            #     if completionHandler:
+            #         completionHandler(
+            #             NSURLSessionAuthChallengeCancelAuthenticationChallenge,
+            #             None
+            #         )
+            #     else:
+            #         challenge.sender().cancelAuthenticationChallenge_(challenge)
+            #     # return since didn't find matching identity
+            #     return
 
             self.log("Will attempt to authenticate")
             credential = NSURLCredential.credentialWithIdentity_certificates_persistence_(
