@@ -163,7 +163,12 @@ def curl(url, values):
 
 def get_hardware_info():
     """Uses system profiler to get hardware info for this machine."""
-    cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
+    # Apple Silicon Macs running Python 2 through Rosetta 2 mis-report this data
+    # Check if we're on an Apple Silicon Mac and force it to run system_profiler as Apple Silicon
+    if "arm64" in get_cpuarch():
+        cmd = ["/usr/bin/arch", "-arm64", "/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
+    else:
+        cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
     proc = subprocess.Popen(
         cmd,
         shell=False,

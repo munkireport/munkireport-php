@@ -2,6 +2,13 @@
 
 Python 3?
 
+Maintenance release 
+
+FIXES
+Reporting on Silicon Macs
+
+Important: read the [release notes for 5.7.0](https://github.com/munkireport/munkireport-php/releases/tag/v5.7.0) as it contains some breaking changes.
+
 ### [5.7.1](https://github.com/munkireport/munkireport-php/compare/v5.7.0...5.x) (February 17, 2022) 🐍
 
 Maintenance release - please read the release notes for 5.7.0
