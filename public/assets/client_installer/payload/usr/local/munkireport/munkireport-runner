@@ -110,7 +110,13 @@ def main():
     hardware_info['os_version'] = reportcommon.getOsVersion(only_major_minor=False)
     hardware_info['buildversion'] = reportcommon.get_buildversion()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
-    hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
+
+    # Check if we have a serial number, if not rerun the check
+    if serial == 'NO_SERIAL':
+        serial = hardware_info.get('serial_number', 'NO_SERIAL')
+        hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
+    else:
+        hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
 
     report_info = {}
     report_info['console_user'] = "%s" % reportcommon.getconsoleuser()

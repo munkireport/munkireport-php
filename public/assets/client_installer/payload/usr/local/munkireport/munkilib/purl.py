@@ -283,7 +283,7 @@ class Purl(NSObject):
         # we don't actually use the connection argument, so
         # pylint: disable=W0613
 
-        self.log("connection_willSendRequestForAuthenticationChallenge_")
+        # self.log("connection_willSendRequestForAuthenticationChallenge_")
         protectionSpace = challenge.protectionSpace()
         host = protectionSpace.host()
         realm = protectionSpace.realm()

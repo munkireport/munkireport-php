@@ -5,8 +5,7 @@ from . import prefs
 from . import constants
 from . import FoundationPlist
 from . import munkilog
-from munkilib.gurl import Gurl
-# from munkilib.purl import Purl
+from munkilib.purl import Purl
 from munkilib.phpserialize import *
 
 import subprocess
@@ -104,23 +103,6 @@ def curl(url, values):
     if pref("FollowHTTPRedirects"):
         options["follow_redirects"] = int(pref("FollowHTTPRedirects"))
 
-    if pref("UseMunkiAdditionalHttpHeaders"):
-        custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
-        if custom_headers:
-            options["additional_headers"] = dict()
-            for header in custom_headers:
-                m = re.search(r"^(?P<header_name>.*?): (?P<header_value>.*?)$", header)
-                if m:
-                    options["additional_headers"][m.group("header_name")] = m.group(
-                        "header_value"
-                    )
-        else:
-            raise CurlError(
-                -1,
-                "UseMunkiAdditionalHttpHeaders defined, "
-                "but not found in Munki preferences",
-            )
-
     if pref("UseAdditionalHttpHeaders"):
         custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
         if custom_headers:
@@ -139,8 +121,7 @@ def curl(url, values):
             )
 
     # Build Purl with initial settings
-    connection = Gurl.alloc().initWithOptions_(options)
-    # connection = Purl.alloc().initWithOptions_(options)
+    connection = Purl.alloc().initWithOptions_(options)
     connection.start()
     try:
         while True:
@@ -427,6 +408,11 @@ def process(serial, items, ForceUpload=False):
             checkurl,
             {"serial": serial, "items": serialize(items), "passphrase": passphrase},
         )
+
+        # Decode response if bytes
+        if isinstance(response, bytes):
+            response = response.decode('UTF-8')
+
         display_detail(response)
     else:
         display_detail("No changes")
