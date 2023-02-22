@@ -49,46 +49,15 @@ from .wrappers import is_a_string
 
 DEFAULT_PREFS = {
     'AdditionalHttpHeaders': None,
-    'AggressiveUpdateNotificationDays': 14,
-    'AppleSoftwareUpdatesOnly': False,
-    'CatalogURL': None,
-    'ClientCertificatePath': None,
-    'ClientIdentifier': '',
-    'ClientKeyPath': None,
-    'ClientResourcesFilename': None,
-    'ClientResourceURL': None,
-    'DaysBetweenNotifications': 1,
-    'EmulateProfileSupport': False,
-    'FollowHTTPRedirects': 'none',
-    'HelpURL': None,
-    'IconURL': None,
-    'IgnoreSystemProxies': False,
-    'InstallRequiresLogout': False,
-    'InstallAppleSoftwareUpdates': False,
-    'LastNotifiedDate': NSDate.dateWithTimeIntervalSince1970_(0),
-    'LocalOnlyManifest': None,
-    'LogFile': '/Library/Managed Installs/Logs/ManagedSoftwareUpdate.log',
-    'LoggingLevel': 1,
-    'LogToSyslog': False,
-    'ManagedInstallDir': '/Library/Managed Installs',
-    'ManifestURL': None,
-    'PackageURL': None,
-    'PackageVerificationMode': 'hash',
-    'PerformAuthRestarts': False,
-    'RecoveryKeyFile': None,
-    'ShowOptionalInstallsForHigherOSVersions': False,
-    'SoftwareRepoCACertificate': None,
-    'SoftwareRepoCAPath': None,
-    'SoftwareRepoURL': DEFAULT_INSECURE_REPO_URL,
-    'SoftwareUpdateServerURL': None,
-    'SuppressAutoInstall': False,
-    'SuppressLoginwindowInstall': False,
-    'SuppressStopButtonOnInstall': False,
-    'SuppressUserNotification': False,
-    'UnattendedAppleUpdates': False,
-    'UseClientCertificate': False,
-    'UseClientCertificateCNAsClientIdentifier': False,
-    'UseNotificationCenterDays': 3,
+    'BaseUrl': None,
+    'FollowHTTPRedirects': False,
+    'HttpConnectionTimeout': 60,
+    # 'IgnoreSystemProxies': False,
+    'LogFile': '/Library/MunkiReport/Logs/MunkiReport.log',
+    'LogToSyslog': False, 
+    'Passphrase': None,
+    'scriptTimeOut': 30,
+    'UseAdditionalHttpHeaders': False,
 }
 
 
@@ -147,10 +116,11 @@ class Preferences(object):
         """Return a preference or the default value"""
         if not pref_name in self:
             return default
-        return self.__getitem__(pref_name)
+        else:
+            return self.__getitem__(pref_name)
 
 
-class MunkiReportPreferences(Preferences):
+class ManagedInstallsPreferences(Preferences):
     """Preferences which are read using 'normal' OS X preferences precedence:
         Managed Preferences (MCX or Configuration Profile)
         ~/Library/Preferences/ByHost/MunkiReport.XXXX.plist
@@ -164,7 +134,7 @@ class MunkiReportPreferences(Preferences):
         Preferences.__init__(self, 'MunkiReport', kCFPreferencesAnyUser)
 
 
-class MunkiReportPreferences(Preferences):
+class SecureManagedInstallsPreferences(Preferences):
     """Preferences which are read using 'normal' OS X preferences precedence:
         Managed Preferences (MCX or Configuration Profile)
         ~/Library/Preferences/ByHost/MunkiReport.XXXX.plist
@@ -276,29 +246,13 @@ def get_config_level(domain, pref_name, value):
 
 
 def print_config():
-    '''Prints the current Munki configuration'''
-    print('Current Munki configuration:')
-    max_pref_name_len = max([len(pref_name) for pref_name in DEFAULT_PREFS])
-    for pref_name in sorted(DEFAULT_PREFS):
-        if pref_name == 'LastNotifiedDate':
             # skip it
-            continue
-        else:
-            value = pref(pref_name)
-            where = get_config_level(BUNDLE_ID, pref_name, value)
-        repr_value = value
-        if is_a_string(value):
-            repr_value = repr(value)
-        print(('%' + str(max_pref_name_len) + 's: %5s %s ') % (
-            pref_name, repr_value, where))
-    # also print com.apple.SoftwareUpdate CatalogURL config if
-    # Munki is configured to install Apple updates
-    if pref('InstallAppleSoftwareUpdates'):
-        print('Current Apple softwareupdate configuration:')
-        domain = 'com.apple.SoftwareUpdate'
-        pref_name = 'CatalogURL'
-        value = CFPreferencesCopyAppValue(pref_name, domain)
-        where = get_config_level(domain, pref_name, value)
+    '''Prints the current MunkiReport configuration'''
+    print('Current MunkiReport configuration:')
+    max_pref_name_len = max([len(pref_name) for pref_name in DEFAULT_PREFS.keys()])
+    for pref_name in sorted(DEFAULT_PREFS.keys()):
+        value = pref(pref_name)
+        where = get_config_level(BUNDLE_ID, pref_name, value)
         repr_value = value
         if is_a_string(value):
             repr_value = repr(value)
