@@ -36,7 +36,7 @@
     . $_SERVER['HTTP_HOST']
     . conf('subdirectory'); ?>index.php?/install)"</string>
 	<key>minimum_os_version</key>
-	<string>10.4.0</string>
+	<string>10.9.0</string>
 	<key>unattended_install</key>
 	<true/> 
 	<key>uninstallable</key>

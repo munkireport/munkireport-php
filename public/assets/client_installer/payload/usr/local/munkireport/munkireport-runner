@@ -35,6 +35,12 @@ def main():
     parser.add_option('--force', '-F', dest="force_modules",
                       help='Forces the specified module\'s cache file to upload to the server.')
 
+
+    parser.add_option('--remove-python2', dest="remove_python2",
+                      help='Uninstalls MunkiReport\'s Python 2 pkg')
+    parser.add_option('--uninstall-munkireport', dest="uninstall_munkireport",
+                      help='Fully uninstalls MunkiReport')
+
     options, dummy_arguments = parser.parse_args()
   
     if options.version:
@@ -68,6 +74,30 @@ def main():
         osutils.cleanUpTmpDir()
         exit(0)
 
+    # Remove MunkiReport's Python 2 pkg
+    if options.remove_python2:
+        if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
+            print ('Removing MunkiReport\'s Python 2 installation...')
+            os.remove("/usr/local/munkireport/munkireport-python2")
+            os.rmdir("/Library/MunkiReport/Python.framework/Versions/2.7/")
+            print ('Complete')
+        else:
+            print ('MunkiReport\'s Python 2 not detected')
+        exit(0)
+
+    # Uninstall MunkiReport
+    if options.uninstall_munkireport:
+        print ('Uninstalling MunkiReport...')
+        os.remove("/Library/LaunchDaemons/com.github.munkireport.runner.plist")
+        os.remove("/usr/local/munki/postflight")
+        os.remove("/usr/local/munki/report_broken_client")
+        os.remove("/var/db/receipts/com.github.munkireport.plist")
+        os.remove("/var/db/receipts/com.github.munkireport.bom")
+        os.rmdir("/Library/MunkiReport/")
+        os.rmdir("/usr/local/munkireport/")
+        print ('Completed uninstallation of MunkiReport')
+        exit(0)
+
     if prefs.pref('LogToSyslog'):
         munkilog.configure_syslog()
 
@@ -78,8 +108,6 @@ def main():
         ForceUpload = options.force_modules
     else:
         ForceUpload = False
-
-#    exit(0)
 
     # Set runtype
     runtype = 'auto'
@@ -92,6 +120,11 @@ def main():
 
     # Main MunkiReport runner block vvv
     reportcommon.display_detail("## Starting MunkiReport run")
+
+    # Check for MunkiReport's Python 2 installation
+    if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
+        reportcommon.display_detail("#! Warning: MunkiReport's Python 2 detected!")
+        reportcommon.display_detail("#! This is no longer used by MunkiReport and should be removed!")
 
     # Try to run postflight.d if not skipping scripts
     if options.uploadonly:

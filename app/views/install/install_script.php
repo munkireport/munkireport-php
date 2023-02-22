@@ -23,22 +23,37 @@ RESULT=""
 VERSION="<?php echo get_version(); ?>"
 VERSIONLONG="<?php echo $GLOBALS['version']; ?>"
 
+POSTINSTALL_SCRIPT="
+if [[ -f \"/usr/local/munkireport/munkireport-python2\" ]] || [[ -f \"/Library/MunkiReport/Python.framework/Versions/2.7/bin/python\" ]]; then
+	echo \"MunkiReport's Python 2 is installed on this Mac!\"
+	echo \"It is no longer used by MunkiReport and should be removed\"
+	echo \"Remove it with 'sudo rm -r /usr/local/munkireport/munkireport-python2 /Library/MunkiReport/Python.framework/Versions/2.7/'\"
+fi
+
+/bin/mkdir -p /private/etc/paths.d/
+echo \"/usr/local/munkireport\" > /private/etc/paths.d/munkireport
+
+"
+
+
+
+
 function usage {
 	PROG=$(basename $0)
 	cat <<EOF >&2
 Usage: ${PROG} [OPTIONS]
 
-  -b URL    Base url to munki report server
+  -b URL   Base url to munki report server
             Current value: ${BASEURL}
-  -m PATH   Path to installation directory
+  -m PATH  Path to installation directory
             Current value: ${MUNKIPATH}
-  -p PATH   Path to preferences file (without the .plist extension)
+  -p PATH  Path to preferences file (without the .plist extension)
             Current value: ${PREFPATH}
-  -i PATH   Create a full installer at PATH
-  -c ID     Change pkg id to ID
-  -h        Display this help message
-  -r PATH   Path to installer result plist
-  -v VERS   Override version number
+  -i PATH  Create a full installer at PATH
+  -c ID    Change pkg id to ID
+  -h       Display this help message
+  -r PATH  Path to installer result plist
+  -v VERS  Override version number
 
 Example:
   * Install munkireport client scripts into the default location.
@@ -61,7 +76,7 @@ EOF
 
 # Set munkireport preference
 function setpref {
-	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write \"\${TARGET}\"${PREFPATH} ${1} \"${2}\"" )
+	PREF_CMDS=( "${PREF_CMDS[@]}" "/usr/bin/defaults write \"\${TARGET}\"${PREFPATH} ${1} \"${2}\"" )
 }
 
 # Set munkireport reportitem preference
@@ -71,7 +86,7 @@ function setreportpref {
 
 # Reset reportitems
 function resetreportpref {
-	PREF_CMDS=( "${PREF_CMDS[@]}" "defaults write \"\${TARGET}\"${PREFPATH} ReportItems -dict" )
+	PREF_CMDS=( "${PREF_CMDS[@]}" "/usr/bin/defaults write \"\${TARGET}\"${PREFPATH} ReportItems -dict" )
 }
 
 while getopts b:m:p:r:c:v:i:h flag; do
@@ -97,7 +112,7 @@ while getopts b:m:p:r:c:v:i:h flag; do
 		i)
 			PKGDEST="$OPTARG"
 			# Create temp directory
-			INSTALLTEMP=$(mktemp -d -t mrpkg)
+			INSTALLTEMP=$(/usr/bin/mktemp -d -t mrpkg)
 			INSTALLROOT="$INSTALLTEMP"/install_root
 			MUNKIPATH="$INSTALLROOT"/usr/local/munkireport/
 			TARGET_VOLUME='$3'
@@ -113,7 +128,7 @@ while getopts b:m:p:r:c:v:i:h flag; do
 done
 
 # build additional HTTP headers
-if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" = "1" ]; then
+if [ "$(/usr/bin/defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" = "1" ]; then
 	BUNDLE_ID='ManagedInstalls'
 	MANAGED_INSTALLS_PLIST_PATHS=("${TARGET_VOLUME}/private/var/root/Library/Preferences/${BUNDLE_ID}.plist" "${TARGET_VOLUME}/Library/Preferences/${BUNDLE_ID}.plist")
 	ADDITIONAL_HTTP_HEADERS_KEY='AdditionalHttpHeaders'
@@ -123,27 +138,26 @@ if [ "$(defaults read "${PREFPATH}" UseMunkiAdditionalHttpHeaders 2>/dev/null)" 
 			if [[ "$line" =~ \"([^\"]+) ]]; then
 				ADDITIONAL_HTTP_HEADERS+=("${BASH_REMATCH[1]}")
 			fi
-		done <<< "$(defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
+		done <<< "$(/usr/bin/defaults read "${plist%.plist}" "$ADDITIONAL_HTTP_HEADERS_KEY")"
 	done
 	for header in "${ADDITIONAL_HTTP_HEADERS[@]}"; do CURL+=("-H" "$header"); done
 fi
 
 echo "# Preparing ${MUNKIPATH}"
-mkdir -p "${MUNKIPATH}munkilib"
-mkdir -p "${MUNKIPATH}scripts/cache"
-mkdir -p "${INSTALLROOT}/Library/MunkiReport/Logs"
+/bin/mkdir -p "${MUNKIPATH}munkilib"
+/bin/mkdir -p "${MUNKIPATH}scripts/cache"
+/bin/mkdir -p "${INSTALLROOT}/Library/MunkiReport/Logs"
 
 # Create preflight.d symlinks
-rm -rf "${MUNKIPATH}preflight.d" &&  ln -s "scripts" "${MUNKIPATH}preflight.d"
-rm -rf "${MUNKIPATH}postflight.d" && ln -s "scripts" "${MUNKIPATH}postflight.d"
+/bin/rm -rf "${MUNKIPATH}preflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}preflight.d"
+/bin/rm -rf "${MUNKIPATH}postflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}postflight.d"
 
-mkdir -p "${INSTALLROOT}/usr/local/munki"
-mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
+/bin/mkdir -p "${INSTALLROOT}/usr/local/munki"
+/bin/mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
 
-#Normalize BASEURL so it has a trailing slash.
-if [[ ${BASEURL: -1} != "/" ]]
-then
-    BASEURL="${BASEURL}/"
+# Normalize BASEURL so it has a trailing slash.
+if [[ ${BASEURL: -1} != "/" ]]; then
+		BASEURL="${BASEURL}/"
 fi
 
 echo "BaseURL is ${BASEURL}"
@@ -165,14 +179,13 @@ if [ $ERR = 1 ]; then
 	for SCRIPT in $SCRIPTS; do
 		COMPONENTS=(${SCRIPT//;/ })
 		TARGET_FILE=${COMPONENTS[1]}
-		rm -f "${INSTALLROOT}${TARGET_FILE}"
+		/bin/rm -f "${INSTALLROOT}${TARGET_FILE}"
 	done
 	exit 1
 fi
 
-chmod a+x "${INSTALLROOT}/usr/local/munki/"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
-chmod a+x "${INSTALLROOT}/usr/local/munkireport/munkireport-runner"
-
+/bin/chmod a+x "${INSTALLROOT}/usr/local/munki/"{${POSTFLIGHT_SCRIPT},${REPORT_BROKEN_CLIENT_SCRIPT}}
+/bin/chmod a+x "${INSTALLROOT}/usr/local/munkireport/munkireport-runner"
 
 echo "Configuring munkireport"
 #### Configure Munkireport ####
@@ -220,12 +233,11 @@ if [ $BUILDPKG = 1 ]; then
 	MUNKIPATH=${STOREPATH}
 fi
 
-
 # If not building a package, execute uninstall scripts
 if [ $BUILDPKG = 0 ]; then
 	eval "$UNINSTALLS"
 	# Remove munkireport version file
-	rm -f "${MUNKIPATH}"munkireport-*.*.*
+	/bin/rm -f "${MUNKIPATH}"munkireport-*.*.*
 fi
 
 if [ $ERR = 0 ]; then
@@ -234,50 +246,53 @@ if [ $ERR = 0 ]; then
 
 		# Create scripts directory
 		SCRIPTDIR="$INSTALLTEMP"/scripts
-		mkdir -p "$SCRIPTDIR"
+		/bin/mkdir -p "$SCRIPTDIR"
 
 		# Add uninstall script to preinstall
-		echo  "#!/bin/bash" > $SCRIPTDIR/preinstall
+		echo "#!/bin/bash" > $SCRIPTDIR/preinstall
+
 		# Add uninstall scripts
-		echo  "$UNINSTALLS" >> $SCRIPTDIR/preinstall
-		chmod +x $SCRIPTDIR/preinstall
+		echo "$UNINSTALLS" >> $SCRIPTDIR/preinstall
+		/bin/chmod +x $SCRIPTDIR/preinstall
 
 		# Add Preference setting commands to postinstall
-		echo  "#!/bin/bash" > $SCRIPTDIR/postinstall
-        cat >>$SCRIPTDIR/postinstall <<EOF
+		echo "#!/bin/bash" > $SCRIPTDIR/postinstall
+		/bin/cat >>$SCRIPTDIR/postinstall <<EOF
 if [[ "\$3" == "/" ]]; then
     TARGET=""
-	/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
-    /bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
+  /bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
+  /bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
 else
-    TARGET="\$3"
+  TARGET="\$3"
 fi
 
 EOF
+		# echo out postinstall script
+		echo "${POSTINSTALL_SCRIPT}" >> $SCRIPTDIR/postinstall
 
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
-        echo "defaults write \"\${TARGET}\"${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
-		chmod +x $SCRIPTDIR/postinstall
 
+		echo "defaults write \"\${TARGET}\"${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
+		/bin/chmod +x $SCRIPTDIR/postinstall
 
 		echo "Building MunkiReport v${VERSION} package."
-		pkgbuild --identifier "$IDENTIFIER" \
+		/usr/bin/pkgbuild --identifier "$IDENTIFIER" \
 				 --version "$VERSION" \
 				 --root "$INSTALLROOT" \
 				 --scripts "$SCRIPTDIR" \
 				 "$PKGDEST/munkireport-${VERSION}.pkg"
 
 		if [[ $RESULT ]]; then
-			defaults write "$RESULT" version ${VERSION}
-			defaults write "$RESULT" pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
+			/usr/bin/defaults write "$RESULT" version ${VERSION}
+			/usr/bin/defaults write "$RESULT" pkg_path "$PKGDEST/munkireport-${VERSION}.pkg"
 		fi
 
 	else
 
 		echo "Preparing ${PREFPATH}"
-		mkdir -p "$(dirname ${PREFPATH})"
+		/bin/mkdir -p "$(/usr/bin/dirname ${PREFPATH})"
 
 		# Set preferences
 		echo "Setting preferences"
@@ -285,14 +300,16 @@ EOF
 			eval $i
 		done
 
-		# Set munkireport version file
-		touch "${MUNKIPATH}munkireport-${VERSION}"
-        defaults write ${PREFPATH} Version ${VERSIONLONG}
+		echo "Running postinstall script"
+		eval "${POSTINSTALL_SCRIPT}"
 
-		echo 'Loading MunkiReport LaunchDaemon'
+		# Set munkireport version file
+		/usr/bin/touch "${MUNKIPATH}munkireport-${VERSION}"
+		/usr/bin/defaults write ${PREFPATH} Version ${VERSIONLONG}
+
+		echo "Loading MunkiReport LaunchDaemon"
 		/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist &>/dev/null
 		/bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
-
 
 		echo "Installation of MunkiReport v${VERSION} complete."
 
@@ -304,9 +321,7 @@ fi
 
 if [ "$INSTALLTEMP" != "" ]; then
 	echo "Cleaning up temporary directory $INSTALLTEMP"
-	rm -r $INSTALLTEMP
+	/bin/rm -r $INSTALLTEMP
 fi
-
-
 
 exit $ERR
