@@ -24,19 +24,34 @@ VERSION="<?php echo get_version(); ?>"
 VERSIONLONG="<?php echo $GLOBALS['version']; ?>"
 
 POSTINSTALL_SCRIPT="
+# Check for and alert about MunkiReport's Python 2
 if [[ -f \"/usr/local/munkireport/munkireport-python2\" ]] || [[ -f \"/Library/MunkiReport/Python.framework/Versions/2.7/bin/python\" ]]; then
 	echo \"MunkiReport's Python 2 is installed on this Mac!\"
 	echo \"It is no longer used by MunkiReport and should be removed\"
 	echo \"Remove it with 'sudo rm -r /usr/local/munkireport/munkireport-python2 /Library/MunkiReport/Python.framework/Versions/2.7/'\"
 fi
 
+# Add the MunkiReport folder to the machine's path
 /bin/mkdir -p /private/etc/paths.d/
 echo \"/usr/local/munkireport\" > /private/etc/paths.d/munkireport
 
+# Check if we already have a symlink to MunkiReport's Python 3
+if [[ ! -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
+
+	# Check if we have Mac Admin Python 3 installed
+	if [[ -f \"/usr/local/bin/managed_python3\" ]] ; then
+		# Make symlink to Mac Admin Python's symlink
+		/bin/ln -s \"/usr/local/munkireport/munkireport-python3\" \"/usr/local/bin/managed_python3\"
+	else
+		echo \"\"
+		echo \"No Python 3 detected! MunkiReport requires Python 3\"
+		echo \"Please download and install it from:\"
+		echo \"https://github.com/MagerValp/MunkiReport-Python/releases/latest\"
+		echo \"\"
+	fi
+fi
+
 "
-
-
-
 
 function usage {
 	PROG=$(basename $0)
