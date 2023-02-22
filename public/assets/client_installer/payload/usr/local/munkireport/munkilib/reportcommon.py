@@ -343,7 +343,7 @@ def pref(pref_name):
     return pref_value
 
 
-def process(serial, items):
+def process(serial, items, ForceUpload=False):
     """Process receives a list of items, checks if they need updating and
     updates them if necessary."""
 
