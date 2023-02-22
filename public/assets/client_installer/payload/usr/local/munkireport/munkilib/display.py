@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2019 Greg Neagle.
+# Copyright 2009-2022 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -19,16 +19,15 @@ Created by Greg Neagle on 2016-12-13.
 
 Common output functions
 """
-
 from __future__ import absolute_import, print_function
 
 import sys
 import warnings
-import six
 
 from . import munkilog
 from . import prefs
 from . import reports
+from .wrappers import unicode_or_str
 
 
 def _getsteps(num_of_steps, limit):
@@ -36,11 +35,11 @@ def _getsteps(num_of_steps, limit):
     steps = []
     current = 0.0
     for i in range(0, num_of_steps):
-        if i == num_of_steps - 1:
+        if i == num_of_steps-1:
             steps.append(int(round(limit)))
         else:
             steps.append(int(round(current)))
-        current += float(limit) / float(num_of_steps - 1)
+        current += float(limit)/float(num_of_steps-1)
     return steps
 
 
@@ -53,7 +52,7 @@ def str_to_ascii(a_string):
       str, ascii form, no >7bit chars
     """
     try:
-        return six.text_type(a_string).encode('ascii', 'ignore')
+        return unicode_or_str(a_string).encode('ascii', 'ignore')
     except UnicodeDecodeError:
         return a_string.decode('ascii', 'ignore')
 
@@ -73,8 +72,8 @@ def _to_unicode(obj, encoding='UTF-8'):
 
 
 def _concat_message(msg, *args):
-    """Concatenates a string with any additional arguments, making sure
-    everything is unicode."""
+    """Concatenates a string with any additional arguments,
+    making sure everything is unicode"""
     # coerce msg to unicode if it's not already
     msg = _to_unicode(msg)
     if args:
@@ -84,8 +83,8 @@ def _concat_message(msg, *args):
             msg = msg % tuple(args)
         except TypeError as dummy_err:
             warnings.warn(
-                "String format does not match concat args: %s" % (str(sys.exc_info()))
-            )
+                'String format does not match concat args: %s'
+                % (str(sys.exc_info())))
     return msg.rstrip()
 
 
@@ -112,7 +111,7 @@ def display_detail(msg, *args):
     if verbose > 1:
         print('    %s' % msg)
         sys.stdout.flush()
-    if prefs.pref("LoggingLevel") > 0:
+    if munkilog.logging_level() > 0:
         munkilog.log(u'    ' + msg)
 
 

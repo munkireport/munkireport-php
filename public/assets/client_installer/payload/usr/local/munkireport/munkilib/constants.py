@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2019 Greg Neagle.
+# Copyright 2009-2022 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -33,9 +33,6 @@ EXIT_STATUS_INVALID_PARAMETERS = 200
 EXIT_STATUS_ROOT_REQUIRED = 201
 
 BUNDLE_ID = "MunkiReport"
-# the following two items are not used internally by Munki
-# any longer, but remain for backwards compatibility with
-# pre and postflight script that might access these files directly
 MANAGED_INSTALLS_PLIST_PATH = "/Library/Preferences/" + BUNDLE_ID + ".plist"
 SECURE_MANAGED_INSTALLS_PLIST_PATH = (
     "/private/var/root/Library/Preferences/" + BUNDLE_ID + ".plist"

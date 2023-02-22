@@ -4,7 +4,8 @@ from . import display
 from . import prefs
 from . import constants
 from . import FoundationPlist
-from munkilib.purl import Purl
+from munkilib.gurl import Gurl
+# from munkilib.purl import Purl
 from munkilib.phpserialize import *
 
 import subprocess
@@ -103,7 +104,8 @@ def curl(url, values):
             )
 
     # Build Purl with initial settings
-    connection = Purl.alloc().initWithOptions_(options)
+    connection = Gurl.alloc().initWithOptions_(options)
+    # connection = Purl.alloc().initWithOptions_(options)
     connection.start()
     try:
         while True:
@@ -163,12 +165,7 @@ def curl(url, values):
 
 def get_hardware_info():
     """Uses system profiler to get hardware info for this machine."""
-    # Apple Silicon Macs running Python 2 through Rosetta 2 mis-report this data
-    # Check if we're on an Apple Silicon Mac and force it to run system_profiler as Apple Silicon
-    if "arm64" in get_cpuarch():
-        cmd = ["/usr/bin/arch", "-arm64", "/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
-    else:
-        cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
+    cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
     proc = subprocess.Popen(
         cmd,
         shell=False,
@@ -239,6 +236,7 @@ def get_cpuinfo():
 
 
 def get_cpuarch():
+    # This is not needed on Python 3, but is kept for compatibility with scripts
     try:
         arch_output = subprocess.check_output(["/usr/bin/arch", "-arm64", "/usr/bin/uname", "-m"], stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
