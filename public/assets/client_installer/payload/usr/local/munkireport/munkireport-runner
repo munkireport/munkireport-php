@@ -4,36 +4,112 @@
 
 from munkilib import reportcommon
 from munkilib import FoundationPlist
+from munkilib import prefs
+# from munkilib import osutils
+from munkilib import munkilog
+# from munkilib import keychain
+
 import hashlib
 import sys
 import os
+import optparse
+
+def get_version():
+    return reportcommon.pref('Version')
 
 def main():
     '''Main'''
 
+    parser = optparse.OptionParser()
+    parser.set_usage('Usage: %prog [options]')
+    parser.add_option('--version', '-V', action='store_true',
+                      help='Print the version of the munki tools and exit.')
+    parser.add_option('--show-config', action='store_true',
+                      help='Print the current configuration and exit.')
+
+    parser.add_option('--scriptsonly', '-S', action='store_true',
+                      help='Runs the MunkiReport postflight scripts only.')
+    parser.add_option('--uploadonly', '-U', action='store_true',
+                      help='Skips running the MunkiReport scripts and only uploads the cache files to the server.')
+    parser.add_option('--forceall', '-A', action='store_true',
+                      help='Forces all the cache files to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
+    parser.add_option('--force', '-F', dest="force_modules",
+                      help='Forces the specified module\'s cache file to upload to the server.')
+
+    options, dummy_arguments = parser.parse_args()
+  
+    if options.version:
+        print get_version()
+        exit(0)
+
+    # Check to see if we're root
+    if os.geteuid() != 0:
+        reportcommon.display_error('You must run this as root!')
+        exit(0)
+
+    # Print MunkiReport's current config
+    if options.show_config:
+        prefs.print_config()
+        print '\nModules enabled:'
+        print reportcommon.pref('ReportItems') 
+        exit(0)
+
+    # Check to see if another instance of this script is running
+    myname = os.path.basename(sys.argv[0])
+    other_managedsoftwareupdate_pid = osutils.pythonScriptRunning(myname)
+    if other_managedsoftwareupdate_pid:
+        # Another instance of this script is running, so we should quit
+        munkilog.log('*' * 60)
+        munkilog.log('%s launched as pid %s' % (myname, os.getpid()))
+        munkilog.log('Another instance of %s is running as pid %s.'
+                     % (myname, other_managedsoftwareupdate_pid))
+        munkilog.log('pid %s exiting.' % os.getpid())
+        munkilog.log('*' * 60)
+        reportcommon.display_error('Another instance of %s is running. Exiting.' % myname)
+        osutils.cleanUpTmpDir()
+        exit(0)
+
+    if prefs.pref('LogToSyslog'):
+        munkilog.configure_syslog()
+
+    # Check if we are to force upload module cache file(s)
+    if options.forceall:
+        ForceUpload = "FORCE_UPLOAD_ALL"
+    elif options.force_modules:
+        ForceUpload = options.force_modules
+    else:
+        ForceUpload = False
+
+#    exit(0)
+
+    # Set runtype
+    runtype = 'auto'
+    reportcommon.set_verbosity(3)
+    
+    # Reset our errors and warnings files, rotate main log if needed
+    munkilog.reset_errors()
+    munkilog.reset_warnings()
+    reportcommon.display_error('test error')
+
+    # Main MunkiReport runner block vvv
     reportcommon.display_detail("## Starting MunkiReport run")
 
-    # set runtype
-    runtype = 'auto'
-
-    reportcommon.set_verbosity(3)
-
-    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
-
-    # Try to run postflight.d
-    postflightscriptdir = os.path.join(scriptdir, "scripts")
-    reportcommon.rundir(postflightscriptdir, runtype, False)
+    # Try to run postflight.d if not skipping scripts
+    if options.uploadonly:
+        reportcommon.display_detail("# Skipping the execution of MunkiReport scripts")
+    else:
+        scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+        postflightscriptdir = os.path.join(scriptdir, "scripts")
+        reportcommon.rundir(postflightscriptdir, runtype, False)
 
     # Get serial
     hardware_info = reportcommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
     hardware_info['cpu'] = reportcommon.get_cpuinfo()
-    hardware_info['cpu_arch'] = reportcommon.get_cpuarch()
+    hardware_info['cpu_arch'] = os.uname()[4]
     hardware_info['hostname'] = os.uname()[1]
-    hardware_info['os_version'] = \
-        reportcommon.getOsVersion(only_major_minor=False)
-    hardware_info['buildversion'] = \
-        reportcommon.get_buildversion()
+    hardware_info['os_version'] = reportcommon.getOsVersion(only_major_minor=False)
+    hardware_info['buildversion'] = reportcommon.get_buildversion()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
     hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
 
@@ -51,14 +127,19 @@ def main():
         {'hash':hashlib.md5(report_info_plist).hexdigest(), \
             'data':report_info_plist}}
 
-    # Read config file /Library/Preferences/Munkireport.plist
-    config_items = reportcommon.pref('ReportItems') or {}
+    # Upload cache files to server if not scriptsonly
+    if options.scriptsonly:
+        reportcommon.display_detail("# Skipping uploading cache files to MunkiReport server")
+    else:
+        # Read config file /Library/Preferences/Munkireport.plist
+        config_items = reportcommon.pref('ReportItems') or {}
 
-    for key, val in config_items.items():
-        reportcommon.display_detail("Requesting %s" % key)
-        items[key] = {'path':val}
+        for key, val in config_items.items():
+            reportcommon.display_detail("Requesting %s" % key)
+            items[key] = {'path':val}
 
-    reportcommon.process(serial, items)
+        reportcommon.process(serial, items, ForceUpload)
+
     reportcommon.finish_run()
 
 if __name__ == '__main__':
