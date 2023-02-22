@@ -22,19 +22,19 @@ if [ -z "$TYPE" ]; then
     TYPE="danger"
 fi
 
-SERIAL=`ioreg -c IOPlatformExpertDevice | grep IOPlatformSerialNumber | awk '{print $4}' | tr -d '"'`
-NAME=`scutil --get ComputerName`
-OSVERSIONLONG=$(uname -r)
+SERIAL=$(/usr/sbin/ioreg -c IOPlatformExpertDevice | /usr/bin/grep IOPlatformSerialNumber | /usr/bin/awk '{print $4}' | /usr/bin/tr -d '"')
+NAME=$(/usr/sbin/scutil --get ComputerName)
+OSVERSIONLONG=$(/usr/bin/uname -r) # Returns Darwin version
 OSVERS=${osversionlong/.*/}
 
-# Get pref from foundation if OS > 10.9
+# Get pref from foundation if OS > 10.9 (Darwin 13)
 if [[ "${OSVERS}" > "13" ]]
 then
-    BASEURL=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('BaseUrl', 'MunkiReport');")
-    PASSPHRASE=$(osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('Passphrase', 'MunkiReport');" 2>/dev/null)
+    BASEURL=$(/usr/bin/osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('BaseUrl', 'MunkiReport');")
+    PASSPHRASE=$(/usr/bin/osascript -l JavaScript -e "ObjC.import('Foundation'); $.CFPreferencesCopyAppValue('Passphrase', 'MunkiReport');" 2>/dev/null)
 else
-    BASEURL=$(defaults read /Library/Preferences/MunkiReport BaseUrl)
-    PASSPHRASE=$(defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
+    BASEURL=$(/usr/bin/defaults read /Library/Preferences/MunkiReport BaseUrl)
+    PASSPHRASE=$(/usr/bin/defaults read /Library/Preferences/MunkiReport Passphrase 2>/dev/null)
 fi
 SUBMITURL="${BASEURL}/index.php?/report/broken_client"
 
