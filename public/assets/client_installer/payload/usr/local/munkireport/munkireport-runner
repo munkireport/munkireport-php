@@ -35,9 +35,9 @@ def main():
     parser.add_option('--force', '-F', dest="force_modules",
                       help='Forces the specified module\'s cache file to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
 
-    parser.add_option('--remove-python2', dest="remove_python2",
+    parser.add_option('--remove-python2', action='store_true',
                       help='Uninstalls MunkiReport\'s Python 2 pkg.')
-    parser.add_option('--uninstall-munkireport', dest="uninstall_munkireport",
+    parser.add_option('--uninstall-munkireport', action='store_true',
                       help='Fully uninstalls MunkiReport.')
 
     options, dummy_arguments = parser.parse_args()

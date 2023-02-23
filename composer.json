@@ -35,7 +35,7 @@
     "munkireport/munkireportinfo": "^3.0",
     "munkireport/users": "^3.0",
     "munkireport/crashplan": "^4.0",
-    "munkireport/bluetooth": "^5.0",
+    "munkireport/bluetooth": "^4.0",
     "munkireport/caching": "^1.0",
     "munkireport/gpu": "^3.0",
     "wikimedia/composer-merge-plugin": "dev-master",
