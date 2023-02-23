@@ -72,7 +72,7 @@ def finish_run():
     remove_run_file()    
     display_detail("## Finished run")
 
-#    # Reset our errors and warnings files, rotate main log if needed
+    # Reset our errors and warnings files, rotate main log if needed
 #    munkilog.reset_errors()
 #    munkilog.reset_warnings()
     munkilog.rotate_main_log()
@@ -252,7 +252,6 @@ def get_cpuinfo():
 
 
 def get_cpuarch():
-    # This is not needed on Python 3, but is kept for compatibility with scripts
     try:
         arch_output = subprocess.check_output(["/usr/bin/arch", "-arm64", "/usr/bin/uname", "-m"], stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError:
