@@ -246,7 +246,6 @@ def get_config_level(domain, pref_name, value):
 
 
 def print_config():
-            # skip it
     '''Prints the current MunkiReport configuration'''
     print('Current MunkiReport configuration:')
     max_pref_name_len = max([len(pref_name) for pref_name in DEFAULT_PREFS.keys()])

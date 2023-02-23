@@ -33,12 +33,12 @@ def main():
     parser.add_option('--forceall', '-A', action='store_true',
                       help='Forces all the cache files to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
     parser.add_option('--force', '-F', dest="force_modules",
-                      help='Forces the specified module\'s cache file to upload to the server.')
+                      help='Forces the specified module\'s cache file to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
 
     parser.add_option('--remove-python2', dest="remove_python2",
-                      help='Uninstalls MunkiReport\'s Python 2 pkg')
+                      help='Uninstalls MunkiReport\'s Python 2 pkg.')
     parser.add_option('--uninstall-munkireport', dest="uninstall_munkireport",
-                      help='Fully uninstalls MunkiReport')
+                      help='Fully uninstalls MunkiReport.')
 
     options, dummy_arguments = parser.parse_args()
   
