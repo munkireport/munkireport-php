@@ -41,7 +41,7 @@ class Report extends Controller
             }
 
             if (! in_array($_POST['passphrase'], $auth_list)) {
-                $this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
+                $this->error('passphrase is not accepted');
             }
         }
 
