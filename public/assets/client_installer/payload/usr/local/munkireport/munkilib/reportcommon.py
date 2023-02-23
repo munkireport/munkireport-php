@@ -72,9 +72,7 @@ def finish_run():
     remove_run_file()    
     display_detail("## Finished run")
 
-    # Reset our errors and warnings files, rotate main log if needed
-#    munkilog.reset_errors()
-#    munkilog.reset_warnings()
+    # Rotate main log if needed, max size is ~1MB
     munkilog.rotate_main_log()
 
     exit(0)
@@ -252,11 +250,7 @@ def get_cpuinfo():
 
 
 def get_cpuarch():
-    try:
-        arch_output = subprocess.check_output(["/usr/bin/arch", "-arm64", "/usr/bin/uname", "-m"], stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError:
-        arch_output = subprocess.check_output(["/usr/bin/uname", "-m"])
-    return arch_output.decode("utf-8").strip()
+    return ''.join(re.findall(r'RELEASE_([iA-Z1-9]+)(_\d+)?', os.uname()[3])[0]).lower()
 
 
 def get_buildversion():

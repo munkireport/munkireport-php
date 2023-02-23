@@ -76,17 +76,17 @@ def main():
     # Remove MunkiReport's Python 2 pkg
     if options.remove_python2:
         if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
-            print ('Removing MunkiReport\'s Python 2 installation...')
+            munkilog.log('Removing MunkiReport\'s Python 2 installation...')
             os.remove("/usr/local/munkireport/munkireport-python2")
             os.rmdir("/Library/MunkiReport/Python.framework/Versions/2.7/")
-            print ('Complete')
+            munkilog.log('Complete')
         else:
-            print ('MunkiReport\'s Python 2 not detected')
+            munkilog.log('MunkiReport\'s Python 2 not detected')
         exit(0)
 
     # Uninstall MunkiReport
     if options.uninstall_munkireport:
-        print ('Uninstalling MunkiReport...')
+        munkilog.log('Uninstalling MunkiReport...')
         os.remove("/Library/LaunchDaemons/com.github.munkireport.runner.plist")
         os.remove("/usr/local/munki/postflight")
         os.remove("/usr/local/munki/report_broken_client")
@@ -113,10 +113,9 @@ def main():
     runtype = 'auto'
     reportcommon.set_verbosity(3)
     
-    # Reset our errors and warnings files, rotate main log if needed
+    # Reset our errors and warnings files
     munkilog.reset_errors()
     munkilog.reset_warnings()
-    # reportcommon.display_error('test error')
 
     # Main MunkiReport runner block vvv
     reportcommon.display_detail("## Starting MunkiReport run")
@@ -138,7 +137,7 @@ def main():
     hardware_info = reportcommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
     hardware_info['cpu'] = reportcommon.get_cpuinfo()
-    hardware_info['cpu_arch'] = os.uname()[4]
+    hardware_info['cpu_arch'] = ''.join(re.findall(r'RELEASE_([iA-Z1-9]+)(_\d+)?', os.uname()[3])[0]).lower()
     hardware_info['hostname'] = os.uname()[1]
     hardware_info['os_version'] = reportcommon.getOsVersion(only_major_minor=False)
     hardware_info['buildversion'] = reportcommon.get_buildversion()
