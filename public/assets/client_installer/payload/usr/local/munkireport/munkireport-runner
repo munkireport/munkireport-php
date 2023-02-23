@@ -65,10 +65,9 @@ def main():
     if other_managedsoftwareupdate_pid:
         # Another instance of this script is running, so we should quit, but instead we're just going to throw an error
         munkilog.log('*' * 60)
-        munkilog.log('%s launched as pid %s' % (myname, os.getpid()))
-        munkilog.log('Another instance of %s is running as pid %s.'
-                     % (myname, other_managedsoftwareupdate_pid))
-        munkilog.log('pid %s exiting.' % os.getpid())
+        # munkilog.log('%s launched as pid %s' % (myname, os.getpid()))
+        munkilog.log('Another instance of %s is running as pid %s.'% (myname, other_managedsoftwareupdate_pid))
+        # munkilog.log('pid %s exiting.' % os.getpid())
         munkilog.log('*' * 60)
         reportcommon.display_warning('Another instance of %s is running!' % myname)
         # osutils.cleanUpTmpDir()
