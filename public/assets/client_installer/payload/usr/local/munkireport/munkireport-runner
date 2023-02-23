@@ -35,7 +35,6 @@ def main():
     parser.add_option('--force', '-F', dest="force_modules",
                       help='Forces the specified module\'s cache file to upload to the server.')
 
-
     parser.add_option('--remove-python2', dest="remove_python2",
                       help='Uninstalls MunkiReport\'s Python 2 pkg')
     parser.add_option('--uninstall-munkireport', dest="uninstall_munkireport",
@@ -93,6 +92,7 @@ def main():
         os.remove("/usr/local/munki/report_broken_client")
         os.remove("/var/db/receipts/com.github.munkireport.plist")
         os.remove("/var/db/receipts/com.github.munkireport.bom")
+        os.remove("/Library/Preferences/MunkiReport.plist")
         os.rmdir("/Library/MunkiReport/")
         os.rmdir("/usr/local/munkireport/")
         print ('Completed uninstallation of MunkiReport')

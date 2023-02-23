@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-r"""
+"""
 Php serialize / unserialize implementation in Python:
 
 https://github.com/sdfsdhgjkbmnmxc/phpserialize

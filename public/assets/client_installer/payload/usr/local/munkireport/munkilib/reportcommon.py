@@ -95,7 +95,7 @@ def curl(url, values):
 
     # Get connection timeout
     options["connection_timeout"] = 60
-    if pref("scriptTimeOut"):
+    if pref("HttpConnectionTimeout"):
         options["connection_timeout"] = int(pref("HttpConnectionTimeout"))
 
     # Get follow_redirects
@@ -372,8 +372,7 @@ def process(serial, items, ForceUpload=False):
     if result.get("info", "") != "":
         display_detail("Server info: %s" % result["info"])
 
-
-    # Override any module that are force updated
+    # Override any module that is force updated
     if ForceUpload == "FORCE_UPLOAD_ALL":
         for i in items.keys():
             display_detail("Forcing update for all modules!")
@@ -386,7 +385,7 @@ def process(serial, items, ForceUpload=False):
     # Retrieve hashes that need updating
     total_size = 0
     for i in list(items.keys()):
-        if i in result:
+        if i.encode('UTF-8') in result:
             if items[i].get("path"):
                 try:
                     f = open(items[i]["path"], "r")
