@@ -36,22 +36,32 @@ fi
 /bin/mkdir -p /private/etc/paths.d/
 echo \"/usr/local/munkireport\" > /private/etc/paths.d/munkireport
 
-# Check if we have Mac Admin Python 3 installed
-if [[ -f \"/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3\" ]] ; then
+# Disabled parts for Mac Admins Python 3
+# # Check if we have Mac Admin Python 3 installed
+# if [[ -f \"/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3\" ]] ; then
 
-	# Check if we already have a Python 3 symlink, remove it if we do
-	if [[ -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
-		/bin/rm \"/usr/local/munkireport/munkireport-python3\"
-	fi
+# 	# Check if we already have a Python 3 symlink, remove it if we do
+# 	if [[ -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
+# 		/bin/rm \"/usr/local/munkireport/munkireport-python3\"
+# 	fi
 
-	# Make symlink to Mac Admin Python's symlink
-	/bin/ln -s \"/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3\" \"/usr/local/munkireport/munkireport-python3\"
-else
-	echo \"\"
-	echo \"No Python 3 detected! MunkiReport requires the Mac Admins Python 3 pkg\"
-	echo \"Please download and install it from:\"
-	echo \"https://github.com/macadmins/python/releases/latest\"
-	echo \"\"
+# 	# Make symlink to Mac Admin Python's symlink
+# 	/bin/ln -s \"/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3\" \"/usr/local/munkireport/munkireport-python3\"
+# else
+# 	echo \"\"
+# 	echo \"No Python 3 detected! MunkiReport requires the Mac Admins Python 3 pkg\"
+# 	echo \"Please download and install it from:\"
+# 	echo \"https://github.com/macadmins/python/releases/latest\"
+# 	echo \"\"
+# fi
+
+# Check if we already have a symlink to MunkiReport's Python 3
+if [[ ! -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
+		echo \"\"
+		echo \"No Python 3 detected! MunkiReport requires Python 3\"
+		echo \"Please download and install it from:\"
+		echo \"https://github.com/MagerValp/MunkiReport-Python/releases/latest\"
+		echo \"\"
 fi
 
 "

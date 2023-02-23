@@ -12,6 +12,7 @@ import hashlib
 import sys
 import os
 import optparse
+import re
 
 def get_version():
     return reportcommon.pref('Version')
@@ -62,16 +63,16 @@ def main():
     myname = os.path.basename(sys.argv[0])
     other_managedsoftwareupdate_pid = osutils.pythonScriptRunning(myname)
     if other_managedsoftwareupdate_pid:
-        # Another instance of this script is running, so we should quit
+        # Another instance of this script is running, so we should quit, but instead we're just going to throw an error
         munkilog.log('*' * 60)
         munkilog.log('%s launched as pid %s' % (myname, os.getpid()))
         munkilog.log('Another instance of %s is running as pid %s.'
                      % (myname, other_managedsoftwareupdate_pid))
         munkilog.log('pid %s exiting.' % os.getpid())
         munkilog.log('*' * 60)
-        reportcommon.display_error('Another instance of %s is running. Exiting.' % myname)
-        osutils.cleanUpTmpDir()
-        exit(0)
+        reportcommon.display_warning('Another instance of %s is running!' % myname)
+        # osutils.cleanUpTmpDir()
+        # exit(0)
 
     # Remove MunkiReport's Python 2 pkg
     if options.remove_python2:
