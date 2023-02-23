@@ -403,7 +403,7 @@ def process(serial, items, ForceUpload=False):
 
         # Decode response if bytes
         if isinstance(response, bytes):
-            response = response.decode('UTF-8')
+            response = response.decode('UTF-8', errors="ignore")
 
         display_detail(response)
     else:
