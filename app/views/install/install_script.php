@@ -24,48 +24,6 @@ RESULT=""
 VERSION="<?php echo get_version(); ?>"
 VERSIONLONG="<?php echo $GLOBALS['version']; ?>"
 
-POSTINSTALL_SCRIPT="
-# Check for and alert about MunkiReport's Python 2
-if [[ -f \"/usr/local/munkireport/munkireport-python2\" ]] || [[ -f \"/Library/MunkiReport/Python.framework/Versions/2.7/bin/python\" ]]; then
-	echo \"MunkiReport's Python 2 is installed on this Mac!\"
-	echo \"It is no longer used by MunkiReport and should be removed\"
-	echo \"Remove it with 'sudo rm -r /usr/local/munkireport/munkireport-python2 /Library/MunkiReport/Python.framework/Versions/2.7/'\"
-fi
-
-# Add the MunkiReport folder to the machine's path
-/bin/mkdir -p /private/etc/paths.d/
-echo \"/usr/local/munkireport\" > /private/etc/paths.d/munkireport
-
-# Disabled parts for Mac Admins Python 3
-# # Check if we have Mac Admin Python 3 installed
-# if [[ -f \"/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3\" ]] ; then
-
-# 	# Check if we already have a Python 3 symlink, remove it if we do
-# 	if [[ -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
-# 		/bin/rm \"/usr/local/munkireport/munkireport-python3\"
-# 	fi
-
-# 	# Make symlink to Mac Admin Python's symlink
-# 	/bin/ln -s \"/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3\" \"/usr/local/munkireport/munkireport-python3\"
-# else
-# 	echo \"\"
-# 	echo \"No Python 3 detected! MunkiReport requires the Mac Admins Python 3 pkg\"
-# 	echo \"Please download and install it from:\"
-# 	echo \"https://github.com/macadmins/python/releases/latest\"
-# 	echo \"\"
-# fi
-
-# Check if we already have a symlink to MunkiReport's Python 3
-if [[ ! -f \"/usr/local/munkireport/munkireport-python3\" ]] ; then
-		echo \"\"
-		echo \"No Python 3 detected! MunkiReport requires Python 3\"
-		echo \"Please download and install it from:\"
-		echo \"https://github.com/MagerValp/MunkiReport-Python/releases/latest\"
-		echo \"\"
-fi
-
-"
-
 function usage {
 	PROG=$(/usr/bin/basename $0)
 	/bin/cat <<EOF >&2
@@ -184,6 +142,13 @@ echo "# Preparing ${MUNKIPATH}"
 /bin/rm -rf "${MUNKIPATH}preflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}preflight.d"
 /bin/rm -rf "${MUNKIPATH}postflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}postflight.d"
 
+# Make symlink to Mac Admin Python 3.10
+/bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/bin/python3.10" "${INSTALLROOT}/usr/local/munkireport/munkireport-python3"
+
+# Add the MunkiReport folder to the machine's path
+/bin/mkdir -p "${INSTALLROOT}/private/etc/paths.d/"
+echo "/usr/local/munkireport" > "${INSTALLROOT}/private/etc/paths.d/munkireport"
+
 /bin/mkdir -p "${INSTALLROOT}/usr/local/munki"
 /bin/mkdir -p "${INSTALLROOT}/Library/LaunchDaemons"
 
@@ -293,17 +258,43 @@ if [ $ERR = 0 ]; then
 		echo "#!/bin/bash" > $SCRIPTDIR/postinstall
 		/bin/cat >>$SCRIPTDIR/postinstall <<EOF
 if [[ "\$3" == "/" ]]; then
-    TARGET=""
-  /bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
-  /bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
+	# If installing on the Mac, not building
+
+	TARGET=""
+	/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
+	/bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
+
+	# Check for and alert about MunkiReport's Python 2
+	if [[ -f "/usr/local/munkireport/munkireport-python2" ]] || [[ -f "/Library/MunkiReport/Python.framework/Versions/2.7/bin/python" ]]; then
+		echo " "
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		echo " "
+		echo "MunkiReport's Python 2 is installed on this Mac!"
+		echo "It is no longer used by MunkiReport and should be removed"
+		echo "Remove it with 'sudo rm -r /usr/local/munkireport/munkireport-python2 /Library/MunkiReport/Python.framework/Versions/2.7/'"
+		echo " "
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		echo " "
+	fi
+
+	# Check if we have Mac Admin Python 3.10 installed
+	if [[ ! -f "/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/bin/python3.10" ]] ; then
+		echo " "
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		echo " "
+		echo "No Python 3.10 detected! MunkiReport requires the Mac Admins Python 3.10 pkg"
+		echo "Please download and install it from:"
+		echo "https://github.com/macadmins/python/releases/tag/v3.10.9.80716"
+		echo " "
+		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		echo " "
+	fi
+
 else
-  TARGET="\$3"
+	TARGET="\$3"
 fi
 
 EOF
-		# echo out postinstall script
-		echo "${POSTINSTALL_SCRIPT}" >> $SCRIPTDIR/postinstall
-
 		for i in "${PREF_CMDS[@]}";
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
@@ -333,9 +324,6 @@ EOF
 		for i in "${PREF_CMDS[@]}"; do
 			eval $i
 		done
-
-		echo "Running postinstall script"
-		eval "${POSTINSTALL_SCRIPT}"
 
 		# Set munkireport version file
 		/usr/bin/touch "${MUNKIPATH}munkireport-${VERSION}"
