@@ -143,7 +143,7 @@ echo "# Preparing ${MUNKIPATH}"
 /bin/rm -rf "${MUNKIPATH}postflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}postflight.d"
 
 # Make symlink to Mac Admin Python 3.10
-/bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/bin/python3.10" "${INSTALLROOT}/usr/local/munkireport/munkireport-python3"
+/bin/rm -rf "${MUNKIPATH}munkireport-python3"; /bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/bin/python3.10" "${MUNKIPATH}munkireport-python3"
 
 # Add the MunkiReport folder to the machine's path
 /bin/mkdir -p "${INSTALLROOT}/private/etc/paths.d/"
@@ -299,7 +299,7 @@ EOF
 			do echo $i >> $SCRIPTDIR/postinstall
 		done
 
-		echo "defaults write \"\${TARGET}\"${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
+		echo "/usr/bin/defaults write \"\${TARGET}\"${PREFPATH} Version ${VERSIONLONG}" >> $SCRIPTDIR/postinstall
 		/bin/chmod +x $SCRIPTDIR/postinstall
 
 		echo "Building MunkiReport v${VERSION} package."
