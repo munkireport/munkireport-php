@@ -369,11 +369,11 @@ def process(serial, items, ForceUpload=False):
     if ForceUpload == "FORCE_UPLOAD_ALL":
         for i in items.keys():
             display_detail("Forcing update for all modules!")
-            result[i] = 1
+            result[i.encode()] = 1
     elif ForceUpload:
         for i in ForceUpload.split(' '):
             display_detail("Forcing update for %s!" % (i))
-            result[i] = 1
+            result[i.encode()] = 1
 
     # Retrieve hashes that need updating
     total_size = 0
