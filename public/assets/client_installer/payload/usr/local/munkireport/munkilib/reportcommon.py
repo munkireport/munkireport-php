@@ -381,8 +381,12 @@ def process(serial, items, ForceUpload=False):
         if i.encode('UTF-8') in result:
             if items[i].get("path"):
                 try:
-                    f = open(items[i]["path"], "r")
-                    items[i]["data"] = f.read()
+                    try:
+                        f = open(items[i]["path"], "r")
+                        items[i]["data"] = f.read()
+                    except:
+                        f = open(items[i]["path"], "rb")
+                        items[i]["data"] = f.read()
                 except:
                     display_warning("Can't open %s" % items[i]["path"])
                     del items[i]
