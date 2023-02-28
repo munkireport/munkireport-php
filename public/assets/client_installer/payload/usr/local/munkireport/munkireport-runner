@@ -68,6 +68,8 @@ def main():
         print ('        Python 3 Version: '+sys.version)
         print ('          PyObjC Version: '+objc.__version__)
         print ('')
+        print ('     MunkiReport Version: '+get_version())
+        print ('')
         print ('         Modules enabled: ')
         print (reportcommon.pref('ReportItems'))
         exit(0)
