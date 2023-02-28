@@ -20,6 +20,7 @@
 
 Created by Greg Neagle on 2013-11-21.
 Modified by Arjen van Bochoven on 2015-09-23
+Updated for Python 3 MagerValp and Tuxudo on 2023-02-23
 
 curl replacement using NSURLConnection and friends
 """

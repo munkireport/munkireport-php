@@ -1,6 +1,9 @@
 #!/usr/local/munkireport/munkireport-python3
 # encoding: utf-8
-'''Postflight script'''
+
+# Main script for MunkiReport (https://github.com/munkireport/munkireport-php)
+# Largely witten by Arjen van Bochoven
+# Updated by Tuxudo and MagerValp
 
 from munkilib import reportcommon
 from munkilib import FoundationPlist
@@ -44,7 +47,8 @@ def main():
     options, dummy_arguments = parser.parse_args()
   
     if options.version:
-        print (get_version())
+        print ("MunkiReport-PHP (https://github.com/munkireport/munkireport-php)")
+        print ("Version: "+get_version())
         exit(0)
 
     # Check to see if we're root
@@ -55,7 +59,11 @@ def main():
     # Print MunkiReport's current config
     if options.show_config:
         prefs.print_config()
-        print ('\nModules enabled:')
+        if os.path.isfile("/usr/local/munkireport/munkireport-python3"):
+            print ('                Python 3: '+os.readlink("/usr/local/munkireport/munkireport-python3"))
+        else:
+            print ('                Python 3: Not detected!')
+        print ('         Modules enabled:')
         print (reportcommon.pref('ReportItems'))
         exit(0)
 

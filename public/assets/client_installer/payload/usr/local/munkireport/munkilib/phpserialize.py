@@ -8,6 +8,7 @@ Author: Alexander Chekunkov
 Modified by: Arjen van Bochoven
 - Included error classes
 - Added support for objc.pyobjc_unicode strings
+- Updated for Python 3
 """
 from decimal import Decimal
 import string
