@@ -210,7 +210,7 @@ class Unserializator(object):
         self._position += n
         if result != symbol:
             raise _PhpUnserializationError(
-                "Next is `%s` not `%s`" % (result, symbol.decode('utf-8')), self.get_rest()
+                "Next is `%s` not `%s`" % (result, symbol.decode("utf-8", errors="ignore")), self.get_rest()
             )
 
     def take(self, n=1):

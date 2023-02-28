@@ -60,7 +60,7 @@ def getOsVersion(only_major_minor=True, as_tuple=False):
         os_version_tuple = subprocess.check_output(
             ('/usr/bin/sw_vers', '-productVersion'),
             env={'SYSTEM_VERSION_COMPAT': '0'}
-        ).decode('UTF-8').rstrip().split('.')
+        ).decode("utf-8", errors="ignore").rstrip().split('.')
     except subprocess.CalledProcessError:
         os_version_tuple = platform.mac_ver()[0].split(".")
     if only_major_minor:
@@ -139,7 +139,7 @@ def currentGUIusers():
     proc = subprocess.Popen('/usr/bin/who', shell=False,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output = proc.communicate()[0].decode("UTF-8")
+    output = proc.communicate()[0].decode("utf-8", errors="ignore")
     lines = output.splitlines()
     for line in lines:
         if 'console' in line:
@@ -159,7 +159,7 @@ def pythonScriptRunning(scriptname):
     proc = subprocess.Popen(cmd, shell=False,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out = proc.communicate()[0].decode("UTF-8")
+    out = proc.communicate()[0].decode("utf-8", errors="ignore")
     mypid = os.getpid()
     lines = str(out).splitlines()
     for line in lines:
@@ -197,9 +197,9 @@ def osascript(osastring):
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (out, err) = proc.communicate()
     if proc.returncode != 0:
-        print('Error: ', err.decode('UTF-8'), file=sys.stderr)
+        print('Error: ', err.decode("utf-8", errors="ignore"), file=sys.stderr)
     if out:
-        return out.decode('UTF-8').rstrip('\n')
+        return out.decode("utf-8", errors="ignore").rstrip('\n')
     return u''
 
 
@@ -214,7 +214,7 @@ def bridgeos_update_staged():
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
-    output = proc.communicate()[0].decode('UTF-8')
+    output = proc.communicate()[0].decode("utf-8", errors="ignore")
     if proc.returncode == 0:
         munkilog.log("nvram output: %s" % output)
         lines = output.splitlines()

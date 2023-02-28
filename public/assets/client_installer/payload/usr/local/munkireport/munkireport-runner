@@ -16,6 +16,7 @@ import sys
 import os
 import optparse
 import re
+import objc # Used only for version printing
 
 def get_version():
     return reportcommon.pref('Version')
@@ -59,11 +60,15 @@ def main():
     # Print MunkiReport's current config
     if options.show_config:
         prefs.print_config()
+        print ('')
         if os.path.isfile("/usr/local/munkireport/munkireport-python3"):
-            print ('                Python 3: '+os.readlink("/usr/local/munkireport/munkireport-python3"))
+            print ('    Python 3 Interpreter: '+os.readlink("/usr/local/munkireport/munkireport-python3"))
         else:
-            print ('                Python 3: Not detected!')
-        print ('         Modules enabled:')
+            print ('    Python 3 Interpreter: Not detected!')
+        print ('        Python 3 Version: '+sys.version)
+        print ('          PyObjC Version: '+objc.__version__)
+        print ('')
+        print ('         Modules enabled: ')
         print (reportcommon.pref('ReportItems'))
         exit(0)
 
@@ -72,11 +77,11 @@ def main():
     other_managedsoftwareupdate_pid = osutils.pythonScriptRunning(myname)
     if other_managedsoftwareupdate_pid:
         # Another instance of this script is running, so we should quit, but instead we're just going to throw an error
-        munkilog.log('*' * 60)
-        # munkilog.log('%s launched as pid %s' % (myname, os.getpid()))
-        munkilog.log('Another instance of %s is running as pid %s.'% (myname, other_managedsoftwareupdate_pid))
-        # munkilog.log('pid %s exiting.' % os.getpid())
-        munkilog.log('*' * 60)
+        reportcommon.display_detail('*' * 60)
+        # reportcommon.display_detail('%s launched as pid %s' % (myname, os.getpid()))
+        reportcommon.display_detail('Another instance of %s is running as pid %s.'% (myname, other_managedsoftwareupdate_pid))
+        # reportcommon.display_detail('pid %s exiting.' % os.getpid())
+        reportcommon.display_detail('*' * 60)
         reportcommon.display_warning('Another instance of %s is running!' % myname)
         # osutils.cleanUpTmpDir()
         # exit(0)
@@ -84,17 +89,17 @@ def main():
     # Remove MunkiReport's Python 2 pkg
     if options.remove_python2:
         if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
-            munkilog.log('Removing MunkiReport\'s Python 2 installation...')
+            reportcommon.display_detail('Removing MunkiReport\'s Python 2 installation...')
             os.remove("/usr/local/munkireport/munkireport-python2")
             os.rmdir("/Library/MunkiReport/Python.framework/Versions/2.7/")
-            munkilog.log('Complete')
+            reportcommon.display_detail('Complete')
         else:
-            munkilog.log('MunkiReport\'s Python 2 not detected')
+            reportcommon.display_detail('MunkiReport\'s Python 2 not detected')
         exit(0)
 
     # Uninstall MunkiReport
     if options.uninstall_munkireport:
-        munkilog.log('Uninstalling MunkiReport...')
+        reportcommon.display_detail('Uninstalling MunkiReport...')
         os.remove("/Library/LaunchDaemons/com.github.munkireport.runner.plist")
         os.remove("/usr/local/munki/postflight")
         os.remove("/usr/local/munki/report_broken_client")
@@ -122,16 +127,18 @@ def main():
     reportcommon.set_verbosity(3)
     
     # Reset our errors and warnings files
-    munkilog.reset_errors()
-    munkilog.reset_warnings()
+    munkilog.rotate_errors()
+    munkilog.rotate_warnings()
 
     # Main MunkiReport runner block vvv
     reportcommon.display_detail("## Starting MunkiReport run")
 
     # Check for MunkiReport's Python 2 installation
     if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
+        reportcommon.display_detail('*' * 63)
         reportcommon.display_detail("#! Warning: MunkiReport's Python 2 detected!")
         reportcommon.display_detail("#! This is no longer used by MunkiReport and should be removed!")
+        reportcommon.display_detail('*' * 63)
 
     # Try to run postflight.d if not skipping scripts
     if options.uploadonly:

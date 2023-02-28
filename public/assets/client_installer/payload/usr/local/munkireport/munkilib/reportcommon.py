@@ -206,7 +206,7 @@ def get_long_username(username):
     except:
         long_name = ""
     if isinstance(long_name, bytes):
-        return long_name.decode("utf-8")
+        return long_name.decode("utf-8", errors="ignore")
     else:
         return long_name
 
@@ -231,7 +231,7 @@ def get_computername():
     )
     (output, unused_error) = proc.communicate()
     output = output.strip()
-    return output.decode("utf-8")
+    return output.decode("utf-8", errors="ignore")
 
 
 def get_cpuinfo():
@@ -246,7 +246,7 @@ def get_cpuinfo():
     )
     (output, unused_error) = proc.communicate()
     output = output.strip()
-    return output.decode("utf-8")
+    return output.decode("utf-8", errors="ignore")
 
 
 def get_cpuarch():
@@ -265,7 +265,7 @@ def get_buildversion():
     )
     (output, unused_error) = proc.communicate()
     output = output.strip()
-    return output.decode("utf-8")
+    return output.decode("utf-8", errors="ignore")
 
 
 def get_uptime():
@@ -279,7 +279,7 @@ def get_uptime():
         stderr=subprocess.PIPE,
     )
     (output, unused_error) = proc.communicate()
-    sec = int(re.sub(r".*sec = (\d+),.*", "\\1", output.decode('utf-8')))
+    sec = int(re.sub(r".*sec = (\d+),.*", "\\1", output.decode("utf-8", errors="ignore")))
     up = int(time.time() - sec)
     return up if up > 0 else -1
 
@@ -605,7 +605,7 @@ def getOsVersion(only_major_minor=True, as_tuple=False):
         stderr=subprocess.PIPE,
     )
     (output, unused_error) = proc.communicate()
-    output = output.decode('utf-8').strip()
+    output = output.decode("utf-8", errors="ignore").strip()
     os_version_tuple = output.split(".")
     if only_major_minor:
         os_version_tuple = os_version_tuple[0:2]

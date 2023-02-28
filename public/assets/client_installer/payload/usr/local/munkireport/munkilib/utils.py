@@ -166,7 +166,7 @@ def getPIDforProcessName(processname):
         return 0
 
     while True:
-        line = proc.stdout.readline().decode('UTF-8')
+        line = proc.stdout.readline().decode("utf-8", errors="ignore")
         if not line and (proc.poll() != None):
             break
         line = line.rstrip('\n')
