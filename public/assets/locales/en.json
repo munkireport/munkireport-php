@@ -82,6 +82,7 @@
         "today": "Backed up today",
         "week_plus": "Latest backup more than a week ago"
     },
+    "beta": "Beta",
     "boot_time": "Booted",
     "buildversion": "Build Version",
     "bundle_id": "Bundle ID",
