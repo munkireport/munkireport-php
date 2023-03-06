@@ -253,6 +253,7 @@
         "date_downloaded": "Date Downloaded",
         "date_updated": "Date Updated",
         "detail_widgets": "Client Detail Widgets",
+        "in_search_path": "Module in Search Path",
         "install_command": "Install Command",
         "install_info": "To install this module, run the following Composer commands from within your MunkiReport directory:",
         "install_more_info": "For more information about installing modules, visit the",

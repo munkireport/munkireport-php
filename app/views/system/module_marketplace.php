@@ -20,12 +20,13 @@
                         <th data-i18n="module_marketplace.date_downloaded" data-colname='date_downloaded'></th>
                         <th data-i18n="module_marketplace.date_updated" data-colname='date_updated'></th>
                         <th data-i18n="module_marketplace.module_location" data-colname='module_location'></th>
+                        <th data-i18n="module_marketplace.in_search_path" data-colname='in_search_path'></th>
                         <th data-i18n="module_marketplace.url" data-colname='url'></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
+                        <td data-i18n="listing.loading" colspan="15" class="dataTables_empty"></td>
                     </tr>
                 </tbody>
             </table>
@@ -67,6 +68,7 @@
                             { "data" : "date_downloaded"},
                             { "data" : "date_updated"},
                             { "data" : "module_location"},
+                            { "data" : "in_search_path"},
                             { "data" : "url"}
                         ],
                         createdRow: function(nRow, aData, iDataIndex) {
@@ -178,10 +180,16 @@
                                 $('td:eq(11)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
                             }
 
+                            // Format in_search_path
+                            var colvar=$('td:eq(13)', nRow).html();
+                            colvar = colvar == '1' ? i18n.t('yes') :
+                            (colvar === '0' ? i18n.t('no') : '')
+                            $('td:eq(13)', nRow).text(colvar)
+
                             // Format repo link
-                            var colvar = $('td:eq(13)', nRow).html();
+                            var colvar = $('td:eq(14)', nRow).html();
                             if (colvar){
-                                $('td:eq(13)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
+                                $('td:eq(14)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
                             }
                         }
                     });

@@ -46,6 +46,7 @@ class Module_marketplace extends Controller
 
         $all_modules = $this->moduleMarketplace->getModuleList(true);
         $enabled_modules = conf('modules', array());
+        $module_search_paths = conf('module_search_paths');
         $composer_modules = [];
         $composer_modules_full = [];
         $composer_modules_name = array();
@@ -68,6 +69,7 @@ class Module_marketplace extends Controller
                 $composer_modules[$i]["latest_version"] = "";
                 $composer_modules[$i]["date_updated"] = "";
                 $composer_modules[$i]["update_available"] = "";
+                $composer_modules[$i]["in_search_path"] = "";
 
                 // Check if the version string has a 'v' in it, if not append it
                 if (substr(strtolower($pkg['version']), 0, 1) !== 'v') {
@@ -110,10 +112,29 @@ class Module_marketplace extends Controller
                 }
 
                 // Get timestamp of module's model file
-                if(file_exists($composer_modules[$i]["module_location"]."/".$name_array[1]."_model.php")){
+                if (file_exists($composer_modules[$i]["module_location"]."/".$name_array[1]."_model.php")){
                     $composer_modules[$i]["date_downloaded"] = filemtime ($composer_modules[$i]["module_location"]);
                 } else {
                     $composer_modules[$i]["date_downloaded"] = "";
+                }
+
+                // Check if module is in module search path
+                if ($composer_modules[$i]["core"] == 0 && $composer_modules[$i]["enabled"] == 1){
+
+                    // If not a core module and enabled, check each search path
+                    $composer_modules[$i]["in_search_path"] = 0;
+                    foreach ($module_search_paths as $module_search_path) {
+                        // Check if the module path is a search path
+                        if (strpos($composer_modules[$i]["module_location"], $module_search_path) !== false ){
+                            $composer_modules[$i]["in_search_path"] = 1;
+                            break;
+                        }
+                    }
+                } else if ($composer_modules[$i]["core"] == 1 && $composer_modules[$i]["enabled"] == 1){
+                    // Core modules that are enabled get this set to yes
+                    $composer_modules[$i]["in_search_path"] = 1;
+                } else {
+                    $composer_modules[$i]["in_search_path"] = "";
                 }
 
                 $i++;
@@ -136,9 +157,10 @@ class Module_marketplace extends Controller
                 $composer_modules[$i]["update_available"] = "";
                 $composer_modules[$i]["date_updated"] = "";
                 $composer_modules[$i]["installed"] = 1;
+                $composer_modules[$i]["in_search_path"] = "";
 
                 // Get timestamp of custom module's model file
-                if(file_exists($location."/".$module."_model.php")){
+                if (file_exists($location."/".$module."_model.php")){
                     $composer_modules[$i]["date_downloaded"] = filemtime ($location);
                 } else {
                     $composer_modules[$i]["date_downloaded"] = "";
@@ -158,7 +180,7 @@ class Module_marketplace extends Controller
         $repo_modules = Module_marketplace::get_module_repos();
 
         // Check if we have a result
-        if($repo_modules){
+        if ($repo_modules){
 
             foreach ($repo_modules as $repo_module) {
 
@@ -180,6 +202,7 @@ class Module_marketplace extends Controller
                     $composer_modules[$i]["date_downloaded"] = "";
                     $composer_modules[$i]["installed"] = 0;
                     $composer_modules[$i]["enabled"] = "";
+                    $composer_modules[$i]["in_search_path"] = "";
 
                     // Check if core module
                     if ($name_array[0] == "munkireport"){
