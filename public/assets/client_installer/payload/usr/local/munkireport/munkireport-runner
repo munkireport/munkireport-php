@@ -97,20 +97,6 @@ def main():
         print (reportcommon.pref('ReportItems'))
         exit(0)
 
-    # Check to see if another instance of this script is running
-    myname = os.path.basename(sys.argv[0])
-    other_managedsoftwareupdate_pid = osutils.pythonScriptRunning(myname)
-    if other_managedsoftwareupdate_pid:
-        # Another instance of this script is running, so we should quit, but instead we're just going to throw an error
-        reportcommon.display_detail('*' * 60)
-        # reportcommon.display_detail('%s launched as pid %s' % (myname, os.getpid()))
-        reportcommon.display_detail('Another instance of %s is running as pid %s.'% (myname, other_managedsoftwareupdate_pid))
-        # reportcommon.display_detail('pid %s exiting.' % os.getpid())
-        reportcommon.display_detail('*' * 60)
-        reportcommon.display_warning('Another instance of %s is running!' % myname)
-        # osutils.cleanUpTmpDir()
-        # exit(0)
-
     # Remove MunkiReport's Python 2 pkg
     if options.remove_python2:
         if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isdir("/Library/MunkiReport/Python.framework/Versions/2.7/"):
