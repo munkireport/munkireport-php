@@ -93,7 +93,7 @@ def main():
             print ("    MunkiReport PKG Name: "+receipt_info["PackageFileName"])
             print ("MunkiReport Install Date: "+receipt_info["InstallDate"])
         print ('')
-        print ('         Modules enabled: ')
+        print ('         Modules enabled: '+prefs.get_config_level("MunkiReport", 'ReportItems', prefs.pref('ReportItems')))
         print (reportcommon.pref('ReportItems'))
         exit(0)
 
