@@ -22,6 +22,21 @@ import shutil
 def get_version():
     return reportcommon.pref('Version')
 
+def get_receipt_info():
+    mr_receipt = FoundationPlist.readPlist("/private/var/db/receipts/com.github.munkireport.plist")
+
+    out = {'PackageVersion':'','InstallDate':'','PackageFileName':''}
+
+    for receipt_entry in mr_receipt:
+        if receipt_entry == "PackageVersion":
+            out["PackageVersion"] = mr_receipt[receipt_entry]
+        elif receipt_entry == "InstallDate":
+            out["InstallDate"] = str(mr_receipt[receipt_entry])
+        elif receipt_entry == "PackageFileName":
+            out["PackageFileName"] = mr_receipt[receipt_entry]
+        
+    return out
+
 def main():
     '''Main'''
 
@@ -51,6 +66,8 @@ def main():
     if options.version:
         print ("MunkiReport-PHP (https://github.com/munkireport/munkireport-php)")
         print ("Version: "+get_version())
+        if os.path.isfile("/private/var/db/receipts/com.github.munkireport.plist"):
+            print ("PKG version: "+get_receipt_info()["PackageVersion"])
         exit(0)
 
     # Check to see if we're root
@@ -60,6 +77,7 @@ def main():
 
     # Print MunkiReport's current config
     if options.show_config:
+        receipt_info = get_receipt_info()
         prefs.print_config()
         print ('')
         if os.path.isfile("/usr/local/munkireport/munkireport-python3"):
@@ -70,6 +88,10 @@ def main():
         print ('          PyObjC Version: '+objc.__version__)
         print ('')
         print ('     MunkiReport Version: '+get_version())
+        if os.path.isfile("/private/var/db/receipts/com.github.munkireport.plist"):
+            print (" MunkiReport PKG Version: "+receipt_info["PackageVersion"])
+            print ("    MunkiReport PKG Name: "+receipt_info["PackageFileName"])
+            print ("MunkiReport Install Date: "+receipt_info["InstallDate"])
         print ('')
         print ('         Modules enabled: ')
         print (reportcommon.pref('ReportItems'))
