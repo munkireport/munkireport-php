@@ -17,6 +17,7 @@ import os
 import optparse
 import re
 import objc # Used only for version printing
+import shutil
 
 def get_version():
     return reportcommon.pref('Version')
@@ -90,26 +91,41 @@ def main():
 
     # Remove MunkiReport's Python 2 pkg
     if options.remove_python2:
-        if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
+        if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isdir("/Library/MunkiReport/Python.framework/Versions/2.7/"):
             reportcommon.display_detail('Removing MunkiReport\'s Python 2 installation...')
-            os.remove("/usr/local/munkireport/munkireport-python2")
-            os.rmdir("/Library/MunkiReport/Python.framework/Versions/2.7/")
+            print ('Removing MunkiReport\'s Python 2 installation...')
+            if os.path.isfile("/usr/local/munkireport/munkireport-python2"):
+                os.remove("/usr/local/munkireport/munkireport-python2")
+            if os.path.isdir("/Library/MunkiReport/Python.framework/Versions/2.7/"):
+                shutil.rmtree("/Library/MunkiReport/Python.framework/Versions/2.7/", ignore_errors=True)
             reportcommon.display_detail('Complete')
+            print ('Complete')
         else:
             reportcommon.display_detail('MunkiReport\'s Python 2 not detected')
+            print ('MunkiReport\'s Python 2 not detected')
         exit(0)
 
     # Uninstall MunkiReport
     if options.uninstall_munkireport:
         reportcommon.display_detail('Uninstalling MunkiReport...')
-        os.remove("/Library/LaunchDaemons/com.github.munkireport.runner.plist")
-        os.remove("/usr/local/munki/postflight")
-        os.remove("/usr/local/munki/report_broken_client")
-        os.remove("/var/db/receipts/com.github.munkireport.plist")
-        os.remove("/var/db/receipts/com.github.munkireport.bom")
-        os.remove("/Library/Preferences/MunkiReport.plist")
-        os.rmdir("/Library/MunkiReport/")
-        os.rmdir("/usr/local/munkireport/")
+        print ('Uninstalling MunkiReport...')
+        if os.path.isfile("/Library/LaunchDaemons/com.github.munkireport.runner.plist"):
+            os.remove("/Library/LaunchDaemons/com.github.munkireport.runner.plist")
+        if os.path.isfile("/usr/local/munki/postflight"):
+            os.remove("/usr/local/munki/postflight")
+        if os.path.isfile("/usr/local/munki/report_broken_client"):
+            os.remove("/usr/local/munki/report_broken_client")
+        if os.path.isfile("/var/db/receipts/com.github.munkireport.plist"):
+            os.remove("/var/db/receipts/com.github.munkireport.plist")
+        if os.path.isfile("/var/db/receipts/com.github.munkireport.bom"):
+            os.remove("/var/db/receipts/com.github.munkireport.bom")
+        if os.path.isfile("/Library/Preferences/MunkiReport.plist"):
+            os.remove("/Library/Preferences/MunkiReport.plist")
+        if os.path.isdir("/Library/MunkiReport/"):
+            shutil.rmtree("/Library/MunkiReport/", ignore_errors=True)
+        if os.path.isdir("/usr/local/munkireport/"):
+            shutil.rmtree("/usr/local/munkireport/", ignore_errors=True)
+        reportcommon.display_detail('Completed uninstallation of MunkiReport')
         print ('Completed uninstallation of MunkiReport')
         exit(0)
 
