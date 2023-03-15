@@ -88,7 +88,9 @@ $(document).on('appReady', function(e, lang) {
             'php.dom': data.dom ? data.dom['DOM/XML'] : false || false,
             'php.allow_url_fopen': coreVars['allow_url_fopen'] || false,
             'php.pdo': data.PDO ? data.PDO['PDO support'] : false || false,
-            'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false
+            'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false,
+            'php.post_max_size': coreVars['post_max_size'],
+            'php.upload_max_filesize': coreVars['upload_max_filesize']
         };
         for(var prop in list) {
 
@@ -109,6 +111,22 @@ $(document).on('appReady', function(e, lang) {
             }
             if(list[prop] === "On (On)"){
                 list[prop] = '<span class="label label-success">On</span>';
+            }
+            if(prop == "php.post_max_size"){
+                var post_max_size = list[prop].split('(').pop().split(')')[0];
+                if (post_max_size.replace(/\D/g, "") < 20){
+                    list[prop] = post_max_size+' — <span class="label label-warning">20M Recommended</span>';
+                } else {
+                    list[prop] = post_max_size;
+                }
+            }
+            if(prop == "php.upload_max_filesize"){
+                var upload_max_filesize = list[prop].split('(').pop().split(')')[0];
+                if (upload_max_filesize.replace(/\D/g, "") < 20){
+                    list[prop] = upload_max_filesize+' — <span class="label label-warning">20M Recommended</span>';
+                } else {
+                    list[prop] = upload_max_filesize;
+                }
             }
 
             table.append($('<tbody>')

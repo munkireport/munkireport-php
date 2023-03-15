@@ -355,7 +355,9 @@
         "pdo": "PDO Extension",
         "pdodrivers": "PDO Database drivers",
         "php": "PHP",
+        "post_max_size": "POST Max Size",
         "soap": "SOAP Extension",
+        "upload_max_filesize": "Upload Max Size",
         "version": "Version"
     },
     "physical_memory": "Memory",
