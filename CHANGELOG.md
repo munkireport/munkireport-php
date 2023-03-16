@@ -5,8 +5,10 @@ MunkiReport is now Python 3 based
 IMPORTANT CHANGES
 You will need to install Mac Admins Python 3.10 first on the client or MunkiReport will not run. Download it from [https://github.com/macadmins/python/releases/tag/v3.10.9.80716](https://github.com/macadmins/python/releases/tag/v3.10.9.80716)
 
+MunkiReport now fully supports PHP 8 and has been tested with PHP 8.2. 
+
 MODULE UPDATES
-Most modules have been updated to have a Python 3 based script. 
+All Python based modules have been updated to have a Python 3 based script. 
 
 FIXES
 - Reporting on Silicon Macs
