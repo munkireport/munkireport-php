@@ -23,6 +23,7 @@ class Modules
       'comment',
     ];
     private $skipInactiveModules = False;
+    private $widgetList;
 
     public function __construct()
     {
@@ -171,8 +172,8 @@ class Modules
 
         $this->collectModuleInfo(
             $this->moduleSearchPaths,
-            $skipInactiveModules,
-            $this->getAllowedModules($skipInactiveModules));
+            $this->getAllowedModules($skipInactiveModules),
+            $skipInactiveModules);
 
         return $this;
 
@@ -378,7 +379,7 @@ class Modules
         return '{'.implode(",\n", $localeList).'}';
     }
 
-    private function collectModuleInfo($modulePaths, $skipInactiveModules = False, $allowedModules)
+    private function collectModuleInfo($modulePaths, $allowedModules, $skipInactiveModules = False)
     {
         foreach ($modulePaths as $basePath)
         {
