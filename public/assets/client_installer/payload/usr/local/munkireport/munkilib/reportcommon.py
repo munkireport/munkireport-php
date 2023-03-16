@@ -492,7 +492,7 @@ def sendDataCurl(total_size, checkurl, serial, items, passphrase):
     if isinstance(response, bytes):
         response = response.decode('UTF-8', errors="ignore")
 
-    display_detail(response.replace("\nServer", "\n    Server"))
+    display_detail(response.replace("\n\nServer", "\nServer").replace("\nServer", "\n    Server"))
 
 
 def runExternalScriptWithTimeout(
