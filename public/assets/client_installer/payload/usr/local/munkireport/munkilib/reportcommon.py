@@ -20,6 +20,8 @@ except ImportError:
 import re
 import time
 import os
+from collections import OrderedDict
+from operator import getitem
 
 # PyLint cannot properly find names inside Cocoa libraries, so issues bogus
 # No name 'Foo' in module 'Bar' warnings. Disable them.
@@ -77,10 +79,12 @@ def finish_run():
 
     exit(0)
 
+
 def remove_run_file():
     touchfile = '/Users/Shared/.com.github.munkireport.run'
     if os.path.exists(touchfile):
         os.remove(touchfile)
+
 
 def curl(url, values):
 
@@ -358,25 +362,52 @@ def process(serial, items, ForceUpload=False):
         display_error("Response: %s" % str(server_data))
         return -1
 
-    if result.get("error", "") != "":
-        display_error("Server error: %s" % result["error"])
+    if result.get(b"error", "") != b"":
+        display_error("Server error: %s" % result[b"error"].decode('UTF-8', errors="ignore"))
         return -1
 
-    if result.get("info", "") != "":
-        display_detail("Server info: %s" % result["info"])
+    if result.get(b"info", "") != b"":
+        display_detail("Server info: %s" % result[b"info"].decode('UTF-8', errors="ignore"))
+
+    if result.get(b"upload_max_filesize", "") != b"":
+        upload_max_filesize = result[b"upload_max_filesize"]
+    else:
+        upload_max_filesize = ""
+
+    if result.get(b"post_max_size", "") != b"":
+        post_max_size = result[b"post_max_size"]
+    else:
+        post_max_size = ""
 
     # Override any module that is force updated
     if ForceUpload == "FORCE_UPLOAD_ALL":
+        display_warning("Forcing update for all modules!")
         for i in items.keys():
-            display_detail("Forcing update for all modules!")
             result[i.encode()] = 1
     elif ForceUpload:
         for i in ForceUpload.split(' '):
-            display_detail("Forcing update for %s!" % (i))
+            display_warning("Forcing update for %s!" % (i))
             result[i.encode()] = 1
+
+    # Get PHP's file size upload limitation
+    if upload_max_filesize != "" and post_max_size != "" and upload_max_filesize < post_max_size:
+        # upload_max_filesize is the limitation
+        upload_limit = upload_max_filesize
+        php_file_limitation = "upload_max_filesize"
+    elif upload_max_filesize != "" and post_max_size != "" and post_max_size < upload_max_filesize:
+        # post_max_size is the limitation
+        upload_limit = post_max_size
+        php_file_limitation = "post_max_size"
+    elif upload_max_filesize != "" and post_max_size != "" and post_max_size == upload_max_filesize:
+        # upload_max_filesize and post_max_size are the same limitation, use upload_max_filesize
+        upload_limit = upload_max_filesize
+        php_file_limitation = "upload_max_filesize"
+    else:
+        upload_limit = ""
 
     # Retrieve hashes that need updating
     total_size = 0
+    item_sizes = {}
     for i in list(items.keys()):
         if i.encode('UTF-8') in result:
             if items[i].get("path"):
@@ -392,26 +423,76 @@ def process(serial, items, ForceUpload=False):
                     del items[i]
                     continue
             size = len(items[i]["data"])
+            item_sizes[i] = {"size": size}
+            # Check if the files are smaller than PHP's file size upload limitation
+            if upload_limit != "" and upload_limit < (size+256): # Add 256KB for overhead
+                display_error("Unable to send %s, file size is too big! (%s)" % (i, sizeof_fmt(size)))
+                display_error("Must be smaller than PHP's %s of %s" % (php_file_limitation, sizeof_fmt(upload_limit)))
+                del items[i] # Remove from items and item_sizes arrays, because we can't ever upload it
+                del item_sizes[i]
+                continue
             display_detail("Need to update %s (%s)" % (i, sizeof_fmt(size)))
             total_size = total_size + size
-        else:  # delete items that don't have to be uploaded
+        else:  # Delete items that don't have to be uploaded
             del items[i]
 
     # Send new files with hashes
     if len(items):
-        display_detail("Sending items (%s)" % sizeof_fmt(total_size))
-        response = curl(
-            checkurl,
-            {"serial": serial, "items": serialize(items), "passphrase": passphrase},
-        )
 
-        # Decode response if bytes
-        if isinstance(response, bytes):
-            response = response.decode('UTF-8', errors="ignore")
+        # Check upload total data size against PHP's file size upload limitation
+        if upload_limit != "" and upload_limit < total_size:
+            display_warning("Unable to send complete data, size is too big! (%s)" % (sizeof_fmt(total_size)))
+            display_warning("Must be smaller than PHP's %s of %s" % (php_file_limitation, sizeof_fmt(upload_limit)))
+            display_detail("Chunking data uploads...")
 
-        display_detail(response)
+            item_sizes_ordered = OrderedDict(sorted(item_sizes.items(), key = lambda x: getitem(x[1], 'size')))
+
+            # Only allow 10 upload chunks
+            chunk_count = 0
+            while chunk_count < 10 and len(items) > 1:
+                chunk_count += 1
+                display_detail("Starting upload %s of 10..." % chunk_count)
+                upload_items = {}
+                upload_total_size = 0
+
+                for item in list(item_sizes_ordered):
+                    upload_total_size = upload_total_size + item_sizes[item]["size"]
+
+                    # Check if we have a small enough size to upload
+                    if upload_limit < upload_total_size:
+
+                        # If a single item is too big to upload, remove it from the list
+                        if len(upload_items) == 1 and upload_limit < upload_total_size:
+                            upload_total_size = upload_total_size - item_sizes[item]["size"]
+                            del item_sizes_ordered[item]
+                            del items[item]
+                            continue
+                        upload_total_size = upload_total_size - item_sizes[item]["size"]
+                        sendDataCurl(upload_total_size, checkurl, serial, upload_items, passphrase)
+                        break
+                    else:
+                        upload_items[item] = items[item]
+                        del item_sizes_ordered[item]
+                        del items[item]
+        else:
+            sendDataCurl(total_size, checkurl, serial, items, passphrase)
     else:
         display_detail("No changes")
+
+
+def sendDataCurl(total_size, checkurl, serial, items, passphrase):
+
+    display_detail("Sending items (%s)" % sizeof_fmt(total_size))
+    response = curl(
+        checkurl,
+        {"serial": serial, "items": serialize(items), "passphrase": passphrase},
+    )
+
+    # Decode response if bytes
+    if isinstance(response, bytes):
+        response = response.decode('UTF-8', errors="ignore")
+
+    display_detail(response.replace("\nServer", "\n    Server"))
 
 
 def runExternalScriptWithTimeout(
