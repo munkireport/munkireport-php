@@ -449,9 +449,9 @@ def process(serial, items, ForceUpload=False):
 
             # Only allow 10 upload chunks
             chunk_count = 0
-            while chunk_count < 10 and len(items) > 1:
+            while chunk_count < 10 and len(items) > 0:
                 chunk_count += 1
-                display_detail("Starting upload %s of 10..." % chunk_count)
+                display_detail("Starting upload of chunk %s..." % chunk_count)
                 upload_items = {}
                 upload_total_size = 0
 
@@ -474,6 +474,10 @@ def process(serial, items, ForceUpload=False):
                         upload_items[item] = items[item]
                         del item_sizes_ordered[item]
                         del items[item]
+
+                # Check if we've used all upload attempts, but still have remaining data
+                if chunk_count == 10 and len(items) > 0:
+                    display_warning("Unable to fully upload all data after %s chunks!" % (chunk_count))
         else:
             sendDataCurl(total_size, checkurl, serial, items, passphrase)
     else:
