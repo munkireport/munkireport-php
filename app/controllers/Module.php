@@ -17,7 +17,7 @@ class Module extends Controller
 {
     public $module = 'default';
     public $action = 'index';
-    private $moduleManager;
+    private $moduleManager, $params, $module_obj, $module_classname;
 
     public function __construct()
     {
