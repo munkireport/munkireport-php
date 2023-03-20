@@ -186,6 +186,7 @@ def main():
 
     # Check if we have a serial number, if not rerun the check
     if serial == 'NO_SERIAL':
+        hardware_info = reportcommon.get_hardware_info()
         serial = hardware_info.get('serial_number', 'NO_SERIAL')
         hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
     else:
