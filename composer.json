@@ -77,7 +77,7 @@
     "fakerphp/faker": "^1.13",
     "guzzlehttp/guzzle": "~7.0",
     "munkireport/usb": "^3.0",
-    "doctrine/dbal": "~2.5",
+    "doctrine/dbal": "~3.6",
     "munkireport/sentinelone": "^3.0",
     "munkireport/inventory": "^7.0",
     "adldap2/adldap2": "^10",
