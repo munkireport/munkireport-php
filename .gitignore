@@ -44,3 +44,6 @@ _lighthouse_ide_helper.php
 # Laravel mix / Webpack output
 public/js/*.js
 public/css/*.css
+
+# Azure Deployment Parameters
+parameters.json
