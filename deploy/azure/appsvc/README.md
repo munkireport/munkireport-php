@@ -24,3 +24,22 @@ az deployment group create \
   --template-file main.bicep \
   --parameters @parameters.json
 ```
+
+
+## Remove ##
+
+```shell 
+
+az deployment group delete \
+  --name MunkiReportPHP \
+  --resource-group MunkiReportPHPRG
+```
+
+## Generate Kudu Script for Azure App Service Build ##
+
+```shell
+
+kuduscript --php -o deploy/azure/appsvc -y
+Generating deployment script for PHP Web Site
+Generated deployment script files
+```

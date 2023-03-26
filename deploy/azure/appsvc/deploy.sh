@@ -2,7 +2,7 @@
 
 # ----------------------
 # KUDU Deployment Script
-# Version: 0.2.2
+# Version: 1.0.17
 # ----------------------
 
 # Helpers
@@ -64,39 +64,24 @@ if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
   fi
 fi
 
-# Node Helpers
-# ------------
+# PHP Helpers
+# -----------
 
-selectNodeVersion () {
-  if [[ -n "$KUDU_SELECT_NODE_VERSION_CMD" ]]; then
-    SELECT_NODE_VERSION="$KUDU_SELECT_NODE_VERSION_CMD \"$DEPLOYMENT_SOURCE\" \"$DEPLOYMENT_TARGET\" \"$DEPLOYMENT_TEMP\""
-    eval $SELECT_NODE_VERSION
-    exitWithMessageOnError "select node version failed"
-
-    if [[ -e "$DEPLOYMENT_TEMP/__nodeVersion.tmp" ]]; then
-      NODE_EXE=`cat "$DEPLOYMENT_TEMP/__nodeVersion.tmp"`
-      exitWithMessageOnError "getting node version failed"
-    fi
-
-    if [[ -e "$DEPLOYMENT_TEMP/.tmp" ]]; then
-      NPM_JS_PATH=`cat "$DEPLOYMENT_TEMP/__npmVersion.tmp"`
-      exitWithMessageOnError "getting npm version failed"
-    fi
-
-    if [[ ! -n "$NODE_EXE" ]]; then
-      NODE_EXE=node
-    fi
-
-    NPM_CMD="\"$NODE_EXE\" \"$NPM_JS_PATH\""
+initializeDeploymentConfig() {
+	if [ ! -e "$COMPOSER_ARGS" ]; then
+    COMPOSER_ARGS="--no-interaction --prefer-dist --optimize-autoloader --no-progress --no-dev --verbose"
+    echo "No COMPOSER_ARGS variable declared in App Settings, using the default settings"
   else
-    NPM_CMD=npm
-    NODE_EXE=node
+    echo "Using COMPOSER_ARGS variable declared in App Setting"
   fi
+  echo "Composer settings: $COMPOSER_ARGS"
 }
 
 ##################################################################################################################################
 # Deployment
 # ----------
+
+echo PHP deployment
 
 # 1. KuduSync
 if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
@@ -104,23 +89,21 @@ if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
   exitWithMessageOnError "Kudu Sync failed"
 fi
 
-# 2. Install Composer modules
+# 2. Verify composer installed
+hash composer 2>/dev/null
+exitWithMessageOnError "Missing composer executable"
+
+# 3. Initialize Composer Config
+initializeDeploymentConfig
+
+# 4. Use composer
+echo "$DEPLOYMENT_TARGET"
 if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
-  echo Running composer install
-  cd "$DEPLOYMENT_TARGET"
-  eval php composer.phar install
-  exitWithMessageOnError "composer failed"
-  cd - > /dev/null
+  echo "Found composer.json"
+  pushd "$DEPLOYMENT_TARGET"
+  composer install $COMPOSER_ARGS
+  exitWithMessageOnError "Composer install failed"
+  popd
 fi
-
 ##################################################################################################################################
-
-# Post deployment stub
-if [[ -n "$POST_DEPLOYMENT_ACTION" ]]; then
-  POST_DEPLOYMENT_ACTION=${POST_DEPLOYMENT_ACTION//\"}
-  cd "${POST_DEPLOYMENT_ACTION_DIR%\\*}"
-  "$POST_DEPLOYMENT_ACTION"
-  exitWithMessageOnError "post deployment action failed"
-fi
-
 echo "Finished successfully."

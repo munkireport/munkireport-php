@@ -53,28 +53,48 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
     siteConfig: {
       appSettings: [
         {
-          name: 'DB_HOST',
+          name: 'DB_CONNECTION'
+          value: 'sqlite'
+        }
+        {
+          name: 'DB_HOST'
           value: ''
-        },
+        }
         {
-          name: 'DB_DATABASE',
+          name: 'DB_DATABASE'
           value: 'munkireport'
-        },
+        }
         {
-          name: 'DB_USERNAME',
+          name: 'DB_USERNAME'
           value: 'munkireport'
-        },
+        }
         {
-          name: 'DB_PASSWORD',
+          name: 'DB_PASSWORD'
           value: ''
-        },
+        }
         {
-          name: 'APP_DEBUG',
+          name: 'APP_DEBUG'
           value: 'false'
         }
+        {
+          name: 'APP_URL'
+          value: 'https://${webAppName}.azurewebsites.net'
+        }
       ]
+      defaultDocuments: [
+        'index.php', 'index.html', 'hostingstart.html'
+      ]
+      http20Enabled: true
       linuxFxVersion: linuxFxVersion
       ftpsState: 'FtpsOnly'
+      virtualApplications: [
+        {
+          physicalPath: 'site\\\\wwwroot\\\\public'
+          preloadEnabled: false
+          virtualDirectories: null
+          virtualPath: '/'
+        }
+      ]
     }
     httpsOnly: true
   }
