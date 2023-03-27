@@ -389,6 +389,19 @@ def process(serial, items, ForceUpload=False):
             display_warning("Forcing update for %s!" % (i))
             result[i.encode()] = 1
 
+    # Decode post_max_size if bytes
+    if isinstance(post_max_size, bytes):
+        post_max_size = post_max_size.decode('UTF-8', errors="ignore")
+    # Decode upload_max_filesize if bytes
+    if isinstance(upload_max_filesize, bytes):
+        upload_max_filesize = upload_max_filesize.decode('UTF-8', errors="ignore")
+
+    # Override a value of "0" to be 100 MB
+    if upload_max_filesize == 0 or upload_max_filesize == "0":
+        upload_max_filesize = 104857600 # 100 MB in bytes
+    if post_max_size == 0 or post_max_size == "0":
+        post_max_size = 104857600 # 100 MB in bytes
+
     # Get PHP's file size upload limitation
     if upload_max_filesize != "" and post_max_size != "" and upload_max_filesize < post_max_size:
         # upload_max_filesize is the limitation
