@@ -18,7 +18,9 @@ class AdminControllerTest extends AuthorizationTestCase
      *  Using the Business Units interface in MunkiReport 5.6.5 to add a new machine group to a business unit does not
      *  invoke this endpoint. It uses /admin/save_business_unit with iteminfo[] populated using the new machine group(s).
      *
-     *  This endpoint is only used for the "Update" part of CRUD.
+     *  This endpoint is used if you either:
+     *  - Update a machine group by clicking on it and changing some detail OR
+     *  - Create an "Unassigned Group" using the Plus button at the bottom of the screen.
      *
      *  Example:
      *
