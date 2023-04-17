@@ -1,4 +1,8 @@
-<!doctype html>
+<?php /**
+ * This partial header template is kept as a backwards compatible facility for modules that were developed in v5.
+ * If developing for v6, it is preferred to use the Blade layouts.
+ */
+?><!doctype html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
