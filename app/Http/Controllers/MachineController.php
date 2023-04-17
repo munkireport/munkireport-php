@@ -22,6 +22,7 @@ class MachineController extends Controller
     public function get_duplicate_computernames(): JsonResponse
     {
         $machine = Machine::selectRaw('computer_name, COUNT(*) AS count')
+            ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
             ->filter()
             ->groupBy('computer_name')
             ->having('count', '>', 1)
@@ -42,7 +43,8 @@ class MachineController extends Controller
      **/
     public function get_model_stats(string $summary = ""): JsonResponse
     {
-        $machine = Machine::with('reportdata')->selectRaw('count(*) AS count, machine_desc AS label')
+        $machine = Machine::selectRaw('count(*) AS count, machine_desc AS label')
+            ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
             ->filter() // If the filter scope refers to columns that arent part of selectRaw, the filter just throws an error
             ->groupBy('machine_desc')
             ->orderBy('count', 'desc')
@@ -104,6 +106,7 @@ class MachineController extends Controller
     public function report($serial_number = '')
     {
         $machine = Machine::where('machine.serial_number', $serial_number)
+            ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
             ->filter('groupOnly')
             ->firstOrFail();
 
@@ -116,7 +119,9 @@ class MachineController extends Controller
     public function new_clients(): JsonResponse
     {
         $lastweek = Carbon::now()->subWeek()->unix();
-        $out = Machine::query()->select('machine.serial_number', 'computer_name', 'reg_timestamp')
+        $out = Machine::query()
+            ->select('machine.serial_number', 'computer_name', 'reg_timestamp')
+            ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
             ->where('reg_timestamp', '>', $lastweek)
             ->filter()
             ->orderBy('reg_timestamp', 'desc')
@@ -140,6 +145,7 @@ class MachineController extends Controller
 
         if ($format === 'none' || $format === 'flotr' || $format === '') {
             $physicalMemoryHistogram = Machine::histogram('physical_memory')
+                ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
                 ->filter()
                 ->orderBy('physical_memory', 'desc')
                 ->get();
@@ -182,6 +188,7 @@ class MachineController extends Controller
     {
         $out = [];
         $machine = Machine::selectRaw('machine_name, count(1) as count')
+            ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
             ->filter()
             ->groupBy('machine_name')
             ->orderBy('count', 'desc')
@@ -216,6 +223,7 @@ class MachineController extends Controller
     private function _trait_stats($what = 'os_version'): array {
         $out = [];
         $machine = Machine::selectRaw("count(1) as count, $what")
+            ->join('reportdata', 'machine.serial_number', '=', 'reportdata.serial_number')
             ->filter()
             ->groupBy($what)
             ->orderBy($what, 'desc')
