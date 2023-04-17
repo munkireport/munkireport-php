@@ -2,6 +2,7 @@
 
 namespace munkireport\lib;
 
+use Illuminate\Support\Arr;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -293,12 +294,12 @@ class Modules
     /**
      * Get information about one or all modules.
      *
-     * @param string $about
-     * @return array
+     * @param string $about The name of a module to get information about, leave empty for all modules.
+     * @return array An array of all module metadata, or just the metadata for the module name specified in the about parameter.
      */
     public function getInfo(string $about = ""): array
     {
-        if( ! $about){
+        if(!$about) {
             return $this->moduleList;
         }
 
@@ -319,7 +320,7 @@ class Modules
      * @param string $name Name of listing
      * @return bool|object
      */
-    public function getListing(string $module, string $name)
+    public function getListing(string $module, string $name): bool|object
     {
         if(isset($this->moduleList[$module]['listings'])){
             if( isset($this->moduleList[$module]['listings'][$name]['view'])) {
@@ -340,7 +341,7 @@ class Modules
      * @param string $name Name of listing
      * @return bool|object
      */
-    public function getReport(string $module, string $name)
+    public function getReport(string $module, string $name): bool|object
     {
         if(isset($this->moduleList[$module]['reports'][$name])){
             return (object) [
@@ -375,7 +376,7 @@ class Modules
      * @param string $append A string to append to the path.
      * @return false|string Returns false if the module doesnt exist.
      */
-    public function getPath(string $module, string $append = '')
+    public function getPath(string $module, string $append = ''): bool|string
     {
         // Temporary workaround which allows core modules to reside in the laravel app path, but still allows
         // mr_view to `include()` the view files.
@@ -451,7 +452,10 @@ class Modules
     public function getDropdownData(string $kind, string $baseUrl, string $page): array
     {
         $out = [];
-        foreach( $this->getInfo($kind) as $module => $kindArray){
+        $items = $this->getInfo($kind);
+        ksort($items);
+
+        foreach($items as $module => $kindArray){
             foreach($kindArray as $itemName => $itemData){
                 if(isset($itemData['hide_from_menu']) && $itemData['hide_from_menu']){
                     continue;
