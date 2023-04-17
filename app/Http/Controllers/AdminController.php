@@ -151,7 +151,27 @@ class AdminController extends Controller
     //===============================================================
 
     /**
-     * Save Business Unit
+     * Save Business Unit.
+     *
+     * @param Request $request The HTTP POST request, in the shape shown in the example
+     *
+     * Accepts a HTTP POST of form-encoded data in the following format
+     *
+     * @code
+     * name=Example Business Unit
+     * unitid=1
+     * groupid=1
+     * key=<GUID Value>
+     * address=123 somewhere street
+     * link=URL to this
+     * users[]=<array of user names or @user_groups>
+     * managers[]=<same array format>
+     * archivers[]=<same array format>
+     * machine_groups[]=<array of machine group IDs>
+     * iteminfo[x][key]=<create machine group, empty key = new ???>
+     * iteminfo[x][name]=<create machine group name>
+     * @endcode
+     *
      **/
     public function save_business_unit(Request $request): JsonResponse
     {
@@ -159,7 +179,8 @@ class AdminController extends Controller
 
         $unit = new BusinessUnit();
         $out = $unit->saveUnit($request->all([
-            'unitid', 'name', 'address', 'link', 'iteminfo', 'managers', 'archivers', 'users'
+            'unitid', 'name', 'address', 'link', 'managers', 'archivers', 'users', 'groupid', 'key', 'keys', 'machine_groups',
+            'iteminfo' // Contains an array of new machine groups to be created
         ]));
 
         return response()->json($out);
