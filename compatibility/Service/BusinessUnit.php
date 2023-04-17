@@ -25,6 +25,9 @@ class BusinessUnit
      * * link: url
      * * machine_groups[]: array of machine group id as string
      * * users[], managers[], archivers[]: array of username or @group as string
+     * * iteminfo[name, key]: array of machine groups to create or update
+     *
+     * A literal value of '#' where an array should be denotes an intentionally empty value (?)
      *
      * @param array $post_array Business unit attributes/properties
      * @return array The updated Business unit, or error message to display.
@@ -59,7 +62,17 @@ class BusinessUnit
         return $out;
     }
 
-    private function _updateMachineGroups(&$post_array)
+    /**
+     * Create/update machine groups for a business unit (v5).
+     * Some other screens make use of /admin/save_machine_group to update detail.
+     *
+     * The $post_array parameter is taken by reference so that it can be modified in-place for output.
+     *
+     * @since v6 - also accepts a NULL key if creating a machine group
+     * @param array &$post_array form data from /admin/save_business_unit
+     * @return void
+     */
+    private function _updateMachineGroups(array &$post_array): void
     {
         $post_array['machine_groups'] = [];
 
@@ -71,7 +84,7 @@ class BusinessUnit
         // Loop through iteminfo
         foreach ($post_array['iteminfo'] as $entry) {
             // No key, create new
-            if ($entry['key'] === '') {
+            if ($entry['key'] === '' || is_null($entry['key'])) {
                 $post_array['machine_groups'][] = $this->_createMachineGroup($entry);
             } else {
                 // Add key to list
@@ -80,7 +93,15 @@ class BusinessUnit
         }
     }
 
-    private function _createMachineGroup($entry)
+    /**
+     * Create a new machine group (v5)
+     *
+     * For compatibility with v5 business units / machine groups
+     *
+     * @param array $entry Associative array containing keys for 'name' (machine group name) and 'key' which is discarded.
+     * @return int The machine group ID of the created machine group.
+     */
+    private function _createMachineGroup(array $entry): int
     {
         $mg = new Machine_group;
         $newgroup = $mg->get_max_groupid() + 1;
