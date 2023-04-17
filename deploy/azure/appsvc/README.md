@@ -3,6 +3,7 @@
 ## Prerequisites ##
 
 - Az CLI with bicep installed
+- The container must trust the MySQL Flexible Server CA via setting CONNECTION_SSL_CA
 
 ## Deploy ##
 
