@@ -12,17 +12,6 @@ use munkireport\lib\Widgets;
 abstract class ModuleServiceProvider extends ServiceProvider
 {
     /**
-     * Register the given path location as providing scripts for this module.
-     *
-     * @param  string  $path
-     * @return void
-     */
-//    protected function loadScriptsFrom($path)
-//    {
-//
-//    }
-
-    /**
      * Register the package's custom widgets.
      *
      * Widgets should be an array of arrays which have the following metadata structure:
@@ -47,14 +36,4 @@ abstract class ModuleServiceProvider extends ServiceProvider
             }
         });
     }
-
-//    protected function loadListingsFrom()
-//    {
-//
-//    }
-//
-//    protected function loadReportsFrom()
-//    {
-//
-//    }
 }
