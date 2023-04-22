@@ -1,9 +1,9 @@
 import i18next from "i18next";
+import type {InitOptions} from "i18next";
 import { createI18nStore } from "svelte-i18next";
 import Fetch from 'i18next-fetch-backend';
 
-
-i18next.use(Fetch).init({
+const options: InitOptions = {
   lng: 'en',
   fallbackLng: 'en',
   ns: ['translation', 'event'],
@@ -17,7 +17,9 @@ i18next.use(Fetch).init({
     prefix: '__',
     suffix: '__',
   }
-});
+}
+
+i18next.use(Fetch).init(options);
 
 export const i18n = createI18nStore(i18next);
 
