@@ -4,6 +4,7 @@ import laravel from 'laravel-vite-plugin';
 import gql from 'vite-plugin-simple-gql';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import {svelte} from '@sveltejs/vite-plugin-svelte';
 
 
 export default defineConfig({
@@ -12,13 +13,16 @@ export default defineConfig({
             input: ['resources/js/app.js', 'resources/sass/app.scss'],
             refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
+        // vue({
+        //     template: {
+        //         transformAssetUrls: {
+        //             base: null,
+        //             includeAbsolute: false,
+        //         },
+        //     },
+        // }),
+        svelte({
+
         }),
         gql(),
         basicSsl(),
@@ -133,8 +137,8 @@ export default defineConfig({
         }
     },
     server: {
-        // Unfortunately if you develop with a PHP server running on a different port, you will hit CORS issues
-        // so we blanket allow (dangerous in production but not in dev)
+        // Unfortunately if you develop with a PHP server running on a different port, you will hit CORS issues.
+        // So we blanket allow (dangerous in production but not in dev)
         cors: {
             origin: true
         }

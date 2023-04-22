@@ -1,13 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use http\Exception\BadMessageException;
+use Inertia\Inertia;
 
 class UsersController extends Controller
 {
     public function index()
     {
-        return view('users.index');
+        Inertia::setRootView('layouts.inertia');
+        return Inertia::render('Users/Index');
     }
 }

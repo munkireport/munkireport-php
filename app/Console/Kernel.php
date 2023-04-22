@@ -20,6 +20,10 @@ class Kernel extends ConsoleKernel
 //        Commands\SeedCommand::class,
         Commands\PasswordResetCommand::class,
         Commands\UserCreateCommand::class,
+        Commands\UserListCommand::class,
+        Commands\UserResetPasswordCommand::class,
+        Commands\UserResetLinkCommand::class,
+        Commands\UserUpdateRoleCommand::class,
     ];
 
     /**

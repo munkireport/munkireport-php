@@ -2,10 +2,12 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "typesafe-i18n": "typesafe-i18n"
   },
   "dependencies": {
-    "@vue/apollo-option": "^4.0.0-alpha.20",
+    "@inertiajs/inertia": "^0.11.1",
+    "@inertiajs/svelte": "^1.0.5",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
@@ -31,25 +33,22 @@
     "nvd3": "^1.8.6",
     "popper.js": "^1.16.1",
     "sass": "^1.48.0",
+    "svelte": "^3.58.0",
+    "svelte-i18next": "^1.2.2",
+    "sveltestrap": "^4.2.1",
     "typeahead.js": "^0.11.1",
-    "typescript": "^4.5.4",
+    "typescript": "^4.9.5",
     "uiv": "^1.4.1",
-    "vue": "^3.2.25",
-    "vue-apollo": "^3.0.0-beta.11",
-    "vue-grid-layout": "^2.3.12",
-    "vue-i18n": "^9.2.2",
-    "vue-router": "^4.0.0",
-    "vue-typeahead-bootstrap": "^2.12.0",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@vitejs/plugin-basic-ssl": "^0.1.2",
-    "@vitejs/plugin-vue": "^3.1.2",
     "axios": "^0.27",
-    "laravel-vite-plugin": "^0.6.0",
+    "laravel-vite-plugin": "^0.6.1",
     "lodash": "^4.17.19",
     "postcss": "^8.1.14",
-    "vite": "^3.0.0",
+    "vite": "^3.2.6",
     "vite-plugin-simple-gql": "^0.5.0",
     "vite-plugin-static-copy": "^0.9.0"
   }

@@ -30,8 +30,29 @@ Follow the link to reset the admin account (the default e-mail address of this a
 
 ### Rescue admin credentials
 
-You cannot currently rescue/recover admin creds.
-This is a work in progress. See [Issue #1492](https://github.com/munkireport/munkireport-php/issues/1492)
+If you can execute commands in your hosting environment you can use the `user:reset-password` and `user:reset-link` commands
+to reset a password for the admin user or any other user.
+
+**To reset a password by typing credentials**:
+
+```shell 
+php please user:reset-password admin@localhost
+
+ Password?:
+ >
+
+ Confirm Password?:
+ >
+
+Password is updated!
+```
+
+**To reset a password using a link that you can share with a recipient**:
+
+```shell 
+php please user:reset-link admin@localhost
+The user, `admin@localhost`, may reset their password at https://localhost/password/reset/1234567ABCDEFGHI
+```
 
 ### Create more users
 
@@ -56,8 +77,18 @@ The created user will default to the **user** role (the lowest level of privileg
 
 ### Update a users role
 
-You cannot currently update the role of a user except by issuing `UPDATE` statements to the database.
-This is a work in progress.
+You can update a local users role by using the `user:update-role` command
+
+```shell 
+php please user:update-role another@localhost
+
+ What global role should this user have? [user]:
+  [0] user
+  [1] admin
+ > 1
+
+Updated another@localhost with role `admin`
+```
 
 ### Update user details (name, locale etc)
 
