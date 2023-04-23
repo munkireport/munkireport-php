@@ -7,6 +7,7 @@ const options: InitOptions = {
   lng: 'en',
   fallbackLng: 'en',
   ns: ['translation', 'event'],
+  fallbackNS: 'event',
   backend: {
     loadPath: '/locales/__lng__/__ns__.json',
     allowMultiLoading: false,
