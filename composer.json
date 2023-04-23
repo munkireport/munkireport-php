@@ -36,6 +36,7 @@
         "anhskohbo/no-captcha": "^3.3",
         "bordoni/phpass": "^0.3",
         "composer/composer": "^2.2",
+        "darkaonline/l5-swagger": "^8.5",
         "defuse/php-encryption": "^2.1",
         "doctrine/dbal": "^2.10",
         "erusev/parsedown": "^1.7",
@@ -116,7 +117,8 @@
         "symfony/yaml": "^5.4",
         "teamtnt/laravel-scout-tntsearch-driver": "^11.5",
         "wikimedia/composer-merge-plugin": "^2.0",
-        "xkerman/restricted-unserialize": "^1.1"
+        "xkerman/restricted-unserialize": "^1.1",
+        "zircote/swagger-php": "^4.7"
     },
     "autoload": {
         "classmap": [],
