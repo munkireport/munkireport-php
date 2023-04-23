@@ -87,4 +87,4 @@ mix.js('resources/js/app.js', 'public/js')
   .sourceMaps();
 
 // For routes which still have jQuery, but want to use Vue components
-mix.js('resources/js/mixed-app.js', 'public/js').vue();
+//mix.js('resources/js/mixed-app.js', 'public/js').vue();
