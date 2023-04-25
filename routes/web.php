@@ -1,8 +1,5 @@
 <?php
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +11,6 @@ use Illuminate\Support\Str;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Users cannot self-register
-Auth::routes(['register' => false]);
 
 Route::get('/oauth2/redirect/{provider}',
     [\App\Http\Controllers\Auth\Oauth2Controller::class, 'redirect'])->name('oauth2_redirect');
