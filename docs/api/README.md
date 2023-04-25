@@ -17,3 +17,12 @@ $ curl --cookie "munkireport_60_session=<sessiontoken>" \
   https://localhost/module/disk_report/get_stats
 
 ```
+
+## GraphQL ##
+
+Some core models are available for query at the GraphQL endpoint `/graphql` provided by [Lighthouse](https://lighthouse-php.com/).
+
+Additionally, if you installed the dev requirements, there is a playground app automatically installed for you to play
+around with GraphQL queries at `/graphql-playground`.
+
+

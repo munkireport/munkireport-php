@@ -122,4 +122,14 @@ class ClientsController extends Controller
         return view("clients.detail", $data);
 
     }
+
+    /**
+     * Show a basic page guiding the admin to install a client.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|null
+     */
+    public function install()
+    {
+        return view('clients.install');
+    }
 }

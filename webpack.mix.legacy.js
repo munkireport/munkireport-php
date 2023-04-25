@@ -80,11 +80,11 @@ mix.scripts([
 
 
 // For routes which are completely Single-Page App (Completely controlled by VueJS)
-mix.js('resources/js/app.js', 'public/js')
-  .extract()
-  .sass('resources/sass/app.scss', 'public/css')
-  .vue().graphql()
-  .sourceMaps();
+// mix.js('resources/js/app.js', 'public/js')
+//   .extract()
+//   .sass('resources/sass/app.scss', 'public/css')
+//   .vue().graphql()
+//   .sourceMaps();
 
 // For routes which still have jQuery, but want to use Vue components
 //mix.js('resources/js/mixed-app.js', 'public/js').vue();

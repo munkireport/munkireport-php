@@ -27,6 +27,7 @@ Route::redirect('/', '/show/dashboard/default');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/clients', 'ClientsController@index');
+    Route::get('/clients/install', 'ClientsController@install');
     Route::get('/clients/detail/{sn?}', 'ClientsController@detail');
     Route::get('/clients/get_data/{serial_number?}', 'ClientsController@get_data');
     Route::get('/clients/get_links', 'ClientsController@get_links');
@@ -83,21 +84,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
     Route::get('/show/report/{report}/{action}', 'ShowController@report');
-    Route::get('/show/kiss_layout', 'ShowController@kiss_layout');
+    Route::get('/show/kiss_layout', 'ShowController@kiss_layout'); // For comparison of head.php/foot.php against blade layouts eg. mr.blade.php
 
     Route::get('/me', 'MeController@index');
     Route::get('/me/tokens', 'MeController@tokens');
+    Route::get('/me/profile', 'MeController@profile');
 
     Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
-
-    // SPA Landing site
-    Route::get('/app', 'AppController@index');
 
     if (config('_munkireport.alpha_features.dashboards', false)) {
         Route::get('/dashboards/{slug?}', 'DashboardsController@index');
     }
 
     //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
+
+    // Laravel JetStream-Alike Grafting
+//    Route::get('/user/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])
+//        ->name('profile.show');
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.
