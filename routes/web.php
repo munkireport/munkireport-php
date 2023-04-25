@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\Oauth2Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/oauth2/redirect/{provider}',
-    [\App\Http\Controllers\Auth\Oauth2Controller::class, 'redirect'])->name('oauth2_redirect');
+    [Oauth2Controller::class, 'redirect'])->name('oauth2_redirect');
 Route::get('/oauth2/callback/{provider}',
-    [\App\Http\Controllers\Auth\Oauth2Controller::class, 'callback'])->name('oauth2_callback');
+    [Oauth2Controller::class, 'callback'])->name('oauth2_callback');
 
 Route::redirect('/', '/show/dashboard/default');
 
