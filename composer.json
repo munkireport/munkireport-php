@@ -44,6 +44,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.6.9",
         "laravel-notification-channels/microsoft-teams": "^1.1",
+        "laravel/fortify": "^1.17",
         "laravel/framework": "^9.0",
         "laravel/legacy-factories": "^1.1",
         "laravel/sanctum": "^2.14",
