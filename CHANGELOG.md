@@ -1,4 +1,10 @@
-### [6.0.0-beta.2](https://github.com/munkireport/munkireport-php/compare/v5.6.5...wip) (Jan 15, 2022)
+### [6.0.0-beta.3](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.3...wip) (Unreleased)
+
+- Theme and Language settings are moved into the user profile to make search bar more prominent.
+- Migrate local user authentication from laravel/ui package to laravel/fortify package
+
+
+### [6.0.0-beta.2](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.2...wip) (Jan 15, 2022)
 
 - Machine, ReportData, Tag, and Comment modules will be folded back into the core project to allow
 for tighter integration with the API.
@@ -18,7 +24,7 @@ DEPENDENCY UPDATES
 - Laravel 8.x
 - Bootstrap 4 (Technically Beta 1)
 
-### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v5.6.2...wip) (May 21, 2021)
+### [6.0.0-beta.1](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.1...wip) (May 21, 2021)
 
 *** COMPLETE REWRITE BETA VERSION - FOR TESTING ONLY ***
 
