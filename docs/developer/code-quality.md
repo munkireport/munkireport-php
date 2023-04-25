@@ -10,6 +10,12 @@ The following packages are part of the MunkiReport PHP Code Quality Stack:
 * PHPUnit, for unit and feature tests
 * PHP_CodeSniffer, for standardising code style
 
+To run all quality tools:
+
+```shell 
+./vendor/bin/phpstan analyse --memory-limit=2G
+
+```
 
 ## Frontend
 
