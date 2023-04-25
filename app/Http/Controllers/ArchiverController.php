@@ -8,6 +8,14 @@ use Illuminate\Support\Carbon;
 
 class ArchiverController extends Controller
 {
+    /**
+     * Archive or Unarchive a single machine.
+     *
+     * @param Request $request
+     * @param string $serial_number
+     * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update_status(Request $request, string $serial_number): JsonResponse
     {
         $reportData = ReportData::where('serial_number', $serial_number)->firstOrFail();
@@ -23,6 +31,13 @@ class ArchiverController extends Controller
         return response()->json(['updated' => intval($request->post('status'))]);
     }
 
+    /**
+     * Archive machines that have been inactive for a given number of days or greater.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function bulk_update_status(Request $request): JsonResponse
     {
         $this->authorize('archive_bulk', ReportData::class);

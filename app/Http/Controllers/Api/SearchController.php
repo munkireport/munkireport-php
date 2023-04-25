@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     /**
-     * Free-text search a specific Eloquent Model.
+     * Free-text search a specific Eloquent Model (using Laravel Scout).
      *
      * The model must use the Searchable trait to be searchable, and the model must
      * already be indexed (via CLI or via API).

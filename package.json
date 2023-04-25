@@ -13,7 +13,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^4.6.2",
     "bootstrap-4-autocomplete": "^1.3.2",
     "bootstrap-markdown": "^2.10.0",
     "bootstrap-tagsinput": "^0.7.1",

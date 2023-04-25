@@ -1,4 +1,11 @@
-<!doctype html>
+{{--
+
+MunkiReport SPA Layout
+
+This layout was used where the frontend was using pure Vue components on top of the static HTML navigation.
+It may be deleted.
+
+--}}<!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">

@@ -69,3 +69,9 @@ class_alias('Compatibility\Machine_group', '\munkireport\models\Machine_group');
 
 
 class_alias('App\Event', '\munkireport\models\Event_model');
+
+/**
+ * Shim the cache model for `supported_os` module.
+ */
+class_alias('App\Cache', '\munkireport\models\Cache');
+
