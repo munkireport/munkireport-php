@@ -15,7 +15,7 @@ It may be deleted.
     <meta name=apple-mobile-web-app-capable content=yes>
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    <title>{{ config('app.name', 'MunkiReport') }} ALPHA</title>
+    <title>{{ config('app.name', 'MunkiReport') }}</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">

@@ -297,6 +297,9 @@
         "admin": {
             "business_units": "Manage Business Units"
         },
+        "api": {
+            "documentation": "API Documentation"
+        },
         "lang": {
             "de": "Deutsch",
             "en": "English",
@@ -314,6 +317,7 @@
         },
         "user": {
             "logout": "Sign Off",
+            "profile": "My Profile",
             "tokens": "My API Tokens"
         }
     },

@@ -65,9 +65,9 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             //
             'appName' => config('app.name'),
-            'dashboards' => $dashboard->getDropdownData('app/show/dashboard', 'dashboard'),
-            'reports' => $modules->getDropdownData('reports', 'app/show/report', ''),
-            'listings' => $modules->getDropdownData('listings', 'app/show/listing', ''),
+            'dashboards' => $dashboard->getDropdownData('/show/dashboard', 'dashboard'),
+            'reports' => $modules->getDropdownData('reports', '/show/report', ''),
+            'listings' => $modules->getDropdownData('listings', '/show/listing', ''),
             'admin' => $admin_pages_legacy + $admin_pages_v5,
             'user' => $request->user(),
             'locales' => $locales,
