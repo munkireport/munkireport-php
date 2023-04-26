@@ -82,7 +82,14 @@ The function `$this->widgets()` registers each widget that has the `'version' =>
 dynamically loaded in any context that uses blade components (Like the dashboard).
 
 
-## How v5 Widget Compatibility is Provided
+## How v5 Widget Compatibility is Provided in v6
 
-(TODO) Describe how we have blade components which provide backwards compatibility for .yaml defined widgets in v5 modules.
+In the dashboard view, each widget is dynamically included by using [Blade Dynamic Components](https://laravel.com/docs/9.x/blade#dynamic-components).
 
+v5 had already established that you could provide a .yaml file describing your widget as long as the widget fell into some pre-defined
+widget types.
+
+In v6, the method `\munkireport\lib\Widgets::getComponent()` is added to map a widget type (declared in yaml) to a blade component, which provides
+a way for v6 to generate blade components out of v5 widget definitions.
+
+(TODO) describe .php widget support <= 5.x

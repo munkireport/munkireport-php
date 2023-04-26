@@ -2,8 +2,6 @@
 MunkiReport
 ===============
 
-master: [![Build Status](https://travis-ci.org/munkireport/munkireport-php.svg?branch=master)](https://travis-ci.org/munkireport/munkireport-php)  wip: [![Build Status](https://travis-ci.org/munkireport/munkireport-php.svg?branch=wip)](https://travis-ci.org/munkireport/munkireport-php)
-
 MunkiReport is a reporting client for macOS. While originally dependent on [Munki](https://github.com/munki/munki/), MunkiReport is now able to run stand-alone or to be coupled with Munki, Jamf or other macOS management solutions.
 
 ![Dashboard view](https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png)

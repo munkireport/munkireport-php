@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Oauth2Controller;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,7 +84,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/me', 'MeController@index');
     Route::get('/me/tokens', 'MeController@tokens');
-    Route::get('/me/profile', 'MeController@profile');
 
     Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
 
@@ -94,8 +94,8 @@ Route::middleware(['auth'])->group(function () {
     //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
 
     // Laravel JetStream-Alike Grafting
-//    Route::get('/user/profile', [\App\Http\Controllers\UserProfileController::class, 'show'])
-//        ->name('profile.show');
+    Route::get('/user/profile', [UserProfileController::class, 'show'])
+        ->name('profile.show');
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.
