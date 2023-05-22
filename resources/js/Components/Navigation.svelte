@@ -123,10 +123,12 @@
                     <DropdownItem href="/me/tokens">{$i18n.t('nav.user.tokens')}</DropdownItem>
                     <DropdownItem href="/api/documentation">{$i18n.t('nav.api.documentation')}</DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>
-                        <FontAwesomeIcon icon={faPowerOff} />
-                        {$i18n.t('nav.user.logout')}
-                    </DropdownItem>
+                    <form method="POST" action="/logout">
+                        <DropdownItem tag="button" type="submit">
+                            <FontAwesomeIcon icon={faPowerOff} />
+                            {$i18n.t('nav.user.logout')}
+                        </DropdownItem>
+                    </form>
                 </DropdownMenu>
             </Dropdown>
         </Nav>

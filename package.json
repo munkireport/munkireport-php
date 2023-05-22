@@ -39,6 +39,7 @@
     "nvd3": "^1.8.6",
     "popper.js": "^1.16.1",
     "svelte": "^3.58.0",
+    "svelte-grid": "^5.1.1",
     "svelte-i18next": "^1.2.2",
     "sveltestrap": "^4.2.1",
     "typeahead.js": "^0.11.1",

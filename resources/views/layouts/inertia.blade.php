@@ -27,7 +27,6 @@ Depending on whether this is successful it may be renamed.
     <meta name="msapplication-config" content="{{ asset('assets/images/favicons/browserconfig.xml') }}">
     <meta name="theme-color" content="#5d5858">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/themes/' . session('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
 
     <!-- munkireport.custom_css -->
@@ -55,15 +54,13 @@ Depending on whether this is successful it may be renamed.
     <!-- Styles -->
     @if (config('frontend.css.use_cdn', false))
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.13.4/b-2.3.6/b-html5-2.3.6/b-print-2.3.6/datatables.min.css"/>
     @else
         <!-- bootstrap.min.js is loaded locally using the `Default` theme -->
-        <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('assets/css/buttons.bootstrap4.min.css') }}" />
     @endif
 
     @vite('resources/js/app.ts')
     @inertiaHead
+    @routes
 </head>
 <body class="mr-inertia-layout">
     @inertia

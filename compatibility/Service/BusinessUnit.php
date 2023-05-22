@@ -10,6 +10,83 @@ use Illuminate\Support\Str;
  *
  * Because v5 Business Units are not row based models (they are more like lookup tables), this class is used
  * to assemble/disassemble them into the model updates.
+ *
+ * This is not the actual schema below, but the most common representation in the REST API
+ *
+ * @OA\Schema(
+ *  schema="BusinessUnit",
+ *  description="Business Unit v5",
+ *  type="object",
+ *  @OA\Property(
+ *      property="users",
+ *      type="array",
+ *      description="A list of users and groups with the user role (denoted by @ prefix). A literal value of hash `#` means empty array",
+ *      @OA\Items(
+ *          type="string"
+ *      )
+ *  ),
+ *  @OA\Property(
+ *      property="managers",
+ *      type="array",
+ *      description="A list of users and groups with the manager role. A literal value of hash `#` means empty array",
+ *      @OA\Items(
+ *          type="string"
+ *      )
+ *  ),
+ *  @OA\Property(
+ *      property="archivers",
+ *      type="array",
+ *      description="A list of users and groups with the archiver role. A literal value of hash `#` means empty array",
+ *      @OA\Items(
+ *          type="string"
+ *      )
+ *  ),
+ *  @OA\Property(
+ *      property="machine_groups",
+ *      type="array",
+ *      description="A list of machine group IDs that are part of this business unit",
+ *      @OA\Items(
+ *          type="integer",
+ *          format="int32",
+ *          description="machine group id",
+ *      )
+ *  ),
+ *  @OA\Property(
+ *      property="name",
+ *      type="string",
+ *      description="The name of the business unit",
+ *      example="Sales and Marketing",
+ *  ),
+ *  @OA\Property(
+ *      property="unitid",
+ *      type="integer",
+ *      format="int32",
+ *      description="Business Unit ID",
+ *  ),
+ *  @OA\Property(
+ *      property="address",
+ *      type="string",
+ *      description="Street address",
+ *  ),
+ *  @OA\Property(
+ *      property="link",
+ *      type="string",
+ *      format="url",
+ *      description="URL",
+ *  ),
+ *  @OA\Property(
+ *      property="groupid",
+ *      type="string",
+ *      description="groupid",
+ *      example="1",
+ *  ),
+ *  @OA\Property(
+ *      property="key",
+ *      type="string",
+ *      format="uuid",
+ *      description="A machine group key associated with the business unit",
+ *  ),
+ * )
  */
 class BusinessUnit
 {

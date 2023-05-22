@@ -21,8 +21,17 @@ class UserProfileController extends Controller
     public function show(Request $request)
     {
         Inertia::setRootView('layouts.inertia');
+
+        $locales = [];
+        foreach (scandir(PUBLIC_ROOT.'assets/locales') AS $list_url) {
+            if (strpos($list_url, 'json')) {
+                $locales[] = strtok($list_url, '.');
+            }
+        }
+
         return Inertia::render('Profile/Show', [
             'sessions' => $this->sessions($request)->all(),
+            'locales' => $locales,
         ]);
     }
 

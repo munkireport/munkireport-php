@@ -196,19 +196,7 @@ $page = url()->current();
             <!-- navbar-right -->
             <div class="navbar-nav ml-auto">
                 @if(config('_munkireport.alpha_features.search', false))
-                <form class="form-inline my-2 my-lg-0 mr-2">
-                    <li class="dropdown" data-reference="parent">
-                        <div class="search-results dropdown-menu">
-                            <a class="dropdown-item" href="#">No results</a>
-                        </div>
-                    </li>
-                    <div class="input-group">
-                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="button-search"><i class="fa fa-search"></i></button>
-                        </div>
-                    </div>
-                </form>
+                <div id="hybrid-search"></div>
                 @endif
 
                 <li class="dropdown">
@@ -363,5 +351,6 @@ $page = url()->current();
 </script>
 
 @stack('scripts')
+@vite('resources/js/app-hybrid.ts')
 </body>
 </html>
