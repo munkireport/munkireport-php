@@ -5,7 +5,7 @@
 
 <div>
     <Navigation />
-    <main style="padding-top: 3rem;">
+    <main style="padding-top: 56px;">
         <slot></slot>
     </main>
     <Footer/>

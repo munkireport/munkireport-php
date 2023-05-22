@@ -234,7 +234,7 @@ function authorized(?string $what = null)
  * @author
  * @todo This has not been converted to Laravel at all, the functionality is missing.
  **/
-function authorized_for_serial(string $serial_number)
+function authorized_for_serial(string $serial_number): bool
 {
     // Make sure the reporting script is authorized
     if (isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report') {
@@ -251,6 +251,7 @@ function authorized_for_serial(string $serial_number)
 /**
  * Get machine_group
  *
+ * @deprecated unused, marked for deprecation
  * @return integer computer group
  * @author AvB
  **/
@@ -259,8 +260,8 @@ function get_machine_group(string $serial_number = '')
     if (!isset($GLOBALS['machine_groups'][$serial_number])) {
         $machine_group = \App\ReportData::select('machine_group')
             ->where('serial_number', $serial_number)
-            ->pluck('machine_group')
-            ->first();
+            ->first()
+            ->pluck('machine_group');
         $GLOBALS['machine_groups'][$serial_number] = $machine_group;
     }
 

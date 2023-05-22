@@ -18,17 +18,19 @@ class SearchController extends Controller
      * @param string $model
      * @param string $query
      */
-    public function searchModel(string $model, string $query) {
+    public function searchModel(string $model, string $query, int $limit = 10) {
         $searchResults = [];
 
         // This seemingly insane switch block is to prevent arbitrary access to models with passwords
-        switch ($model) {
-            case 'Machine':
-                $searchResults = Machine::search($query)->get();
+        switch (strtolower($model)) {
+            case 'machine':
+                $searchResults = Machine::search($query)->get()->take($limit);
                 break;
-            case 'ReportData':
-                $searchResults = ReportData::search($query)->get();
+            case 'reportdata':
+                $searchResults = ReportData::search($query)->get()->take($limit);
                 break;
+            default:
+                abort(404, "No valid model name specified for search query");
         }
 
         return $searchResults;

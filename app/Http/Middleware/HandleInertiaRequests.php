@@ -55,13 +55,6 @@ class HandleInertiaRequests extends Middleware
 
         $admin_pages_v5 = $modules->getDropdownData('admin_pages', 'module', '');
 
-        $locales = [];
-        foreach (scandir(PUBLIC_ROOT.'assets/locales') AS $list_url) {
-            if (strpos($list_url, 'json')) {
-                $locales[] = strtok($list_url, '.');
-            }
-        }
-
         return array_merge(parent::share($request), [
             //
             'appName' => config('app.name'),
@@ -70,7 +63,6 @@ class HandleInertiaRequests extends Middleware
             'listings' => $modules->getDropdownData('listings', '/show/listing', ''),
             'admin' => $admin_pages_legacy + $admin_pages_v5,
             'user' => $request->user(),
-            'locales' => $locales,
         ]);
     }
 }

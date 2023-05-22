@@ -96,3 +96,14 @@ feature of the adldap2-laravel package. The feature has been re-added via the `R
 
 ## Authorization ##
 
+### object-level authz ###
+
+In MunkiReport v5 you could not get data, tags, or comments for a client that was not part of a machine group
+you could see, unless you were an admin.
+
+Also, you could not delete, get, or list data associated with a serial number that didnt exist in your machine groups.
+
+Laravel can support two types of authorization, [Gates](https://laravel.com/docs/9.x/authorization#gates) and [Policies](https://laravel.com/docs/9.x/authorization#creating-policies).
+
+Gates are a wrapper around a particular action, but policies deal with instances of things.
+

@@ -23,6 +23,64 @@ class ClientsController extends Controller
     /**
      * Get some data for serial_number
      *
+     * @OA\Get(
+     *   path="/clients/get_data/{serial_number}",
+     *   summary="Get data for a single client",
+     *   tags={"internal-v5-clients"},
+     *   @OA\Parameter(
+     *     name="serial_number",
+     *     in="path",
+     *     description="Serial number of the machine to fetch",
+     *     required=true,
+     *   ),
+     *   @OA\Response(
+     *     response="403",
+     *     description="not authorized",
+     *     @OA\JsonContent(
+     *       @OA\Property(
+     *         property="error",
+     *         type="string",
+     *         description="error message",
+     *       )
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="successful operation",
+     *     @OA\JsonContent(
+     *       type="array",
+     *       @OA\Items(
+     *         type="object",
+     *         @OA\Property(
+     *           property="computer_name",
+     *           type="string",
+     *           description="computer name unqualified",
+     *         ),
+     *         @OA\Property(
+     *           property="remote_ip",
+     *           type="string",
+     *           description="IP address that contacted munkireport to send the data",
+     *         ),
+     *         @OA\Property(
+     *           property="status",
+     *           type="number",
+     *           description="number representing the archival status of the client",
+     *         ),
+     *         @OA\Property(
+     *           property="ipv4ip",
+     *           type="string",
+     *           description="IPv4 address of the client",
+     *         ),
+     *         @OA\Property(
+     *           property="ipv6ip",
+     *           type="string",
+     *           description="IPv6 address of the client",
+     *         ),
+     *       )
+     *     )
+     *   )
+     * )
+     *
      * @author AvB
      **/
     public function get_data(string $serial_number): JsonResponse

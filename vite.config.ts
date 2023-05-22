@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path'
 import laravel from 'laravel-vite-plugin';
 import gql from 'vite-plugin-simple-gql';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
@@ -39,6 +40,18 @@ export default defineConfig({
         // So we blanket allow (dangerous in production but not in dev)
         cors: {
             origin: true
+        }
+    },
+    build: {
+        rollupOptions: {
+            input: {
+                // This entry point is for full SPA
+                app: resolve(__dirname, 'resources/js/app.ts'),
+
+                // This entry point for hybrid jQuery/Svelte pages where Svelte is only used on part of the page eg.
+                // For the search box
+                hybrid: resolve(__dirname, 'resources/js/app-hybrid.ts'),
+            }
         }
     }
 });

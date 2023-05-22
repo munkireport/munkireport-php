@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         Commands\UserResetPasswordCommand::class,
         Commands\UserResetLinkCommand::class,
         Commands\UserUpdateRoleCommand::class,
+        Commands\BusinessUnitsMigrateV2Command::class,
     ];
 
     /**

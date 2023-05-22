@@ -59,11 +59,12 @@ class Oauth2Controller extends Controller
 
         $user = Socialite::driver('azure')->user();
 
-        $databaseUser = User::where('objectguid', $user->getId())->first();
+        $databaseUser = User::where('email', $user->getEmail())->first();
         if ($databaseUser) {
             $databaseUser->update([
                 'email' => $user->getEmail(),
                 'display_name' => $user->getName(),
+                'source' => $provider,
             ]);
         } else {
             $databaseUser = User::create([
@@ -72,6 +73,7 @@ class Oauth2Controller extends Controller
                 'email' => $user->getEmail(),
                 'display_name' => $user->getName(),
                 'password' => Str::random(40),
+                'source' => $provider,
             ]);
         }
 

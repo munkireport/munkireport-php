@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\ReportData;
@@ -10,6 +11,44 @@ class ArchiverController extends Controller
 {
     /**
      * Archive or Unarchive a single machine.
+     *
+     * @OA\Post(
+     *   path="/archiver/update_status/{serial_number}",
+     *   summary="Set machine archive status",
+     *   tags={"internal-v5-archiver"},
+     *   @OA\Parameter(
+     *     name="serial_number",
+     *     in="path",
+     *     description="Serial number of the machine being updated",
+     *     required=true,
+     *   ),
+     *     @OA\RequestBody(
+     *       required=true,
+     *       request="archiveStatusRequest",
+     *       @OA\MediaType(
+     *          mediaType="application/x-www-form-urlencoded",
+     *          @OA\Schema(
+     *              type="object",
+     *              @OA\Property(
+     *                 property="status",
+     *                 description="The archival status",
+     *                 type="number",
+     *              ),
+     *          )
+     *       ),
+     *     ),
+     *     @OA\Response(
+     *       response="200",
+     *       description="successful operation",
+     *       @OA\JsonContent(
+     *          @OA\Property(
+     *              property="updated",
+     *              type="integer",
+     *              description="The resulting archival status after update",
+     *          ),
+     *     ),
+     *     ),
+     * )
      *
      * @param Request $request
      * @param string $serial_number
@@ -33,6 +72,39 @@ class ArchiverController extends Controller
 
     /**
      * Archive machines that have been inactive for a given number of days or greater.
+     *
+     * @OA\Post(
+     *   path="/archiver/bulk_update_status",
+     *   summary="Bulk update machine archive status",
+     *   tags={"internal-v5-archiver"},
+     *   @OA\RequestBody(
+     *     required=true,
+     *     request="bulkArchiveStatusRequest",
+     *     @OA\MediaType(
+     *        mediaType="application/x-www-form-urlencoded",
+     *        @OA\Schema(
+     *            type="object",
+     *            @OA\Property(
+     *               property="days",
+     *               description="The number of days that a client must be inactive to be archived",
+     *               type="number",
+     *               minimum=1,
+     *            ),
+     *        )
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="successful operation",
+     *     @OA\JsonContent(
+     *        @OA\Property(
+     *            property="updated",
+     *            type="integer",
+     *            description="The resulting archival status after update",
+     *        ),
+     *      ),
+     *   ),
+     * )
      *
      * @param Request $request
      * @return JsonResponse

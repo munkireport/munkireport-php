@@ -16,8 +16,8 @@ Prerequisites:
     - **name:** MunkiReport-PHP
     - **supported account types:** Accounts in this organizational directory only.
     - **redirect application type:** Choose "Web".
-    - **redirect uri:** (The URL to your MunkiReport installation, with the path `/oauth2/redirect/azure` appended), eg.
-        `https://munkireport.local/oauth2/redirect/azure` if you access munkireport at `https://munkireport.local`.
+    - **redirect uri:** (The URL to your MunkiReport installation, with the path `/oauth2/callback/azure` appended), eg.
+        `https://munkireport.local/oauth2/callback/azure` if you access munkireport at `https://munkireport.local`.
    
     _You should now be redirected to your newly registered "MunkiReport-PHP" application, if not: you can access the registration
     detail at any time by visiting the **App Registrations** page, and clicking on the "MunkiReport-PHP" registration._
@@ -31,7 +31,7 @@ Prerequisites:
 7. Click the button **New client secret**.
 8. Describe the secret, it's not important for this application to provide a detailed description.
 9. Select an expiry length.
-10. Click **Add**, you will be shown the secret value **ONLY ONCE**, so make a copy of it now.
+10. Click **Add**, you will be shown the secret value **ONLY ONCE**, so make a copy of it (the Value not the Secret ID) now.
 
 ## Step 2 - MunkiReport PHP Configuration ##
 
