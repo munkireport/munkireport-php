@@ -1,4 +1,8 @@
-<?php if(Auth::check()):?>
+<?php /**
+ * This partial header template is kept as a backwards compatible facility for modules that were developed in v5.
+ * If developing for v6, it is preferred to use the Blade layouts.
+ */
+?><?php if(Auth::check()):?>
 
   <div class="container-fluid">
     <div style="text-align: right; margin: 10px; color: #bbb; font-size: 80%;">

@@ -1,8 +1,7 @@
 <?php
-
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use App\Http\Controllers\Auth\Oauth2Controller;
+use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,18 +14,16 @@ use Illuminate\Support\Str;
 |
 */
 
-// Users cannot self-register
-Auth::routes(['register' => false]);
-
 Route::get('/oauth2/redirect/{provider}',
-    [\App\Http\Controllers\Auth\Oauth2Controller::class, 'redirect'])->name('oauth2_redirect');
+    [Oauth2Controller::class, 'redirect'])->name('oauth2_redirect');
 Route::get('/oauth2/callback/{provider}',
-    [\App\Http\Controllers\Auth\Oauth2Controller::class, 'callback'])->name('oauth2_callback');
+    [Oauth2Controller::class, 'callback'])->name('oauth2_callback');
 
 Route::redirect('/', '/show/dashboard/default');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/clients', 'ClientsController@index');
+    Route::get('/clients/install', 'ClientsController@install');
     Route::get('/clients/detail/{sn?}', 'ClientsController@detail');
     Route::get('/clients/get_data/{serial_number?}', 'ClientsController@get_data');
     Route::get('/clients/get_links', 'ClientsController@get_links');
@@ -83,21 +80,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
     Route::get('/show/report/{report}/{action}', 'ShowController@report');
-    Route::get('/show/kiss_layout', 'ShowController@kiss_layout');
+    Route::get('/show/kiss_layout', 'ShowController@kiss_layout'); // For comparison of head.php/foot.php against blade layouts eg. mr.blade.php
 
     Route::get('/me', 'MeController@index');
     Route::get('/me/tokens', 'MeController@tokens');
 
     Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
 
-    // SPA Landing site
-    Route::get('/app', 'AppController@index');
-
     if (config('_munkireport.alpha_features.dashboards', false)) {
         Route::get('/dashboards/{slug?}', 'DashboardsController@index');
     }
 
     //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
+
+    // Laravel JetStream-Alike Grafting
+    Route::get('/user/profile', [UserProfileController::class, 'show'])
+        ->name('profile.show');
 });
 
 // NOTE: These cannot be completely behind auth because the get_script() action needs to be accessible without authentication.

@@ -42,7 +42,7 @@ class MachinePolicy
      * - Nobody role cannot view anything.
      *
      *
-     * @param  \App\User  $user
+     * @param User $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -64,8 +64,8 @@ class MachinePolicy
      * - Manager or User can only view their own Business Unit.
      * - Nobody role cannot view anything.
      *
-     * @param  \App\User  $user
-     * @param  \App\Machine  $machine
+     * @param User $user
+     * @param Machine $machine
      * @return mixed
      */
     public function view(User $user, Machine $machine)
@@ -82,8 +82,8 @@ class MachinePolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\Machine  $machine
+     * @param User $user
+     * @param Machine $machine
      * @return mixed
      */
     public function delete(User $user, Machine $machine)

@@ -1,4 +1,8 @@
-<!doctype html>
+<?php /**
+ * This partial header template is kept as a backwards compatible facility for modules that were developed in v5.
+ * If developing for v6, it is preferred to use the Blade layouts.
+ */
+?><!doctype html>
 <html class="no-js" lang="en">
 <head>
     <meta charset="utf-8">
@@ -207,41 +211,13 @@
             <?php endif ?>
 
             <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="themeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-wrench"></i>
-                </a>
-                <div class="theme dropdown-menu" aria-labelledby="themeMenuLink">
-                    <?php foreach(scandir(PUBLIC_ROOT.'assets/themes') AS $theme): ?>
-                        <?php if( $theme != 'fonts' && strpos($theme, '.') === false):?>
-                            <a class="dropdown-item" data-switch="<?php echo $theme; ?>" href="#"><?php echo $theme; ?></a>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </li>
-
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" id="localeMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-globe"></i>
-                </a>
-                <div class="locale dropdown-menu" aria-labelledby="localeMenuLink">
-                    <?php foreach(scandir(PUBLIC_ROOT.'assets/locales') AS $list_url): ?>
-                        <?php if( strpos($list_url, 'json')):?>
-                            <?php $lang = strtok($list_url, '.'); ?>
-                            <a class="dropdown-item"
-                               href="<?php echo mr_url($page, false, ['setLng' => $lang]); ?>"
-                               data-i18n="nav.lang.<?php echo $lang; ?>"><?php echo $lang; ?></a>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                </div>
-            </li>
-
-            <li class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" id="userMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user"></i> <?php echo \Auth::user()['email']; ?>
                     <b class="caret"></b>
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="userMenuLink">
+                    <a class="dropdown-item" href="<?php echo url('/me/profile'); ?>" data-i18n="nav.user.profile">My Profile</a>
                     <a class="dropdown-item" href="<?php echo url('/me/tokens'); ?>" data-i18n="nav.user.tokens">My API Tokens</a>
                     <div class="dropdown-divider"></div>
 

@@ -234,7 +234,7 @@ function authorized(?string $what = null)
  * @author
  * @todo This has not been converted to Laravel at all, the functionality is missing.
  **/
-function authorized_for_serial(string $serial_number)
+function authorized_for_serial(string $serial_number): bool
 {
     // Make sure the reporting script is authorized
     if (isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report') {
@@ -251,6 +251,7 @@ function authorized_for_serial(string $serial_number)
 /**
  * Get machine_group
  *
+ * @deprecated unused, marked for deprecation
  * @return integer computer group
  * @author AvB
  **/
@@ -259,8 +260,8 @@ function get_machine_group(string $serial_number = '')
     if (!isset($GLOBALS['machine_groups'][$serial_number])) {
         $machine_group = \App\ReportData::select('machine_group')
             ->where('serial_number', $serial_number)
-            ->pluck('machine_group')
-            ->first();
+            ->first()
+            ->pluck('machine_group');
         $GLOBALS['machine_groups'][$serial_number] = $machine_group;
     }
 
@@ -323,15 +324,45 @@ function get_filtered_groups(): array
     return $out;
 }
 
-// Return if session filter is not set or archived filter is not empty
-function is_archived_filter_on()
+/**
+ * Has the user toggled on the "Show Archived" filter?
+ *
+ * The "Show Archived" filter allows all results (incl. from APIs) to include computers marked as "archived".
+ * AKA, they have the reportdata.archive_status of 1.
+ *
+ * Previously, we only checked the session data for a `filter.archived` value which corresponded to the filter that
+ * the user selected. This completely breaks down if a module wants to provide an API which does not require session
+ * authentication and needs to use sanctum authentication.
+ *
+ * For this reason we default to no archive filter if there is no session.
+ *
+ * @todo For some reason the value seems to be zero (the inverse) compared to the database, need to check this.
+ *
+ * @return bool
+ */
+function is_archived_filter_on(): bool
 {
-    return !request()->session()->has('filter.archived') || request()->session()->get('filter.archived');
+    if (request()->hasSession()) {
+        return !request()->session()->has('filter.archived') || request()->session()->get('filter.archived');
+    } else {
+        return false;
+    }
 }
 
-function is_archived_only_filter_on()
+/**
+ * Has the user toggled on the "Show Archived Only" filter on?
+ *
+ * The "Show Archived Only" filter excludes all current (non-archived) computers and ONLY shows archived ones.
+ *
+ * @return bool
+ */
+function is_archived_only_filter_on(): bool
 {
-    return request()->session()->has('filter.archived_only') && request()->session()->get('filter.archived_only');
+    if (request()->hasSession()) {
+        return request()->session()->has('filter.archived_only') && request()->session()->get('filter.archived_only');
+    } else {
+        return false;
+    }
 }
 
 /**

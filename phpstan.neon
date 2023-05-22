@@ -5,7 +5,7 @@ parameters:
 
     paths:
         - app
-        - MR
+        - compatibility
 
     # The level 9 is the highest level
     level: 5

@@ -37,6 +37,95 @@ use Laravel\Scout\Searchable;
  * @property string $machine_name
  * @property string $packages
  * @property string $buildversion
+ *
+ * @OA\Schema(
+ *   schema="Machine",
+ *   description="Basic information about a single client",
+ *   type="object",
+ *   @OA\Property(
+ *      property="id",
+ *      type="integer",
+ *      description="Machine Unique Identifier",
+ *   ),
+ *   @OA\Property(
+ *      property="serial_number",
+ *      type="string",
+ *      description="Serial Number",
+ *   ),
+ *   @OA\Property(
+ *      property="hostname",
+ *      type="string",
+ *      description="Local Hostname",
+ *      example="computer.local",
+ *   ),
+ *   @OA\Property(
+ *      property="machine_model",
+ *      type="string",
+ *      description="Model Identifier",
+ *      example="iMac17,1",
+ *   ),
+ *   @OA\Property(
+ *      property="machine_desc",
+ *      type="string",
+ *      description="Model Description",
+ *   ),
+ *   @OA\Property(
+ *      property="img_url",
+ *      type="string",
+ *      format="url",
+ *      description="Image URL",
+ *   ),
+ *   @OA\Property(
+ *      property="cpu",
+ *      type="string",
+ *      description="CPU Information String",
+ *   ),
+ *   @OA\Property(
+ *      property="current_processor_speed",
+ *      type="string",
+ *      description="Processor speed with unit of measurement",
+ *      example="4 Ghz",
+ *   ),
+ *   @OA\Property(
+ *      property="cpu_arch",
+ *      type="string",
+ *      description="CPU Architecture",
+ *      example="x86_64",
+ *   ),
+ *   @OA\Property(
+ *      property="os_version",
+ *      type="integer",
+ *      description="Operating System Version represented as an integer of 2 digit pairs",
+ *      example="101201",
+ *   ),
+ *   @OA\Property(
+ *      property="physical_memory",
+ *      type="integer",
+ *      description="Physical memory (in GB)",
+ *      example="32",
+ *   ),
+ *   @OA\Property(
+ *      property="platform_UUID",
+ *      type="string",
+ *      format="uuid",
+ *      example="FC499AAF-884D-4FB2-87AE-81C9CBC6E559",
+ *   ),
+ *   @OA\Property(
+ *      property="number_processors",
+ *      type="integer",
+ *      description="Number of (v)CPUs",
+ *   ),
+ *   @OA\Property(
+ *      property="SMC_version_system",
+ *      type="string",
+ *      description="SMC version string",
+ *   ),
+ *   @OA\Property(
+ *      property="boot_rom_version",
+ *      type="string",
+ *      description="Boot ROM version string",
+ *   )
+ * )
  */
 class Machine extends MRModel
 {

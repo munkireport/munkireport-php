@@ -38,3 +38,8 @@ Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth:sanc
 
     Route::get('/search/{model}/{query}', 'SearchController@searchModel')->where('query', '.*');
 });
+
+Route::group(['prefix' => 'v5', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+    Route::post('/module/{module}/{action}/{params?}', 'ModuleController@invoke')->where('params', '.*');
+});

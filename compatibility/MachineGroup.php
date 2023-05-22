@@ -5,7 +5,7 @@ namespace Compatibility;
 use Compatibility\Kiss\Contracts\LegacyMachineGroup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Webpatser\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 /**
  * MachineGroup model for v5 compatibility.
@@ -46,7 +46,7 @@ class MachineGroup extends Model
      */
     public static function createWithParameters($machineGroupId, $machineGroupName, $machineGroupKey = null) {
         if ($machineGroupKey === null) {
-            $machineGroupKey = Uuid::generate();
+            $machineGroupKey = Str::uuid()->toString();
         }
 
         $nameRow = MachineGroup::create(

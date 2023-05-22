@@ -25,14 +25,14 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'source', 'objectguid'
     ];
 
     /**
      * The attributes that should be hidden for arrays.
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'two_factor_secret', 'two_factor_recovery_codes',
     ];
 
     /**
@@ -130,12 +130,17 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
     }
 
     /**
-     * @todo
+     * Backwards compatible function to list machine groups that the user has access to.
+     *
+     * - If you are an admin this does not apply and you get all machine groups
+     * - MunkiReport 5.6.5 sets this information on the session when you log in
+     * - Backwards compatibility for session-based machine groups is provided by App\Auth\Listeners\MachineGroupMembership
+     *
      * @return array
      */
     public function machineGroups(): array
     {
-        return [];
+        return session('machine_groups') ?? [];
     }
 
     /**

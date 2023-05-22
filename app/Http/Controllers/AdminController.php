@@ -37,6 +37,75 @@ class AdminController extends Controller
      * Response:
      * {"groupid":2,"business_unit":1,"name":"mgnew","keys":["215C10D0-648E-6E86-841C-4B27EBA535F8"]}
      *
+     * @OA\Post(
+     *  path="/admin/save_machine_group",
+     *  summary="create/update machine group",
+     *  tags={"internal-v5-machine-groups"},
+     *  @OA\RequestBody(
+     *     required=true,
+     *     request="createUpdateBusinessUnitRequest",
+     *     @OA\MediaType(
+     *      mediaType="application/x-www-form-urlencoded",
+     *      @OA\Schema(
+     *        type="object",
+     *        @OA\Property(
+     *            property="groupid",
+     *            type="integer",
+     *            description="A machine group id to update, or empty for create",
+     *        ),
+     *        @OA\Property(
+     *            property="name",
+     *            type="string",
+     *            description="machine group name",
+     *        ),
+     *        @OA\Property(
+     *            property="key",
+     *            type="string",
+     *            format="uuid",
+     *            description="machine group uuid key, or empty to generate one",
+     *        ),
+     *        @OA\Property(
+     *            property="business_unit",
+     *            type="integer",
+     *            format="int32",
+     *            description="business unit id which will contain this machine group",
+     *        ),
+     *     ),
+     *     ),
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="successful operation",
+     *     @OA\JsonContent(
+     *        @OA\Property(
+     *            property="groupid",
+     *            type="integer",
+     *            description="A machine group id to update, or empty for create",
+     *        ),
+     *        @OA\Property(
+     *            property="name",
+     *            type="string",
+     *            description="machine group name",
+     *        ),
+     *        @OA\Property(
+     *            property="business_unit",
+     *            type="integer",
+     *            format="int32",
+     *            description="business unit id which will contain this machine group",
+     *        ),
+     *        @OA\Property(
+     *            property="keys",
+     *            type="array",
+     *            @OA\Items(
+     *              type="string",
+     *              format="uuid",
+     *              description="machine group uuid key, or empty to generate one",
+     *            ),
+     *        ),
+     *    ),
+     *  ),
+     * )
+     *
      * @param Request $request
      * @return JsonResponse
      */
@@ -115,10 +184,34 @@ class AdminController extends Controller
      * Request is form encoded and contains only the `groupid` field.
      * can also be a route parameter???
      *
-     * Response contains:
-     * {"success":true,"successs":1}
-     *
-     * For reasons I will never know -m.
+     * @OA\Get(
+     *  path="/admin/remove_machine_group/{groupid}",
+     *  summary="Remove machine group",
+     *  tags={"internal-v5-machine-groups"},
+     *  @OA\Parameter(
+     *     name="groupid",
+     *     in="path",
+     *     description="The machine group id to delete",
+     *     required=true,
+     *  ),
+     *  @OA\Response(
+     *     response="200",
+     *     description="successful operation",
+     *     @OA\JsonContent(
+     *      @OA\Property(
+     *          property="success",
+     *          type="boolean",
+     *          description="delete operation was successful",
+     *      ),
+     *      @OA\Property(
+     *          property="successs",
+     *          type="integer",
+     *          format="int32",
+     *          description="value indicates business unit the machine group was removed from",
+     *      ),
+     *    ),
+     *  ),
+     * )
      *
      * @param Request $request
      * @return JsonResponse
@@ -151,7 +244,113 @@ class AdminController extends Controller
     //===============================================================
 
     /**
-     * Save Business Unit
+     * Save Business Unit and optionally create/update child machine groups.
+     *
+     * @OA\Post(
+     *  path="/admin/save_business_unit",
+     *  summary="Create/Update a Business Unit",
+     *  tags={"internal-v5-business-units"},
+     *  @OA\RequestBody(
+     *     required=true,
+     *     request="createUpdateBusinessUnitRequest",
+     *     @OA\MediaType(
+     *      mediaType="application/x-www-form-urlencoded",
+     *      @OA\Schema(
+     *        type="object",
+     *        @OA\Property(
+     *            property="users",
+     *            type="array",
+     *            description="A list of users and groups with the user role (denoted by @ prefix). A literal value of hash `#` means empty array",
+     *            @OA\Items(
+     *                type="string"
+     *            )
+     *        ),
+     *        @OA\Property(
+     *            property="managers",
+     *            type="array",
+     *            description="A list of users and groups with the manager role. A literal value of hash `#` means empty array",
+     *            @OA\Items(
+     *                type="string"
+     *            )
+     *        ),
+     *        @OA\Property(
+     *            property="archivers",
+     *            type="array",
+     *            description="A list of users and groups with the archiver role. A literal value of hash `#` means empty array",
+     *            @OA\Items(
+     *                type="string"
+     *            )
+     *        ),
+     *        @OA\Property(
+     *            property="machine_groups",
+     *            type="array",
+     *            description="A list of machine group IDs that are part of this business unit",
+     *            @OA\Items(
+     *                type="string",
+     *                format="int32",
+     *            )
+     *        ),
+     *        @OA\Property(
+     *            property="name",
+     *            type="string",
+     *            description="The name of the business unit",
+     *            example="Sales and Marketing",
+     *        ),
+     *        @OA\Property(
+     *            property="unitid",
+     *            type="integer",
+     *            format="int32",
+     *            description="Business Unit ID",
+     *        ),
+     *        @OA\Property(
+     *            property="address",
+     *            type="string",
+     *            description="Street address",
+     *        ),
+     *        @OA\Property(
+     *            property="link",
+     *            type="string",
+     *            format="url",
+     *            description="URL",
+     *        ),
+     *        @OA\Property(
+     *            property="groupid",
+     *            type="string",
+     *            description="groupid",
+     *            example="1",
+     *        ),
+     *        @OA\Property(
+     *            property="key",
+     *            type="string",
+     *            format="uuid",
+     *            description="A machine group key associated with the business unit",
+     *        ),
+     *        @OA\Property(
+     *            property="iteminfo",
+     *            type="array",
+     *            description="array of machine groups that should be created or updated to be child objects of this BU",
+     *            @OA\Items(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="key",
+     *                  type="string",
+     *                  description="A machine group id. If empty, a machine group will be created under this BU",
+     *              ),
+     *              @OA\Property(
+     *                  property="name",
+     *                  type="string",
+     *                  description="A machine group name to create (or update if the key was not empty)",
+     *              ),
+     *           ),
+     *          ),
+     *        ),
+     *     ),
+     *  ),
+     *  @OA\Response(
+     *     response="200",
+     *     description="successful operation",
+     *  ),
+     * )
      **/
     public function save_business_unit(Request $request): JsonResponse
     {
@@ -159,7 +358,8 @@ class AdminController extends Controller
 
         $unit = new BusinessUnit();
         $out = $unit->saveUnit($request->all([
-            'unitid', 'name', 'address', 'link', 'iteminfo', 'managers', 'archivers', 'users'
+            'unitid', 'name', 'address', 'link', 'managers', 'archivers', 'users', 'groupid', 'key', 'keys', 'machine_groups',
+            'iteminfo' // Contains an array of new machine groups to be created
         ]));
 
         return response()->json($out);
@@ -168,7 +368,40 @@ class AdminController extends Controller
     //===============================================================
 
     /**
-     * remove_business_unit
+     * Remove a business unit
+     *
+     * @OA\Post(
+     *  path="/admin/remove_business_unit",
+     *  summary="Remove a business unit",
+     *  tags={"internal-v5-business-units"},
+     *  @OA\RequestBody(
+     *    required=true,
+     *    request="removeBusinessUnitRequest",
+     *    @OA\MediaType(
+     *     mediaType="application/x-www-form-urlencoded",
+     *     @OA\Schema(
+     *      type="object",
+     *      @OA\Property(
+     *        property="id",
+     *        type="string",
+     *        description="The business unit id to delete",
+     *      ),
+     *     ),
+     *    ),
+     *  ),
+     *  @OA\Response(
+     *     response="200",
+     *     description="successful operation",
+     *     @OA\JsonContent(
+     *      @OA\Property(
+     *          property="success",
+     *          type="integer",
+     *          format="int32",
+     *          description="TODO",
+     *      ),
+     *     ),
+     *  ),
+     * )
      **/
     public function remove_business_unit(): JsonResponse
     {
@@ -187,33 +420,95 @@ class AdminController extends Controller
     /**
      * Return BU data for unitid or all units if unitid is empty
      *
-     * Response is a JSON Array with elements in this format:
-     *
-     * {
-     *   "0": {
-     *       "users": [
-     *           "user"
-     *       ],
-     *       "managers": [
-     *           "@managers_group",
-     *           "manager",
-     *           "admin@localhost"
-     *       ],
-     *       "archivers": [
-     *           "@archivers_group",
-     *           "archiver"
-     *       ],
-     *       "machine_groups": [
-     *           0,
-     *           1,
-     *           0
-     *       ],
-     *       "name": "IT Department",
-     *       "unitid": 1
-     *   }
-     *
      * @todo This is currently not fully compatible with MunkiReport 5.6.5 because it does not return empty strings for
      *       unset values, or empty arrays for unset collections.
+     *
+     * @OA\Get(
+     *     path="/admin/get_bu_data",
+     *     summary="Get a list of Business Units",
+     *     tags={"internal-v5-business-units"},
+     *     @OA\Response(
+     *      response="200",
+     *      description="successful operation",
+     *      @OA\JsonContent(
+     *          @OA\Property(
+     *              type="array",
+     *              description="List of business units",
+     *              @OA\Items(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="users",
+     *                      type="array",
+     *                      description="A list of users and groups with the user role (denoted by @ prefix)",
+     *                      @OA\Items(
+     *                          type="string"
+     *                      )
+     *                  ),
+     *                  @OA\Property(
+     *                      property="managers",
+     *                      type="array",
+     *                      description="A list of users and groups with the manager role",
+     *                      @OA\Items(
+     *                          type="string"
+     *                      )
+     *                  ),
+     *                  @OA\Property(
+     *                      property="archivers",
+     *                      type="array",
+     *                      description="A list of users and groups with the archiver role",
+     *                      @OA\Items(
+     *                          type="string"
+     *                      )
+     *                  ),
+     *                  @OA\Property(
+     *                      property="machine_groups",
+     *                      type="array",
+     *                      description="A list of machine group IDs that are part of this business unit",
+     *                      @OA\Items(
+     *                          type="integer",
+     *                          format="int32",
+     *                      )
+     *                  ),
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="The name of the business unit",
+     *                      example="Sales and Marketing",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="unitid",
+     *                      type="integer",
+     *                      format="int32",
+     *                      description="Business Unit ID",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="address",
+     *                      type="string",
+     *                      description="Street address",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="link",
+     *                      type="string",
+     *                      format="url",
+     *                      description="URL",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="groupid",
+     *                      type="string",
+     *                      description="groupid",
+     *                      example="1",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="key",
+     *                      type="string",
+     *                      format="uuid",
+     *                      description="A machine group key associated with the business unit",
+     *                  ),
+     *              ),
+     *          ),
+     *     ),
+     *     )
+     * )
      **/
     public function get_bu_data(): JsonResponse
     {
@@ -261,18 +556,50 @@ class AdminController extends Controller
     /**
      * Return Machinegroup data for groupid or all groups if groupid is empty.
      *
-     * Example response (no groupid) Array containing elements like:
-     * {
-     *  ...
-     *   "1": {
-     *     "keys": [
-     *       "1448859D-1EA0-DD43-7C9C-605238328F3E"
-     *     ],
-     *     "groupid": 1,
-     *     "name": "Example Machine Group"
-     *     }
-     *   }
-     * }
+     * @OA\Get(
+     *     path="/admin/get_mg_data",
+     *     summary="Get a list of Machine Groups",
+     *     tags={"internal-v5-machine-groups"},
+     *     @OA\Parameter(
+     *      name="groupid",
+     *      in="query",
+     *      description="A specific machine group id to retrieve",
+     *     ),
+     *     @OA\Response(
+     *      response="200",
+     *      description="successful operation",
+     *      @OA\JsonContent(
+     *          @OA\Property(
+     *              type="array",
+     *              description="List of business units",
+     *              @OA\Items(
+     *                  type="object",
+     *                  @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="The name of the machine group",
+     *                      example="Laptops",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="groupid",
+     *                      type="integer",
+     *                      format="int32",
+     *                      description="machine group ID",
+     *                  ),
+     *                  @OA\Property(
+     *                      property="keys",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          type="string",
+     *                          format="uuid",
+     *                          description="A machine group key which can be used to identify a client as belonging to this group",
+     *                      )
+     *                  ),
+     *              ),
+     *          ),
+     *     ),
+     *     )
+     * )
      **/
     public function get_mg_data(string $groupid = ""): JsonResponse
     {

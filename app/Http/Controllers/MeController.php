@@ -26,4 +26,17 @@ class MeController extends Controller
     public function tokens(Request $request) {
         return view('me.tokens');
     }
+
+    /**
+     * Display the user profile including personal settings.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|null
+     */
+    public function profile(Request $request) {
+        return view('me.profile', [
+            'locale' => $request->getLocale(),
+            'current_theme' => $request->session()->get('theme', config('_munkireport.default_theme')),
+        ]);
+    }
 }

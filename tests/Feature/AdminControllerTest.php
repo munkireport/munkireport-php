@@ -18,7 +18,9 @@ class AdminControllerTest extends AuthorizationTestCase
      *  Using the Business Units interface in MunkiReport 5.6.5 to add a new machine group to a business unit does not
      *  invoke this endpoint. It uses /admin/save_business_unit with iteminfo[] populated using the new machine group(s).
      *
-     *  This endpoint is only used for the "Update" part of CRUD.
+     *  This endpoint is used if you either:
+     *  - Update a machine group by clicking on it and changing some detail OR
+     *  - Create an "Unassigned Group" using the Plus button at the bottom of the screen.
      *
      *  Example:
      *
@@ -111,18 +113,22 @@ class AdminControllerTest extends AuthorizationTestCase
     }
 
     /**
+     * Create a new Business Unit (v5)
+     *
      *  POST /admin/save_business_unit
      */
     public function testSaveBusinessUnit()
     {
         $response = $this->actingAs($this->adminUser)
             ->post('/admin/save_business_unit', [
+                'name' => 'testSaveBusinessUnit',
+                # groupid  # The business unit ID
+                # keys[]
                 'unitid' => 'new',
                 'users[]' => '#',
                 'archivers[]' => '#',
                 'managers[]' => '#',
                 'machine_groups[]' => '#',
-                'name' => 'testSaveBusinessUnit',
                 'address' => 'testSaveBusinessUnitAddr',
                 'link' => 'http://test.save.business.unit.example.com',
             ]);
@@ -143,13 +149,59 @@ class AdminControllerTest extends AuthorizationTestCase
     }
 
     /**
+     * This integration test replicates the XHR calls from jQuery when you save a new machine group into an existing
+     * Business Unit i.e
+     *
+     *  POST /admin/save_business_unit (with form encoded data)
+     *  GET /admin/get_mg_data
+     *
      * POST same as above, except the new machine group detail will be:
      * iteminfo[0][key]: ""
      * iteminfo[1][name]: "Machine Group Name"
      */
-    public function testSaveBusinessUnitMachineGroup()
+    public function testNewMachineGroupV5()
     {
-        $this->markTestIncomplete();
+        $response = $this->actingAs($this->adminUser)
+            ->post('/admin/save_business_unit', [
+                'unitid' => 'new',  # or an existing unit id number
+                'users[]' => '#',
+                'archivers[]' => '#',
+                'managers[]' => '#',
+                'machine_groups[]' => '#',
+                'name' => 'testSaveBusinessUnit', # URL encoded
+                'address' => 'testSaveBusinessUnitAddr',
+                'link' => 'http://test.save.business.unit.example.com',
+                'iteminfo' => [
+                    [
+                        'key' => '',  # The empty string value is coerced to NULL (could be PHPUnit or something else)
+                        'name' => 'The name of a machine group being created under this business unit'
+                    ]
+                ],
+//                'iteminfo[0][key]' => '',
+//                'iteminfo[0][name]' => 'The name of a machine group being created under this business unit',
+            ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'unitid',
+                'name',
+                'address',
+                'link',
+                'groupid',
+                'key',
+
+                // arrays
+                'users',
+                'managers',
+                'archivers',
+                'machine_groups'
+            ])
+            ->assertJsonFragment([
+                'name' => 'testSaveBusinessUnit',
+                'address' => 'testSaveBusinessUnitAddr',
+                'link' => 'http://test.save.business.unit.example.com',
+            ]);
     }
 
     /**
