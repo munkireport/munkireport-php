@@ -94,7 +94,7 @@ if [ ! -e "$DEPLOYMENT_TARGET/composer.phar" ]; then
 fi
 
 # 2. Verify composer installed
-hash composer 2>/dev/null
+hash "$DEPLOYMENT_TARGET/composer.phar" 2>/dev/null
 exitWithMessageOnError "Missing composer executable"
 
 # 3. Initialize Composer Config
@@ -105,7 +105,7 @@ echo "$DEPLOYMENT_TARGET"
 if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
   echo "Found composer.json"
   pushd "$DEPLOYMENT_TARGET"
-  composer install $COMPOSER_ARGS
+  php composer.phar install $COMPOSER_ARGS
   exitWithMessageOnError "Composer install failed"
   popd
 fi
