@@ -1,13 +1,17 @@
 # MunkiReport PHP on Azure App Service #
 
+This template provides an Azure App Service deployment of MunkiReport-PHP on a least-cost design philosophy.
+Not much in Azure is truly free, so please consider the potential cost before deployment.
+
 ## Prerequisites ##
 
-- Az CLI with bicep installed
-- The container must trust the MySQL Flexible Server CA via setting CONNECTION_SSL_CA
+- Azure CLI. [You can find a Microsoft guide to install Azure CLI here](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-macos).
+- Azure CLI Bicep Plugin (Automatically installed the first time you use it).
 
 ## Deploy ##
 
-Create a resource group for the deployment in the region where you want to deploy eg.
+Create a resource group for the deployment. The deployment will assume that the resource group region selected is the
+one you want to place resources into.
 
 ```shell
 az group create --location australiaeast --resource-group MunkiReportPHPRG
@@ -44,3 +48,6 @@ kuduscript --php -o deploy/azure/appsvc -y
 Generating deployment script for PHP Web Site
 Generated deployment script files
 ```
+
+## Parameters ##
+

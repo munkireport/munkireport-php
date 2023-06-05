@@ -4,7 +4,6 @@ namespace Tests\Feature\Graphql;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
-use PHPUnit\Framework\TestCase;
 use Tests\GraphqlTestCase;
 
 class BusinessUnitsTest extends GraphqlTestCase

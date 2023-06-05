@@ -4,8 +4,15 @@
 app/db
 docs
 local
+
+# Pretty much all laravel storage is cache, which you do not want to build into an image.
 storage/logs/*.log
 storage/*.index
+storage/framework/cache/data/*
+storage/app/*
+storage/sessions/*
+storage/testing/*
+storage/views/*
 
 # local overrides should never apply to container builds
 composer.local.json

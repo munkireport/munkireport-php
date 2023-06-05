@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\TagController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
 use Tests\AuthorizationTestCase;
 
 class TagControllerTest extends AuthorizationTestCase
