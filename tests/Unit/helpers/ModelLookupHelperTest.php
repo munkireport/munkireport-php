@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\helpers;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class ModelLookupHelperTest extends TestCase
 {

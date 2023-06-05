@@ -3,7 +3,7 @@
 namespace Tests\Unit\Faker;
 use Faker\Factory;
 use App\Faker\MacProvider;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class MacProviderTest extends TestCase
 {

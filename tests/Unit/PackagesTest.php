@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Packages;
 use Composer\Factory;
 use Composer\IO\BufferIO;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class PackagesTest extends TestCase
 {

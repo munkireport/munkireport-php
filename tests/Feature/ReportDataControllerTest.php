@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\ReportDataController;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
 use Tests\AuthorizationTestCase;
 
 class ReportDataControllerTest extends AuthorizationTestCase
