@@ -31,7 +31,7 @@ param databaseLogin string = 'munkireport'
 param databaseLoginPassword string = newGuid()
 
 //var linuxFxVersion = 'DOCKER|${containerImage}'
-var linuxFxVersion = 'PHP:8.2'
+var linuxFxVersion = 'PHP|8.1'
 
 var appServiceName = '${webAppName}-webapp-${uniqueString(resourceGroup().id)}'
 var appServicePlanName = '${webAppName}-asp-${uniqueString(resourceGroup().id)}'
