@@ -94,7 +94,7 @@
         "munkireport/printer": "dev-mr6-python3",
         "munkireport/profile": "dev-mr6-python3",
         "munkireport/sccm_status": "dev-mr6-python3",
-        "munkireport/security": "dev-mr6-python3",
+        "munkireport/security": "dev-mr5-python3",
         "munkireport/sentinelone": "dev-mr5-python3",
         "munkireport/sentinelonequarantine": "dev-mr6-python3",
         "munkireport/smart_stats": "dev-mr6-python3",
