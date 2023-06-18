@@ -27,7 +27,7 @@ ENV INDEX_PAGE ""
 ENV AUTH_METHODS NOAUTH
 
 COPY . $APP_DIR
-COPY --from=frontend /usr/src/app/public/* $APACHE_DOCUMENT_ROOT/
+COPY --from=frontend /usr/src/app/public/ /var/munkireport/public/
 WORKDIR $APP_DIR
 
 COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer
