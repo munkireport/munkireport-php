@@ -40,6 +40,7 @@ var linuxFxVersion = useScmDeployment ? 'PHP|8.2' : 'DOCKER|${containerImage}'
 var appServiceName = '${webAppName}-webapp-${uniqueString(resourceGroup().id)}'
 var appServicePlanName = '${webAppName}-asp-${uniqueString(resourceGroup().id)}'
 var storageAccountName = toLower('${substring(webAppName, 0, 10)}${uniqueString(resourceGroup().id)}')
+var storageQueueName = 'laravel'
 var databaseName = toLower('${webAppName}-database-${uniqueString(resourceGroup().id)}')
 
 resource dataStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
@@ -75,9 +76,8 @@ resource dataStorageQueues 'Microsoft.Storage/storageAccounts/queueServices@2022
 }
 
 resource workerQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2022-09-01' = {
-  name: ''
+  name: storageQueueName
   parent: dataStorageQueues
-
 }
 
 
