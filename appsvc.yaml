@@ -2,5 +2,4 @@
 version: 1
 
 post-build: |
-  php please migrate
-  
+  npm run build

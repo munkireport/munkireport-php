@@ -43,13 +43,11 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.6.9",
-        "laravel-notification-channels/microsoft-teams": "^1.1",
         "laravel/fortify": "^1.17",
         "laravel/framework": "^9.0",
         "laravel/legacy-factories": "^1.1",
         "laravel/sanctum": "^2.14",
         "laravel/scout": "^9",
-        "laravel/slack-notification-channel": "^2.4",
         "laravel/socialite": "^5.5",
         "league/flysystem": "^3.0.16",
         "munkireport/applications": "dev-mr6-python3",
@@ -110,7 +108,6 @@
         "nuwave/lighthouse": "^5.39.0",
         "onelogin/php-saml": "^3.0",
         "rodneyrehm/plist": "^2.0",
-        "socialiteproviders/microsoft-azure": "^5.0",
         "symfony/yaml": "^5.4",
         "tightenco/ziggy": "^1.5",
         "wikimedia/composer-merge-plugin": "^2.0",
@@ -170,7 +167,10 @@
         ]
     },
     "suggest": {
-        "ext-ldap": "Needed to support Active Directory/LDAP Authentication"
+        "ext-ldap": "Needed to support Active Directory/LDAP Authentication",
+        "laravel-notification-channels/microsoft-teams": "Send alerts to Microsoft Teams",
+        "laravel/slack-notification-channel": "Send alerts to Slack",
+        "socialiteproviders/microsoft-azure": "Sign-in using Azure Active Directory"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
