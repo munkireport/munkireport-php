@@ -66,7 +66,7 @@ straight from git.
 The App Build Service can break unexpectedly because it's not a tested/supported use-case in MunkiReport PHP.
 
 ```shell
-kuduscript --php -o deploy/azure/appsvc -y
+kuduscript --php -o deploy/azure/app-service-container -y
 Generating deployment script for PHP Web Site
 Generated deployment script files
 ```
