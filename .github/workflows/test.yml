@@ -67,12 +67,16 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 
+      - name: Validate composer.json
+        run: composer validate
+
       - name: Install Composer dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Run PHPStan
-        run: phpstan analyse app compatibility
-        continue-on-error: true
+# NOTE: PHPStan takes a while and this isnt a code quality pipeline
+#      - name: Run PHPStan
+#        run: phpstan analyse app compatibility
+#        continue-on-error: true
 
       - name: Adjust directory permissions
         run: chmod -R 777 storage bootstrap/cache

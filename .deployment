@@ -1,2 +1,3 @@
+# This file required for compatibility with Azure App Service Build
 [config]
-command = bash deploy/azure/appsvc/deploy.sh
+command = bash deploy/azure/app-service-container/deploy.sh

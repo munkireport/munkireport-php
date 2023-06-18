@@ -2,7 +2,7 @@
 
 The following deployment models are given as examples, they are not guaranteed to be up-to-date with the cloud tooling:
 
-- [MunkiReport PHP on Azure App Service (Web App for Containers)](./appsvc/README.md)
+- [MunkiReport PHP on Azure App Service (Web App for Containers)](app-service-container/README.md)
 - TODO: [MunkiReport PHP on Azure Container Instances](./container-instance/README.md)
 - TODO: [MunkiReport PHP on Azure Container Apps](./container-apps/README.md)
 
