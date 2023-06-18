@@ -39,7 +39,7 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip opcache
 
 COPY . $APP_DIR
-COPY --from=frontend /usr/src/app/public/* $APACHE_DOCUMENT_ROOT/
+COPY --from=frontend /usr/src/app/public/ /var/munkireport/public/
 WORKDIR $APP_DIR
 RUN chown -R www-data:www-data $APP_DIR
 
