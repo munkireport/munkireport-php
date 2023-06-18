@@ -89,25 +89,21 @@ if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
   exitWithMessageOnError "Kudu Sync failed"
 fi
 
-#if [ ! -e "$DEPLOYMENT_TARGET/composer.phar" ]; then
-#  curl -s https://getcomposer.org/installer | php
-#fi
-#
-## 2. Verify composer installed
-#hash "$DEPLOYMENT_TARGET/composer.phar" 2>/dev/null
-#exitWithMessageOnError "Missing composer executable"
-#
+# 2. Verify composer installed
+hash composer 2>/dev/null
+exitWithMessageOnError "Missing composer executable"
+
 # 3. Initialize Composer Config
 initializeDeploymentConfig
 
 # 4. Use composer
-#echo "$DEPLOYMENT_TARGET"
-#if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
-#  echo "Found composer.json"
-#  pushd "$DEPLOYMENT_TARGET"
-#  php composer.phar install $COMPOSER_ARGS
-#  exitWithMessageOnError "Composer install failed"
-#  popd
-#fi
+echo "$DEPLOYMENT_TARGET"
+if [ -e "$DEPLOYMENT_TARGET/composer.json" ]; then
+  echo "Found composer.json"
+  pushd "$DEPLOYMENT_TARGET"
+  composer install $COMPOSER_ARGS
+  exitWithMessageOnError "Composer install failed"
+  popd
+fi
 ##################################################################################################################################
 echo "Finished successfully."
