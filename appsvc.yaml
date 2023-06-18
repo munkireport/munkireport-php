@@ -1,0 +1,6 @@
+# Azure App Service Build (Not Container Mode)
+version: 1
+
+post-build: |
+  php please migrate
+  
