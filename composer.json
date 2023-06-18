@@ -108,6 +108,7 @@
         "nuwave/lighthouse": "^5.39.0",
         "onelogin/php-saml": "^3.0",
         "rodneyrehm/plist": "^2.0",
+        "socialiteproviders/microsoft-azure": "^5.1.0",
         "symfony/yaml": "^5.4",
         "tightenco/ziggy": "^1.5",
         "wikimedia/composer-merge-plugin": "^2.0",
