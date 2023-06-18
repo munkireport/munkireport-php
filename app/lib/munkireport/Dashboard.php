@@ -8,7 +8,7 @@ use \View;
 
 class Dashboard
 {
-    private $config, $dashboards = [], $loaded = false, $filesystem;
+    private $config, $dashboards = [], $loaded = false, $fileSystem;
     
     public function __construct($config, $loadAll = true)
     {

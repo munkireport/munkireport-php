@@ -1,4 +1,20 @@
-### [5.7.2](https://github.com/munkireport/munkireport-php/compare/v5.7.1...wip) (Unreleased)
+### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (Unreleased) 🌋
+
+MunkiReport is now Python 3 based
+
+IMPORTANT CHANGES
+You will need to install Mac Admins Python 3.10 first on the client or MunkiReport will not run. Download it from [https://github.com/macadmins/python/releases/tag/v3.10.9.80716](https://github.com/macadmins/python/releases/tag/v3.10.9.80716)
+
+MunkiReport now fully supports PHP 8 and has been tested with PHP 8.2. 
+
+MODULE UPDATES
+All Python based modules have been updated to have a Python 3 based script. 
+
+FIXES
+- Reporting on Silicon Macs
+- Fixes cross site security issue
+
+Important: Read the [release notes for 5.8.0](https://github.com/munkireport/munkireport-php/releases/tag/v5.8.0) as it contains some breaking changes.
 
 Maintenance release 
 

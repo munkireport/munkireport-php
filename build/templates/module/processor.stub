@@ -10,7 +10,7 @@ class CLASS_processor extends Processor
 
 		// Parse data
         $sep = ' = ';
-		foreach(explode(PHP_EOL, $data) as $line) {
+		foreach(explode("\n", $data) as $line) {
             if($line){
                 list($key, $val) = explode($sep, $line);
                 $modelData[$key] = $val;

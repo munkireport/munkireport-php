@@ -1,4 +1,5 @@
-#!/usr/local/munkireport/munkireport-python2
+#!/usr/local/munkireport/munkireport-python3
+
 #
 # Script to run the munkireport-php GitHub release workflow as outlined here:
 #https://github.com/autopkg/autopkg/wiki/Packaging-AutoPkg-For-Release-on-GitHub
@@ -20,7 +21,7 @@ import re
 import subprocess
 import sys
 import tempfile
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 from distutils.version import LooseVersion
 from pprint import pprint
@@ -46,25 +47,25 @@ def api_call(endpoint, token, baseurl='https://api.github.com', data=None,
     headers = {'Accept': 'application/vnd.github.v3+json',
                'Authorization': 'token %s' % token}
     if additional_headers:
-        for header, value in additional_headers.items():
+        for header, value in list(additional_headers.items()):
             headers[header] = value
 
-    req = urllib2.Request(baseurl + endpoint, headers=headers)
+    req = urllib.request.Request(baseurl + endpoint, headers=headers)
     try:
-        results = urllib2.urlopen(req, data=data)
-    except urllib2.HTTPError as err:
-        print >> sys.stderr, "HTTP error making API call!"
-        print >> sys.stderr, err
+        results = urllib.request.urlopen(req, data=data)
+    except urllib.error.HTTPError as err:
+        print("HTTP error making API call!", file=sys.stderr)
+        print(err, file=sys.stderr)
         error_json = err.read()
         error = json.loads(error_json)
-        print >> sys.stderr, "API message: %s" % error['message']
+        print("API message: %s" % error['message'], file=sys.stderr)
         sys.exit(1)
     if results:
         try:
             parsed = json.loads(results.read())
             return parsed
         except BaseException as err:
-            print >> sys.stderr, err
+            print(err, file=sys.stderr)
             raise GitHubAPIError
     return None
 
@@ -104,7 +105,7 @@ def get_version_from_string(str):
     return str.split(" ", 1)[0]
 
 def run_command(cmd):
-    print ' '.join(cmd)
+    print(' '.join(cmd))
     subprocess.check_call(cmd)
 
 def main():
@@ -147,7 +148,7 @@ def main():
         sys.exit("Option --token is required!")
     next_version = opts.next_version
     if opts.dry_run:
-        print "Running in 'dry-run' mode.."
+        print("Running in 'dry-run' mode..")
     publish_user, publish_repo = opts.user_repo.split('/')
     token = opts.token
     release_icon = opts.release_icon
@@ -187,10 +188,10 @@ def main():
         '/repos/%s/%s/releases' % (publish_user, publish_repo), token)
     for rel in published_releases:
         if rel['tag_name'] == tag_name:
-            print >> sys.stderr, (
+            print((
                 "There's already a published release on GitHub with the tag "
                 "{0}. It should first be manually removed. "
-                "Release data printed below:".format(tag_name))
+                "Release data printed below:".format(tag_name)), file=sys.stderr)
             pprint(rel, stream=sys.stderr)
             sys.exit()
 
@@ -238,12 +239,12 @@ def main():
             token,
             data=release_data)
         if create_release:
-            print "Release successfully created. Server response:"
+            print("Release successfully created. Server response:")
             pprint(create_release)
-            print
+            print()
 
     # increment version
-    print "Incrementing version to %s.." % next_version
+    print("Incrementing version to %s.." % next_version)
     set_version('%s.%s' % (clean_version(next_version), get_commit_count() + 1))
 
     # increment changelog
@@ -266,8 +267,8 @@ def main():
         run_command(['git', 'merge', tag_name])
         run_command(['git', 'push', 'origin', 'main'])
     else:
-        print ("Ended dry-run mode. Final state of the munkireport-php repo can be "
-               "found at: %s" % munkireport_root)
+        print(("Ended dry-run mode. Final state of the munkireport-php repo can be "
+               "found at: %s" % munkireport_root))
     # clean up
 
 

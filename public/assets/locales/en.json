@@ -82,6 +82,7 @@
         "today": "Backed up today",
         "week_plus": "Latest backup more than a week ago"
     },
+    "beta": "Beta",
     "boot_time": "Booted",
     "buildversion": "Build Version",
     "bundle_id": "Bundle ID",
@@ -252,6 +253,7 @@
         "date_downloaded": "Date Downloaded",
         "date_updated": "Date Updated",
         "detail_widgets": "Client Detail Widgets",
+        "in_search_path": "Module in Search Path",
         "install_command": "Install Command",
         "install_info": "To install this module, run the following Composer commands from within your MunkiReport directory:",
         "install_more_info": "For more information about installing modules, visit the",
@@ -353,7 +355,9 @@
         "pdo": "PDO Extension",
         "pdodrivers": "PDO Database drivers",
         "php": "PHP",
+        "post_max_size": "POST Max Size",
         "soap": "SOAP Extension",
+        "upload_max_filesize": "Upload Max Size",
         "version": "Version"
     },
     "physical_memory": "Memory",
