@@ -35,7 +35,7 @@ param databaseLogin string = 'munkireport'
 @secure()
 param databaseLoginPassword string = newGuid()
 
-var linuxFxVersion = useScmDeployment ? 'PHP|8.1' : 'DOCKER|${containerImage}'
+var linuxFxVersion = useScmDeployment ? 'PHP|8.2' : 'DOCKER|${containerImage}'
 
 var appServiceName = '${webAppName}-webapp-${uniqueString(resourceGroup().id)}'
 var appServicePlanName = '${webAppName}-asp-${uniqueString(resourceGroup().id)}'
