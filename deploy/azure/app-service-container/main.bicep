@@ -1,4 +1,6 @@
-@description('Base name of the resource such as web app name and app service plan ')
+metadata description = 'This template deploys MunkiReport PHP as an App Service Container App on a Linux Application Service Plan'
+
+@description('Base name of the resource such as web app name and app service plan')
 @minLength(2)
 param webAppName string = 'MunkiReportPHP'
 
@@ -7,6 +9,9 @@ param sku string = 'B1'
 
 @description('The container image to run')
 param containerImage string = 'ghcr.io/munkireport/munkireport-php:wip'
+
+@description('Deploy from a git repository instead of the container build. WARNING: this can be very broken')
+param useScmDeployment bool = false
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
@@ -30,8 +35,7 @@ param databaseLogin string = 'munkireport'
 @secure()
 param databaseLoginPassword string = newGuid()
 
-//var linuxFxVersion = 'DOCKER|${containerImage}'
-var linuxFxVersion = 'PHP|8.1'
+var linuxFxVersion = useScmDeployment ? 'PHP|8.1' : 'DOCKER|${containerImage}'
 
 var appServiceName = '${webAppName}-webapp-${uniqueString(resourceGroup().id)}'
 var appServicePlanName = '${webAppName}-asp-${uniqueString(resourceGroup().id)}'
@@ -50,6 +54,7 @@ resource dataStorage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   }
 }
 
+/// Azure Files is used as the persistent storage of the App Service
 resource dataStorageFiles 'Microsoft.Storage/storageAccounts/fileServices@2022-09-01' = {
   name: 'default'
   parent: dataStorage
@@ -61,6 +66,18 @@ resource dataShare 'Microsoft.Storage/storageAccounts/fileServices/shares@2022-0
   properties: {
     enabledProtocols: 'SMB'
   }
+}
+
+/// Azure Storage Queue is used as the default queue driver for Laravel
+resource dataStorageQueues 'Microsoft.Storage/storageAccounts/queueServices@2022-09-01' = {
+  name: 'default'
+  parent: dataStorage
+}
+
+resource workerQueue 'Microsoft.Storage/storageAccounts/queueServices/queues@2022-09-01' = {
+  name: ''
+  parent: dataStorageQueues
+
 }
 
 
@@ -186,4 +203,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
 
 
 
-output url string = 'https://${appService.properties.defaultHostName}/'
+output hostname string = appService.properties.defaultHostName
+//output storageAccountEndpoints array = [for (endpoint, i) in dataStorage.properties.primaryEndpoints: {
+//
+//}]
