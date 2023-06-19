@@ -142,8 +142,8 @@ echo "# Preparing ${MUNKIPATH}"
 /bin/rm -rf "${MUNKIPATH}preflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}preflight.d"
 /bin/rm -rf "${MUNKIPATH}postflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}postflight.d"
 
-# Make symlink to Mac Admin Python 3.10
-/bin/rm -rf "${MUNKIPATH}munkireport-python3"; /bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/bin/python3.10" "${MUNKIPATH}munkireport-python3"
+# Make symlink to macadmins python3 https://github.com/macadmins/python
+/bin/rm -rf "${MUNKIPATH}munkireport-python3"; /bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3" "${MUNKIPATH}munkireport-python3"
 
 # Add the MunkiReport folder to the machine's path
 /bin/mkdir -p "${INSTALLROOT}/private/etc/paths.d/"
