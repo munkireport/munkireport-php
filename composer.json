@@ -45,7 +45,7 @@
     "munkireport/tag": "^3.0",
     "munkireport/reportdata": "^3.0",
     "ext-dom": "*",
-    "munkireport/warranty": "^4.0",
+    "munkireport/warranty": "^5.0",
     "illuminate/events": "~7.0|~10.0",
     "munkireport/comment": "^4.0",
     "munkireport/supported_os": "^2.0",
