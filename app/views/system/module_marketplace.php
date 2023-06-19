@@ -296,13 +296,27 @@
         if(['==','===','<','<=','>','>=','!=','!=='].indexOf(comparator) == -1) {
             throw new Error('Invalid comparator. ' + comparator);
         }
-        var v1parts = v1.replace('b', '.').replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace('b', '.').replace(/[^\d.-]/g, '').split('.');
+        var v1parts = v1.replace('b', '.0.0.').replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace('b', '.0.0.').replace(/[^\d.-]/g, '').split('.');
         
-        // Compare beta/pre-release versions
-        if (v1parts.length == 2){
+        if (v1parts.length == 4){
+            v1parts.push("999999");
+        } else if (v1parts.length == 3){
+            v1parts.push("0");
+            v1parts.push("999999");
+        } else if (v1parts.length == 2){
+            v1parts.push("0");
+            v1parts.push("0");
             v1parts.push("999999");
         }
-        if (v2parts.length == 2){
+
+        if (v2parts.length == 4){
+            v2parts.push("999999");
+        } else if (v2parts.length == 3){
+            v2parts.push("0");
+            v2parts.push("999999");
+        } else if (v2parts.length == 2){
+            v2parts.push("0");
+            v2parts.push("0");
             v2parts.push("999999");
         }
 
