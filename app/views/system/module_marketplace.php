@@ -96,13 +96,16 @@
 
                                     // Get latest version number
                                     for (const pkg in pkg_details) {
-                                        compare_version = pkg_details[pkg]['version'].replace(/[^\d.-]/g, '')
+                                        compare_version = pkg_details[pkg]['version'].replace(/[^\d.b-]/g, '')
+
                                         if (!compare_version.includes("-") && compare_version !== '' && compareVersions(latest_ver, '<', compare_version)) {
                                             latest_ver = pkg_details[pkg]['version'].replace(/[^0-9b.]/g, '')
                                             update_time = pkg_details[pkg]['time']
                                             // Check if it's a beta/pre-release module
                                             if (pkg_details[pkg]['version_normalized'].includes("beta")){
                                                 is_beta = true
+                                            } else {
+                                                is_beta = false
                                             }
                                         }
                                     };
@@ -293,10 +296,20 @@
         if(['==','===','<','<=','>','>=','!=','!=='].indexOf(comparator) == -1) {
             throw new Error('Invalid comparator. ' + comparator);
         }
-        var v1parts = v1.replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace(/[^\d.-]/g, '').split('.');
+        var v1parts = v1.replace('b', '.').replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace('b', '.').replace(/[^\d.-]/g, '').split('.');
+        
+        // Compare beta/pre-release versions
+        if (v1parts.length == 2){
+            v1parts.push("999999");
+        }
+        if (v2parts.length == 2){
+            v2parts.push("999999");
+        }
+
         var maxLen = Math.max(v1parts.length, v2parts.length);
         var part1, part2;
         var cmp = 0;
+
         for(var i = 0; i < maxLen && !cmp; i++) {
             part1 = parseInt(v1parts[i], 10) || 0;
             part2 = parseInt(v2parts[i], 10) || 0;
