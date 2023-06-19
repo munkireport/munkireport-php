@@ -33,7 +33,7 @@
     "munkireport/printer": "^3.0",
     "symfony/yaml": "^3.4",
     "league/flysystem": "~1.0",
-    "php": ">=7.3",
+    "php": ">=8.1",
     "munkireport/power": "^3.0",
     "munkireport/wifi": "^3.0",
     "munkireport/softwareupdate": "^3.0",
