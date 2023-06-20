@@ -367,6 +367,8 @@ class Module_controller extends Controller
 
     // Module, override in child object
     protected $module_path;
+    protected $view_path;
+    protected $modules;
 
     public function get_script($filename = '')
     {

@@ -69,7 +69,7 @@ class SeedCommand extends Command
         $factory_models = [];
         foreach($moduleMgr->getInfo() as $moduleName => $info){
             // print("Finding model factories in " . $moduleMgr->getPath($moduleName). "\n");
-            $factorypath = $moduleMgr->getPath($moduleName, "/${moduleName}_factory.php");
+            $factorypath = $moduleMgr->getPath($moduleName, ("/".$moduleName."_factory.php"));
 
             if(is_file($factorypath)){
                 $factory->load($factorypath);

@@ -1,32 +1,18 @@
 <?php $this->view('partials/head'); ?>
-
 <div class="container">
-
     <div class="row">
-
         <h3 class="col-lg-12" data-i18n="system.status"></h3>
-
     </div>
-
     <div class="row">
-
         <div id="mr-phpinfo" class="col-lg-6">
-
             <h4 data-i18n="php.php"></h4>
-
-            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
-
+            <table class="table table-striped table-condensed"><tbody><tr><td data-i18n="loading"></td></tr></tbody></table>
         </div>
-
         <div id="mr-db" class="col-lg-6">
-
             <h4 data-i18n="database"></h4>
-
-            <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
-
+            <table class="table table-striped table-condensed"><tbody><tr><td data-i18n="loading"></td></tr></tbody></table>
         </div>
     </div>
-
 </div>  <!-- /container -->
 
 <script>
@@ -46,11 +32,12 @@ $(document).on('appReady', function(e, lang) {
               data[prop] = parseFloat(data[prop]).toFixed(2) + ' MB'
             }
 
-            table.append($('<tr>')
-                .append($('<th>')
-                    .html(i18n.t(prop)))
-                .append($('<td>')
-                    .html(data[prop])))
+            table.append($('<tbody>')
+                    .append($('<tr>')
+                        .append($('<th>')
+                            .html(i18n.t(prop)))
+                        .append($('<td>')
+                            .html(data[prop]))))
         }
     })
     .fail(function( jqxhr, textStatus, error ) {
@@ -68,22 +55,23 @@ $(document).on('appReady', function(e, lang) {
         //console.log(data);
 
         // Create php info dom structure
-        var phpinfo = $('<table>').addClass('table table-striped');
+        var phpinfo = $('<table>').addClass('table table-striped table-condensed');
         for(var section in data) {
-            phpinfo
-                .append($('<tr>')
-                    .append($('<th>')
-                        .attr('colspan', 2)
-                        .addClass('info')
-                        .append($('<h4>')
-                            .text(section))))
+            phpinfo.append($('<tbody>')
+                    .append($('<tr>')
+                        .append($('<th>')
+                            .attr('colspan', 2)
+                            .addClass('info')
+                            .append($('<h4>')
+                                .text(section)))))
 
             for(var sectiondata in data[section]){
-                phpinfo.append($('<tr>')
-                    .append($('<th>')
-                        .text(sectiondata))
-                    .append($('<td>')
-                        .html(data[section][sectiondata])));
+                phpinfo.append($('<tbody>')
+                        .append($('<tr>')
+                            .append($('<th>')
+                                .text(sectiondata))
+                            .append($('<td>')
+                                .html(data[section][sectiondata]))));
             }
 
         }
@@ -100,7 +88,9 @@ $(document).on('appReady', function(e, lang) {
             'php.dom': data.dom ? data.dom['DOM/XML'] : false || false,
             'php.allow_url_fopen': coreVars['allow_url_fopen'] || false,
             'php.pdo': data.PDO ? data.PDO['PDO support'] : false || false,
-            'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false
+            'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false,
+            'php.post_max_size': coreVars['post_max_size'],
+            'php.upload_max_filesize': coreVars['upload_max_filesize']
         };
         for(var prop in list) {
 
@@ -110,12 +100,41 @@ $(document).on('appReady', function(e, lang) {
             if(list[prop] === true){
                 list[prop] = '<span class="label label-success">Yes</span>';
             }
+            if(list[prop] === "disabled"){
+                list[prop] = '<span class="label label-danger">Disabled</span>';
+            }
+            if(list[prop] === "enabled"){
+                list[prop] = '<span class="label label-success">Enabled</span>';
+            }
+            if(list[prop] === "Off (Off)"){
+                list[prop] = '<span class="label label-danger">Off</span>';
+            }
+            if(list[prop] === "On (On)"){
+                list[prop] = '<span class="label label-success">On</span>';
+            }
+            if(prop == "php.post_max_size"){
+                var post_max_size = list[prop].split('(').pop().split(')')[0];
+                if (post_max_size.replace(/\D/g, "") < 20){
+                    list[prop] = post_max_size+' — <span class="label label-warning">20M Recommended</span>';
+                } else {
+                    list[prop] = post_max_size;
+                }
+            }
+            if(prop == "php.upload_max_filesize"){
+                var upload_max_filesize = list[prop].split('(').pop().split(')')[0];
+                if (upload_max_filesize.replace(/\D/g, "") < 20){
+                    list[prop] = upload_max_filesize+' — <span class="label label-warning">20M Recommended</span>';
+                } else {
+                    list[prop] = upload_max_filesize;
+                }
+            }
 
-            table.append($('<tr>')
-                .append($('<th>')
-                .html(i18n.t(prop)))
-                .append($('<td>')
-                    .html(list[prop])))
+            table.append($('<tbody>')
+                    .append($('<tr>')
+                        .append($('<th>')
+                            .html(i18n.t(prop)))
+                        .append($('<td>')
+                            .html(list[prop]))))
 
         }
 

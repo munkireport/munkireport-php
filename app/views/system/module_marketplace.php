@@ -20,12 +20,13 @@
                         <th data-i18n="module_marketplace.date_downloaded" data-colname='date_downloaded'></th>
                         <th data-i18n="module_marketplace.date_updated" data-colname='date_updated'></th>
                         <th data-i18n="module_marketplace.module_location" data-colname='module_location'></th>
+                        <th data-i18n="module_marketplace.in_search_path" data-colname='in_search_path'></th>
                         <th data-i18n="module_marketplace.url" data-colname='url'></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td data-i18n="listing.loading" colspan="14" class="dataTables_empty"></td>
+                        <td data-i18n="listing.loading" colspan="15" class="dataTables_empty"></td>
                     </tr>
                 </tbody>
             </table>
@@ -35,14 +36,14 @@
 
 <script>
 
-	$(document).on('appUpdate', function(e){
-		var oTable = $('.table').DataTable();
-		oTable.ajax.reload();
-		return;
-	});
+    $(document).on('appUpdate', function(e){
+        var oTable = $('.table').DataTable();
+        oTable.ajax.reload();
+        return;
+    });
 
-	$(document).on('appReady', function(e, lang) {
-        
+    $(document).on('appReady', function(e, lang) {
+
         // Get JSON and generate table
         $.ajax({
             type: "GET",
@@ -67,6 +68,7 @@
                             { "data" : "date_downloaded"},
                             { "data" : "date_updated"},
                             { "data" : "module_location"},
+                            { "data" : "in_search_path"},
                             { "data" : "url"}
                         ],
                         createdRow: function(nRow, aData, iDataIndex) {
@@ -74,10 +76,10 @@
                             // Add row count
                             row_count = parseInt(row_count) + 1;
 
-                            var module=$('td:eq(0)', nRow).html();
-                            var installed=$('td:eq(2)', nRow).html();
-                            var latest_ver=$('td:eq(4)', nRow).html();
-                            var maintainer=$('td:eq(6)', nRow).html();
+                            var module=$('td:eq(0)', nRow).text();
+                            var installed=$('td:eq(2)', nRow).text();
+                            var latest_ver=$('td:eq(4)', nRow).text();
+                            var maintainer=$('td:eq(6)', nRow).text();
 
                             // Get monthly downloads, live versions, and uninstalled modules
                             $('td:eq(9)', nRow).text(""); // Blank out the row
@@ -89,14 +91,22 @@
 
                                     var pkg_details = data['package']['versions']
                                     var latest_ver = "0"
-                                    var installed_ver=$('td:eq(3)', nRow).html();
+                                    var is_beta = false
+                                    var installed_ver=$('td:eq(3)', nRow).text();
 
                                     // Get latest version number
                                     for (const pkg in pkg_details) {
-                                        compare_version = pkg_details[pkg]['version'].replace(/[^\d.-]/g, '')
+                                        compare_version = pkg_details[pkg]['version'].replace(/[^\d.b-]/g, '')
+
                                         if (!compare_version.includes("-") && compare_version !== '' && compareVersions(latest_ver, '<', compare_version)) {
-                                            latest_ver = compare_version
+                                            latest_ver = pkg_details[pkg]['version'].replace(/[^0-9b.]/g, '')
                                             update_time = pkg_details[pkg]['time']
+                                            // Check if it's a beta/pre-release module
+                                            if (pkg_details[pkg]['version_normalized'].includes("beta")){
+                                                is_beta = true
+                                            } else {
+                                                is_beta = false
+                                            }
                                         }
                                     };
 
@@ -105,10 +115,16 @@
 
                                     // Check if update is available
                                     if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
-                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
-                                        $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
+                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^0-9b.]/g, ''))
+
+                                        if (is_beta){
+                                            $('td:eq(5)', nRow).html(mr.label((i18n.t('yes')+" - "+i18n.t('beta')), 'warning'))
+                                        } else {
+                                            $('td:eq(5)', nRow).html(mr.label(i18n.t('yes'), 'success'))
+                                        }
+
                                     } else {
-                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^\d.-]/g, ''))
+                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^0-9b.]/g, ''))
                                         $('td:eq(5)', nRow).html(i18n.t('no'))
                                     }
 
@@ -167,10 +183,16 @@
                                 $('td:eq(11)', nRow).html('<span title="'+moment(date).fromNow()+'">'+moment(date).format('llll')+'</span>');
                             }
 
+                            // Format in_search_path
+                            var colvar=$('td:eq(13)', nRow).html();
+                            colvar = colvar == '1' ? i18n.t('yes') :
+                            (colvar === '0' ? i18n.t('no') : '')
+                            $('td:eq(13)', nRow).text(colvar)
+
                             // Format repo link
-                            var colvar = $('td:eq(13)', nRow).html();
+                            var colvar = $('td:eq(14)', nRow).html();
                             if (colvar){
-                                $('td:eq(13)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
+                                $('td:eq(14)', nRow).html('<a target="_blank" href="'+colvar+'">'+colvar+'</a>');
                             }
                         }
                     });
@@ -274,10 +296,34 @@
         if(['==','===','<','<=','>','>=','!=','!=='].indexOf(comparator) == -1) {
             throw new Error('Invalid comparator. ' + comparator);
         }
-        var v1parts = v1.replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace(/[^\d.-]/g, '').split('.');
+        var v1parts = v1.replace('b', '.0.0.').replace(/[^\d.-]/g, '').split('.'), v2parts = v2.replace('b', '.0.0.').replace(/[^\d.-]/g, '').split('.');
+        
+        if (v1parts.length == 4){
+            v1parts.push("999999");
+        } else if (v1parts.length == 3){
+            v1parts.push("0");
+            v1parts.push("999999");
+        } else if (v1parts.length == 2){
+            v1parts.push("0");
+            v1parts.push("0");
+            v1parts.push("999999");
+        }
+
+        if (v2parts.length == 4){
+            v2parts.push("999999");
+        } else if (v2parts.length == 3){
+            v2parts.push("0");
+            v2parts.push("999999");
+        } else if (v2parts.length == 2){
+            v2parts.push("0");
+            v2parts.push("0");
+            v2parts.push("999999");
+        }
+
         var maxLen = Math.max(v1parts.length, v2parts.length);
         var part1, part2;
         var cmp = 0;
+
         for(var i = 0; i < maxLen && !cmp; i++) {
             part1 = parseInt(v1parts[i], 10) || 0;
             part2 = parseInt(v2parts[i], 10) || 0;
@@ -288,11 +334,11 @@
         }
         return eval('0' + comparator + cmp);
     }
-    
+
     function isFloat(n){
         return Number(n) === n && n % 1 !== 0;
     }
-    
+
     // Function to sort tables
     function sortTable(table) {
       var rows, switching, i, x, y, shouldSwitch;

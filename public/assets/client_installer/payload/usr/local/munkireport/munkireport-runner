@@ -1,41 +1,196 @@
-#!/usr/local/munkireport/munkireport-python2
+#!/usr/local/munkireport/munkireport-python3
 # encoding: utf-8
-'''Postflight script'''
+
+# Main script for MunkiReport (https://github.com/munkireport/munkireport-php)
+# Largely witten by Arjen van Bochoven
+# Updated by Tuxudo and MagerValp
 
 from munkilib import reportcommon
 from munkilib import FoundationPlist
+from munkilib import prefs
+from munkilib import osutils
+from munkilib import munkilog
+
 import hashlib
 import sys
 import os
+import optparse
+import re
+import objc # Used only for version printing
+import shutil
+
+def get_version():
+    return reportcommon.pref('Version')
+
+def get_receipt_info():
+    mr_receipt = FoundationPlist.readPlist("/private/var/db/receipts/com.github.munkireport.plist")
+
+    out = {'PackageVersion':'','InstallDate':'','PackageFileName':''}
+
+    for receipt_entry in mr_receipt:
+        if receipt_entry == "PackageVersion":
+            out["PackageVersion"] = mr_receipt[receipt_entry]
+        elif receipt_entry == "InstallDate":
+            out["InstallDate"] = str(mr_receipt[receipt_entry])
+        elif receipt_entry == "PackageFileName":
+            out["PackageFileName"] = mr_receipt[receipt_entry]
+        
+    return out
 
 def main():
     '''Main'''
 
+    parser = optparse.OptionParser()
+    parser.set_usage('Usage: %prog [options]')
+    parser.add_option('--version', '-V', action='store_true',
+                      help='Print the version of the munki tools and exit.')
+    parser.add_option('--show-config', action='store_true',
+                      help='Print the current configuration and exit.')
+
+    parser.add_option('--scriptsonly', '-S', action='store_true',
+                      help='Runs the MunkiReport postflight scripts only.')
+    parser.add_option('--uploadonly', '-U', action='store_true',
+                      help='Skips running the MunkiReport scripts and only uploads the cache files to the server.')
+    parser.add_option('--forceall', '-A', action='store_true',
+                      help='Forces all the cache files to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
+    parser.add_option('--force', '-F', dest="force_modules",
+                      help='Forces the specified module\'s cache file to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
+
+    parser.add_option('--remove-python2', action='store_true',
+                      help='Uninstalls MunkiReport\'s Python 2 pkg.')
+    parser.add_option('--uninstall-munkireport', action='store_true',
+                      help='Fully uninstalls MunkiReport.')
+
+    options, dummy_arguments = parser.parse_args()
+  
+    if options.version:
+        print ("MunkiReport-PHP (https://github.com/munkireport/munkireport-php)")
+        print ("Version: "+get_version())
+        if os.path.isfile("/private/var/db/receipts/com.github.munkireport.plist"):
+            print ("PKG version: "+get_receipt_info()["PackageVersion"])
+        exit(0)
+
+    # Check to see if we're root
+    if os.geteuid() != 0:
+        reportcommon.display_error('You must run this as root!')
+        exit(0)
+
+    # Print MunkiReport's current config
+    if options.show_config:
+        receipt_info = get_receipt_info()
+        prefs.print_config()
+        print ('')
+        if os.path.isfile("/usr/local/munkireport/munkireport-python3"):
+            print ('    Python 3 Interpreter: '+os.readlink("/usr/local/munkireport/munkireport-python3"))
+        else:
+            print ('    Python 3 Interpreter: Not detected!')
+        print ('        Python 3 Version: '+sys.version)
+        print ('          PyObjC Version: '+objc.__version__)
+        print ('')
+        print ('     MunkiReport Version: '+get_version())
+        if os.path.isfile("/private/var/db/receipts/com.github.munkireport.plist"):
+            print (" MunkiReport PKG Version: "+receipt_info["PackageVersion"])
+            print ("    MunkiReport PKG Name: "+receipt_info["PackageFileName"])
+            print ("MunkiReport Install Date: "+receipt_info["InstallDate"])
+        print ('')
+        print ('         Modules enabled: '+prefs.get_config_level("MunkiReport", 'ReportItems', prefs.pref('ReportItems')))
+        print (reportcommon.pref('ReportItems'))
+        exit(0)
+
+    # Remove MunkiReport's Python 2 pkg
+    if options.remove_python2:
+        if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isdir("/Library/MunkiReport/Python.framework/Versions/2.7/"):
+            reportcommon.display_detail('Removing MunkiReport\'s Python 2 installation...')
+            print ('Removing MunkiReport\'s Python 2 installation...')
+            if os.path.isfile("/usr/local/munkireport/munkireport-python2"):
+                os.remove("/usr/local/munkireport/munkireport-python2")
+            if os.path.isdir("/Library/MunkiReport/Python.framework/Versions/2.7/"):
+                shutil.rmtree("/Library/MunkiReport/Python.framework/Versions/2.7/", ignore_errors=True)
+            reportcommon.display_detail('Complete')
+            print ('Complete')
+        else:
+            reportcommon.display_detail('MunkiReport\'s Python 2 not detected')
+            print ('MunkiReport\'s Python 2 not detected')
+        exit(0)
+
+    # Uninstall MunkiReport
+    if options.uninstall_munkireport:
+        reportcommon.display_detail('Uninstalling MunkiReport...')
+        print ('Uninstalling MunkiReport...')
+        if os.path.isfile("/Library/LaunchDaemons/com.github.munkireport.runner.plist"):
+            os.remove("/Library/LaunchDaemons/com.github.munkireport.runner.plist")
+        if os.path.isfile("/usr/local/munki/postflight"):
+            os.remove("/usr/local/munki/postflight")
+        if os.path.isfile("/usr/local/munki/report_broken_client"):
+            os.remove("/usr/local/munki/report_broken_client")
+        if os.path.isfile("/var/db/receipts/com.github.munkireport.plist"):
+            os.remove("/var/db/receipts/com.github.munkireport.plist")
+        if os.path.isfile("/var/db/receipts/com.github.munkireport.bom"):
+            os.remove("/var/db/receipts/com.github.munkireport.bom")
+        if os.path.isfile("/Library/Preferences/MunkiReport.plist"):
+            os.remove("/Library/Preferences/MunkiReport.plist")
+        if os.path.isdir("/Library/MunkiReport/"):
+            shutil.rmtree("/Library/MunkiReport/", ignore_errors=True)
+        if os.path.isdir("/usr/local/munkireport/"):
+            shutil.rmtree("/usr/local/munkireport/", ignore_errors=True)
+        reportcommon.display_detail('Completed uninstallation of MunkiReport')
+        print ('Completed uninstallation of MunkiReport')
+        exit(0)
+
+    if prefs.pref('LogToSyslog'):
+        munkilog.configure_syslog()
+
+    # Check if we are to force upload module cache file(s)
+    if options.forceall:
+        ForceUpload = "FORCE_UPLOAD_ALL"
+    elif options.force_modules:
+        ForceUpload = options.force_modules
+    else:
+        ForceUpload = False
+
+    # Set runtype
+    runtype = 'auto'
+    reportcommon.set_verbosity(3)
+    
+    # Reset our errors and warnings files
+    munkilog.rotate_errors()
+    munkilog.rotate_warnings()
+
+    # Main MunkiReport runner block vvv
     reportcommon.display_detail("## Starting MunkiReport run")
 
-    # set runtype
-    runtype = 'auto'
+    # Check for MunkiReport's Python 2 installation
+    if os.path.isfile("/usr/local/munkireport/munkireport-python2") or os.path.isfile("/Library/MunkiReport/Python.framework/Versions/2.7/bin/python"):
+        reportcommon.display_detail('*' * 63)
+        reportcommon.display_detail("#! Warning: MunkiReport's Python 2 detected!")
+        reportcommon.display_detail("#! This is no longer used by MunkiReport and should be removed!")
+        reportcommon.display_detail('*' * 63)
 
-    reportcommon.set_verbosity(3)
-
-    scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
-
-    # Try to run postflight.d
-    postflightscriptdir = os.path.join(scriptdir, "scripts")
-    reportcommon.rundir(postflightscriptdir, runtype, False)
+    # Try to run postflight.d if not skipping scripts
+    if options.uploadonly:
+        reportcommon.display_detail("# Skipping the execution of MunkiReport scripts")
+    else:
+        scriptdir = os.path.realpath(os.path.dirname(sys.argv[0]))
+        postflightscriptdir = os.path.join(scriptdir, "scripts")
+        reportcommon.rundir(postflightscriptdir, runtype, False)
 
     # Get serial
     hardware_info = reportcommon.get_hardware_info()
     hardware_info['computer_name'] = reportcommon.get_computername()
     hardware_info['cpu'] = reportcommon.get_cpuinfo()
-    hardware_info['cpu_arch'] = os.uname()[4]
+    hardware_info['cpu_arch'] = ''.join(re.findall(r'RELEASE_([iA-Z1-9]+)(_\d+)?', os.uname()[3])[0]).lower()
     hardware_info['hostname'] = os.uname()[1]
-    hardware_info['os_version'] = \
-        reportcommon.getOsVersion(only_major_minor=False)
-    hardware_info['buildversion'] = \
-        reportcommon.get_buildversion()
+    hardware_info['os_version'] = reportcommon.getOsVersion(only_major_minor=False)
+    hardware_info['buildversion'] = reportcommon.get_buildversion()
     serial = hardware_info.get('serial_number', 'NO_SERIAL')
-    hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
+
+    # Check if we have a serial number, if not rerun the check
+    if serial == 'NO_SERIAL':
+        hardware_info = reportcommon.get_hardware_info()
+        serial = hardware_info.get('serial_number', 'NO_SERIAL')
+        hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
+    else:
+        hw_info_plist = FoundationPlist.writePlistToString(hardware_info)
 
     report_info = {}
     report_info['console_user'] = "%s" % reportcommon.getconsoleuser()
@@ -51,14 +206,19 @@ def main():
         {'hash':hashlib.md5(report_info_plist).hexdigest(), \
             'data':report_info_plist}}
 
-    # Read config file /Library/Preferences/Munkireport.plist
-    config_items = reportcommon.pref('ReportItems') or {}
+    # Upload cache files to server if not scriptsonly
+    if options.scriptsonly:
+        reportcommon.display_detail("# Skipping uploading cache files to MunkiReport server")
+    else:
+        # Read config file /Library/Preferences/Munkireport.plist
+        config_items = reportcommon.pref('ReportItems') or {}
 
-    for key, val in config_items.items():
-        reportcommon.display_detail("Requesting %s" % key)
-        items[key] = {'path':val}
+        for key, val in config_items.items():
+            reportcommon.display_detail("Requesting %s" % key)
+            items[key] = {'path':val}
 
-    reportcommon.process(serial, items)
+        reportcommon.process(serial, items, ForceUpload)
+
     reportcommon.finish_run()
 
 if __name__ == '__main__':

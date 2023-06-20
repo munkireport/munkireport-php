@@ -1,4 +1,36 @@
+### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (June 20, 2023)  🌋
+
+MDOYVR 2023 Release: MunkiReport is now Python 3 based
+
+IMPORTANT CHANGES
+You will need to install Mac Admins Python 3.10 first on the client or MunkiReport will not run. Download it from [https://github.com/macadmins/python/releases/tag/v3.10.9.80716](https://github.com/macadmins/python/releases/tag/v3.10.9.80716)
+
+MunkiReport now fully supports PHP 8 and has been tested with PHP 8.2. PHP 7 is no longer supported, but may continue to work.
+
+MODULE UPDATES
+All Python based modules have been updated to have a Python 3 based script.
+
+NEW FEATURES
+- Client flags: `munkireport-runner -help`
+- Beta module tagging in Module Marketplace
+- `munkireport-runner` now in system $PATH
+- Checks for and warns if MunkiReport's Python 2.7 is installed
+- Chunks uploaded data when PHP's upload limit is too small
+- Module Marketplace now checks if module is in search path
+- MunkiReport logs on client are now rotated
+- munkilibs updated to 6.2
+
+FIXES
+- Reporting on Silicon Macs
+- Fixes cross site security issue
+
+
 ### [5.7.1](https://github.com/munkireport/munkireport-php/compare/v5.7.0...5.x) (February 17, 2022) 🐍
+
+Maintenance release - please read the release notes for 5.7.0
+
+FIXES
+Update sentinelone to v6.x
 
 ### [5.7.0](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (February 09, 2022) 🐍
 

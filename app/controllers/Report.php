@@ -41,7 +41,7 @@ class Report extends Controller
             }
 
             if (! in_array($_POST['passphrase'], $auth_list)) {
-                $this->error('passphrase "'.$_POST['passphrase'].'" not accepted');
+                $this->error('passphrase is not accepted');
             }
         }
 
@@ -50,7 +50,7 @@ class Report extends Controller
             $this->error("Serial is missing or empty");
         }
 
-        if ($_POST['serial'] !== filter_var($_POST['serial'], FILTER_SANITIZE_STRING))
+        if ($_POST['serial'] !== filter_var($_POST['serial'], FILTER_UNSAFE_RAW))
         {
             $this->error("Serial contains illegal characters");
         }
@@ -72,7 +72,35 @@ class Report extends Controller
             $this->error("Items are missing");
         }
 
-        $itemarr = ['error' => '', 'danger' => '', 'warning' => '', 'info' => ''];
+        // Get PHP's 'upload_max_filesize', used to warn about low limits and limit larger files
+        $upload_max_filesize = trim(ini_get('upload_max_filesize'));
+        $last = strtolower($upload_max_filesize[strlen($upload_max_filesize)-1]);
+        $upload_max_filesize = preg_replace("/[^0-9.]/", "", $upload_max_filesize);
+        switch($last) 
+        {
+            case 'g':
+            $upload_max_filesize *= 1024;
+            case 'm':
+            $upload_max_filesize *= 1024;
+            case 'k':
+            $upload_max_filesize *= 1024;
+        }
+
+        // Get PHP's 'post_max_size', used to warn about low limits and chunk larger uploads
+        $post_max_size = trim(ini_get('post_max_size'));
+        $last = strtolower($post_max_size[strlen($post_max_size)-1]);
+        $post_max_size = preg_replace("/[^0-9.]/", "", $post_max_size);
+        switch($last) 
+        {
+            case 'g':
+            $post_max_size *= 1024;
+            case 'm':
+            $post_max_size *= 1024;
+            case 'k':
+            $post_max_size *= 1024;
+        }
+
+        $itemarr = ['error' => '', 'danger' => '', 'warning' => '', 'info' => '', 'upload_max_filesize' => $upload_max_filesize, 'post_max_size' => $post_max_size];
 
         // Try to register client and lookup hashes in db
         try {

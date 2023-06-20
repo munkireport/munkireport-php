@@ -2,9 +2,7 @@
 MunkiReport
 ===============
 
-master: [![Build Status](https://travis-ci.org/munkireport/munkireport-php.svg?branch=master)](https://travis-ci.org/munkireport/munkireport-php)  wip: [![Build Status](https://travis-ci.org/munkireport/munkireport-php.svg?branch=wip)](https://travis-ci.org/munkireport/munkireport-php)
-
-MunkiReport is a reporting client for macOS. While originally dependent on [Munki](https://github.com/munki/munki/), MunkiReport is now able to run stand-alone or to be coupled with Munki, Jamf or other macOS management solutions.
+MunkiReport is a reporting client for macOS. While originally dependent on [Munki](https://github.com/munki/munki/), MunkiReport is able to run stand-alone or to be coupled with Munki, Jamf or other macOS management solutions.
 
 ![Dashboard view](https://github.com/munkireport/munkireport-php/wiki/assets/pics/dashboard.png)
 
@@ -31,7 +29,7 @@ System Requirements
 ### Serverside:
 
 * A webserver (runs fine with Apache, IIS and nginx)
-* php version 7.2.5 or higher with pdo-sqlite3 and libxml
+* php version 8.1 or higher with pdo-sqlite3 and libxml
 
 ### Clientside
 
@@ -81,6 +79,5 @@ MunkiReport makes use of these fine software packages:
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons
 * [adLDAP](https://github.com/Adldap2/Adldap2) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
-* [libgsx](https://github.com/filipp/gsxlib) libgsx library used for GSX integration 
 
 
