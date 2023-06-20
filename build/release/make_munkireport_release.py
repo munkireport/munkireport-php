@@ -16,7 +16,8 @@
 import json
 import optparse
 import os
-import plistlib
+import certifi
+import ssl
 import re
 import subprocess
 import sys
@@ -52,7 +53,9 @@ def api_call(endpoint, token, baseurl='https://api.github.com', data=None,
 
     req = urllib.request.Request(baseurl + endpoint, headers=headers)
     try:
-        results = urllib.request.urlopen(req, data=data)
+        context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        context.load_verify_locations(certifi.where())
+        results = urllib.request.urlopen(req, data=data, context=context)
     except urllib.error.HTTPError as err:
         print("HTTP error making API call!", file=sys.stderr)
         print(err, file=sys.stderr)
@@ -248,11 +251,12 @@ def main():
     set_version('%s.%s' % (clean_version(next_version), get_commit_count() + 1))
 
     # increment changelog
-    new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...wip) (Unreleased)\n\n".format(
+    new_changelog = "### [{0}](https://github.com/{1}/{2}/compare/v{3}...{4}) (Unreleased)\n\n".format(
         next_version,
         publish_user,
         publish_repo,
-        current_version) + new_changelog
+        current_version,
+        branch) + new_changelog
     with open(changelog_path, 'w') as fdesc:
         fdesc.write(new_changelog)
 
