@@ -1,4 +1,4 @@
-### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (Unreleased) 🌋
+### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (June 20, 2023)  🌋
 
 MDOYVR 2023 Release: MunkiReport is now Python 3 based
 
