@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-use http\Exception\BadMessageException;
 use Inertia\Inertia;
 
 class UsersController extends Controller
