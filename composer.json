@@ -105,7 +105,7 @@
         "munkireport/user_sessions": "dev-mr6-python3",
         "munkireport/warranty": "dev-mr6-python3",
         "munkireport/wifi": "dev-mr6-python3",
-        "nuwave/lighthouse": "^5.39.0",
+        "nuwave/lighthouse": "6.11.0",
         "onelogin/php-saml": "^3.0",
         "rodneyrehm/plist": "^2.0",
         "socialiteproviders/microsoft-azure": "^5.1.0",
