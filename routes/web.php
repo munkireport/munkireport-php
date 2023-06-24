@@ -91,6 +91,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboards/{slug?}', 'DashboardsController@index');
     }
 
+    if (config('_munkireport.alpha_features.flexible_query', false)) {
+        Route::get('/query', 'QueryController@index');
+    }
+
     //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
 
     // Laravel JetStream-Alike Grafting

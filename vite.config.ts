@@ -4,7 +4,7 @@ import laravel from 'laravel-vite-plugin';
 import gql from 'vite-plugin-simple-gql';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import basicSsl from '@vitejs/plugin-basic-ssl'
-import {svelte, vitePreprocess} from '@sveltejs/vite-plugin-svelte';
+import {svelte} from '@sveltejs/vite-plugin-svelte';
 import sveltePreprocess from 'svelte-preprocess';
 import staticCopyFiles from './vite.copy';
 
@@ -18,7 +18,6 @@ export default defineConfig({
             refresh: true,
         }),
         svelte({
-            // preprocess: vitePreprocess(),
             preprocess: sveltePreprocess({ typescript: true }),
             configFile: false,
         }),

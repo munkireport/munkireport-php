@@ -4,6 +4,7 @@
 app/db
 docs
 local
+deploy
 
 # Pretty much all laravel storage is cache, which you do not want to build into an image.
 storage/logs/*.log

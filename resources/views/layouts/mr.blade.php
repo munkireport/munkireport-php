@@ -106,6 +106,14 @@ $page = url()->current();
 
     <div class="collapse navbar-collapse bs-navbar-collapse" id="navbarSupportedContent">
         <div class="navbar-nav mr-auto">
+            @if(config('_munkireport.alpha_features.flexible_query', false))
+                <li class="nav-item">
+                    <a class="nav-link" href="/query">
+                        <i class="fa fa-search-plus"></i>
+                        <span class="visible-lg-inline" data-i18n="nav.main.query">Flexible Query</span>
+                    </a>
+                </li>
+            @endif
             @if(config('_munkireport.alpha_features.dashboards', false))
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboards/default">

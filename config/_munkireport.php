@@ -450,11 +450,11 @@ return [
     | Webhook URL's / Secrets are configured in services.php
     */
     'notifications' => [
-        'forward_events' => true,
-        'slack' => [
-            'from' => env('SLACK_FROM', 'MunkiReport'),
-            'to' => env('SLACK_TO', ''),
-        ]
+        'forward_events' => false,
+//        'slack' => [
+//            'from' => env('SLACK_FROM', 'MunkiReport'),
+//            'to' => env('SLACK_TO', ''),
+//        ]
     ],
 
     /*
@@ -464,13 +464,17 @@ return [
     |
     | These feature flags allow you to test individual alpha
     | features but are turned off by default to protect you from instability.
+    |
+    | They aren't even guaranteed to work!
     */
     'alpha_features' => [
         // Enable the Alpha Vue Dashboards
         'dashboards' => env('ALPHA_FEATURE_DASHBOARDS', False),
-        // Enable the Global Search via Scout+TNTSearch
+        // Enable the Global Search via Scout
         'search' => env('ALPHA_FEATURE_SEARCH', False),
         // Enable Business Units rewrite
         'business_units_v2' => env('ALPHA_FEATURE_BUSINESS_UNITS_V2', False),
+        // Enable Flexible Query (GraphQL)
+        'flexible_query' => env('ALPHA_FEATURE_FLEXIBLE_QUERY', false),
     ]
 ];
