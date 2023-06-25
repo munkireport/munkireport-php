@@ -29,6 +29,11 @@ export default defineConfig({
       // Note that v5 usually didn't have a transpiler. Dependencies were just added to head/body as needed.
         viteStaticCopy(staticCopyFiles)
     ],
+    optimizeDeps: {
+        exclude: [
+            '@urql/svelte'  // https://formidable.com/open-source/urql/docs/basics/svelte/#installation
+        ]
+    },
     resolve: {
         alias: {
             '@': '/resources/js'
