@@ -98,6 +98,12 @@ return [
             'model' => App\User::class,
         ],
 
+        // Backwards compatibility for YAML users
+        'yaml_users' => [
+            'driver' => 'yaml',
+            'model' => App\User::class,
+        ],
+
         'nodes' => [
             'driver' => 'eloquent',
             'model' => Munkireport\Osquery\Node::class,

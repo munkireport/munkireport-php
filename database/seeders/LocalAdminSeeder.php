@@ -23,7 +23,7 @@ class LocalAdminSeeder extends Seeder
             $resetToken = Password::createToken($admin);
             $appUrl = env('APP_URL', 'http://localhost:8080');
             $this->command->info(
-                "Reset the `admin@localhost` password at {$appUrl}/password/reset/{$resetToken}"
+                "Reset the `admin@localhost` password at {$appUrl}/reset-password/{$resetToken}"
             );
         } else {
             $this->command->info("A local administrator account already exists, not providing password reset link");

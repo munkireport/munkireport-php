@@ -55,6 +55,12 @@ return [
             'visibility' => 'public',
         ],
 
+        // Since `local` is a reserved disk name, we use `ext` to represent the user provided yaml files in local/
+        'ext' => [
+            'driver' => 'local',
+            'root' => app_path('local'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

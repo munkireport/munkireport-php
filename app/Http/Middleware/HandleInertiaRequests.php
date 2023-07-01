@@ -31,6 +31,8 @@ class HandleInertiaRequests extends Middleware
     /**
      * Defines the props that are shared by default.
      *
+     * Should be in-sync with resources/js/types.ts (SharedData)
+     *
      * @see https://inertiajs.com/shared-data
      * @param  \Illuminate\Http\Request  $request
      * @return array
@@ -63,6 +65,7 @@ class HandleInertiaRequests extends Middleware
             'listings' => $modules->getDropdownData('listings', '/show/listing', ''),
             'admin' => $admin_pages_legacy + $admin_pages_v5,
             'user' => $request->user(),
+            'csrf_token' => csrf_token(),  // Needed if doing XHR/Ajax outside of InertiaJS client.
         ]);
     }
 }
