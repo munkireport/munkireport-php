@@ -14,5 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         "/report/hash_check",
         "/report/check_in",
+        "/graphql" // Temporary: urql not sending token correctly
     ];
 }

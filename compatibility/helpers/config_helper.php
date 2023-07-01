@@ -6,11 +6,16 @@ use Illuminate\Support\Facades\Log;
 function initConfig()
 {
     if (!App::environment('testing')) {
+        $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,2);
+
         Log::channel('deprecations')
             ->warning('This function will be deprecated in future, please use config() in your modules.', [
                 'function' => __FUNCTION__,
                 'file' => __FILE__,
                 'line' => __LINE__,
+                'calling_function' => $caller[0]['function'] ?? null,
+                'calling_file' => $caller[0]['file'] ?? null,
+                'calling_line' => $caller[0]['line'] ?? null,
             ]);
     }
     $GLOBALS['conf'] = [];
@@ -25,11 +30,16 @@ function initConfig()
 function configAppendArray($configArray, $namespace = '')
 {
     if (!App::environment('testing')) {
+        $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,2);
+
         Log::channel('deprecations')
             ->warning('This function will be deprecated in future, please use config() in your modules.', [
                 'function' => __FUNCTION__,
                 'file' => __FILE__,
                 'line' => __LINE__,
+                'calling_function' => $caller[0]['function'] ?? null,
+                'calling_file' => $caller[0]['file'] ?? null,
+                'calling_line' => $caller[0]['line'] ?? null,
             ]);
     }
 
@@ -50,11 +60,16 @@ function configAppendArray($configArray, $namespace = '')
 function configAppendFile($configPath, $namespace = '')
 {
     if (!App::environment('testing')) {
+        $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS,2);
+
         Log::channel('deprecations')
             ->warning('This function will be deprecated in future, please use config() in your modules.', [
                 'function' => __FUNCTION__,
                 'file' => __FILE__,
                 'line' => __LINE__,
+                'calling_function' => $caller[0]['function'] ?? null,
+                'calling_file' => $caller[0]['file'] ?? null,
+                'calling_line' => $caller[0]['line'] ?? null,
             ]);
     }
     $config = require $configPath;

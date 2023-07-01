@@ -31,7 +31,9 @@ export default defineConfig({
     ],
     optimizeDeps: {
         exclude: [
-            '@urql/svelte'  // https://formidable.com/open-source/urql/docs/basics/svelte/#installation
+            '@urql/svelte',   // https://formidable.com/open-source/urql/docs/basics/svelte/#installation
+            'codemirror',     // https://github.com/touchifyapp/svelte-codemirror-editor#usage-with-vite--svelte-kit
+            'cm6-graphql'
         ]
     },
     resolve: {

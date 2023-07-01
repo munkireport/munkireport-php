@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 /**
  * This controller provides a staging area for Dashboards V2, and should not be normally visible unless a feature
@@ -13,7 +14,10 @@ use Illuminate\Http\Request;
 class DashboardsController extends Controller
 {
     public function index() {
-        return view('dashboards.index');
+        Inertia::setRootView('layouts.inertia');
+        return Inertia::render('Dashboards/Index', [
+            'dashboard_default_layout' => config('dashboard.default_layout')
+        ]);
     }
 
     /**

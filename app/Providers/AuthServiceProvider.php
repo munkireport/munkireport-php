@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Extensions\YamlUserProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -30,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
 
@@ -82,6 +84,10 @@ class AuthServiceProvider extends ServiceProvider
                 Log::debug('global admin gate rejected user: ' . $user->email . ', has role `' . $user->role . '` which is not in any authorized role(s) (' . implode(', ', $globalAdmins) . ')');
                 return false;
             }
+        });
+
+        Auth::provider('yaml', function (Application $app, array $config) {
+            return new YamlUserProvider(base_path('local/users'));
         });
     }
 }

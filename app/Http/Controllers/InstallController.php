@@ -144,7 +144,9 @@ class InstallController extends Controller
                 return $attributes->isFile()
                     && basename($attributes->path())[0] !== '.'
                     && strpos($attributes->path(), '@') == false // Don't accept @ in path - Synology I'm looking at you
-                    && strpos($attributes->path(), '.AppleDouble') == false; // What year is it?
+                    && strpos($attributes->path(), '.DS_Store') == false // Not required
+                    && strpos($attributes->path(), '.AppleDouble') == false // What year is it?
+                    && strpos($attributes->path(), '__pycache__') == false; // If you accidentally have cache because you are developing locally, this wont be downloadable
             });
 
         foreach($listing as $item) {
