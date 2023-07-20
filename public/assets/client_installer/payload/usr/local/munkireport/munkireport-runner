@@ -106,6 +106,10 @@ def main():
                 os.remove("/usr/local/munkireport/munkireport-python2")
             if os.path.isdir("/Library/MunkiReport/Python.framework/Versions/2.7/"):
                 shutil.rmtree("/Library/MunkiReport/Python.framework/Versions/2.7/", ignore_errors=True)
+            if os.path.isfile("/private/var/db/receipts/com.github.munkireport-python2.bom"):
+                os.remove("/private/var/db/receipts/com.github.munkireport-python2.bom")
+            if os.path.isfile("/private/var/db/receipts/com.github.munkireport-python2.plist"):
+                os.remove("/private/var/db/receipts/com.github.munkireport-python2.plist")
             reportcommon.display_detail('Complete')
             print ('Complete')
         else:
