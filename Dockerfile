@@ -12,7 +12,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
+RUN arch="$(dpkg --print-architecture)" && args="--with-libdir=lib/x86_64-linux-gnu/" && \
+    case "$arch" in \
+        *arm*) args="" ;; \
+    esac && \
+    docker-php-ext-configure ldap "$args" && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
