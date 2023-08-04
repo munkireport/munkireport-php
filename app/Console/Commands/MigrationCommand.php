@@ -69,7 +69,7 @@ class MigrationCommand extends Command
         $this->parseFieldData($this->option('field'), $columns, $indexes);
 
         $this->saveStub(
-            "${migrations_dir}${filename}",
+            "{$migrations_dir}{$filename}",
             $this->populateStub(
                 $stub,
                 [
@@ -81,7 +81,7 @@ class MigrationCommand extends Command
             )
         );
         if( ! $this->option('quiet') ){
-            $this->info("Created migration at ${migrations_dir}${filename}");
+            $this->info("Created migration at {$migrations_dir}{$filename}");
         }
     }
 
@@ -92,7 +92,7 @@ class MigrationCommand extends Command
           $regex = '/' . $module . '(_init)?\.php/';
           if (preg_match($regex, $migration_filename)){
             $initial_migration_found = $migration_filename;
-          }elseif (strpos($migration_filename, "${migration_name}.php")){
+          }elseif (strpos($migration_filename, "{$migration_name}.php")){
             throw new RuntimeException("Found migration ending in $migration_name, please provide another migration name\n");
           }
         }
@@ -162,6 +162,6 @@ class MigrationCommand extends Command
 
     public function renderDefinition($name, $type, $postfix = "")
     {
-        return "            \$table->${type}('${name}')${postfix};\n";
+        return "            \$table->{$type}('{$name}'){$postfix};\n";
     }
 }
