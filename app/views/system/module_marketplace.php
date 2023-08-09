@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
-            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span></h3>
+            <h3><span data-i18n="module_marketplace.module_marketplace"></span> <span id="total-count" class='label label-primary'></span> <span id='new_mr_version'></span></h3>
             <table class="table table-striped table-condensed table-bordered" id="marketplace-table">
                 <thead>
                     <tr>
@@ -203,7 +203,10 @@
                 alert(obj.msg);
             }
         });
-	});
+
+        // Get latest verison of MunkiReport-PHP
+        getLatestMRVersion();
+    });
 
     // Get module info via API and display in modal
     function viewModule(module){
@@ -287,6 +290,36 @@
             .click(function(){$('#myModal').modal('hide')});
 
         $('#myModal').modal('show');
+    }
+
+    // Get latest version of MunkiReport-PHP from GitHub
+    function getLatestMRVersion(){
+        $.ajax({
+            type: "GET",
+            url: 'https://api.github.com/repos/munkireport/munkireport-php/releases/latest', // API page to get JSON from
+            dataType: "jsonp",
+            success: function (obj, textstatus) {
+
+                try {
+                    var latest_tag = obj.data['tag_name'].replace('v', '');
+                    var current_tag_array = "<?php echo $GLOBALS['version']; ?>".split('.');
+                    var current_tag = current_tag_array[0]+"."+current_tag_array[1]+"."+current_tag_array[2];
+                    var html_url = obj.data['html_url'];
+                }
+                catch(err) {
+                    console.log("Error getting latest version of MunkiReport-PHP from GitHub!");
+                    var latest_tag, html_url, current_tag = "";
+                }
+
+                // If we have a new version, show the new version button
+                if (current_tag != "" && latest_tag != "" && compareVersions(current_tag, '<', latest_tag)) {
+                    $('#new_mr_version').html('New version of MunkiReport available: <a href="'+html_url+'" target="_blank" class="btn btn-info btn-sm">v'+latest_tag+'</a')
+                }
+            },
+            error: function (obj, textstatus) {
+                alert(obj.msg);
+            }
+        });
     }
 
     // Function to compare versions
