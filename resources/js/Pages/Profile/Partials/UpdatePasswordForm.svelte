@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { useForm } from '@inertiajs/svelte'
+    import {useForm} from '@inertiajs/svelte'
     import {Button, Card, CardBody, CardHeader, Col, Form, FormGroup, Input, Label, Row} from "sveltestrap";
 
     function submit(e) {

@@ -21,6 +21,18 @@ class DashboardsController extends Controller
     }
 
     /**
+     * This controller action returns an experimental blade component based dashboard.
+     * Not sure if we will go forward with this option right now, but did not want to remove it entirely.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|null
+     */
+    public function bladeIndex() {
+        return view('dashboards.default', [
+            'dashboard_layout' => config('dashboard.default_layout'),
+        ]);
+    }
+
+    /**
      * Show the default dashboard.
      *
      * This is currently a testbed for widget components and all other dashboards use the Dashboard class to render.

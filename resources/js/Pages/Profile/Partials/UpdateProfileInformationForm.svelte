@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { useForm } from '@inertiajs/svelte'
+    import {useForm} from '@inertiajs/svelte'
     import i18next from "i18next";
     import {
         Badge,
@@ -15,7 +15,7 @@
         Col,
         Alert
     } from 'sveltestrap';
-    import { i18n } from '../../../i18n';
+    import {i18n} from '../../../i18n';
 
     export let user;
     export let locales: string[] = [];
@@ -57,7 +57,9 @@
             <Row>
                 <Col>
                     {#if user.source !== null}
-                        <Alert color="warning">Some data is managed by your identity provider and cannot be changed by MunkiReport PHP</Alert>
+                        <Alert color="warning">Some data is managed by your identity provider and cannot be changed by
+                            MunkiReport PHP
+                        </Alert>
                     {/if}
                 </Col>
             </Row>

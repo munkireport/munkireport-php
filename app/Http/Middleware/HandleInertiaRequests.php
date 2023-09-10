@@ -66,6 +66,7 @@ class HandleInertiaRequests extends Middleware
             'admin' => $admin_pages_legacy + $admin_pages_v5,
             'user' => $request->user(),
             'csrf_token' => csrf_token(),  // Needed if doing XHR/Ajax outside of InertiaJS client.
+            'graphql_url' => route('graphql')
         ]);
     }
 }
