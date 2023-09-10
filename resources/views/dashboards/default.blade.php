@@ -6,7 +6,6 @@
 
 @section('content')
     <div class="container-fluid">
-
         @foreach($dashboard_layout as $row)
             <div class="row pt-4">
                 @foreach($row as $name => $data)

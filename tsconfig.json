@@ -14,7 +14,11 @@
     "allowJs": true,
     "checkJs": true,
     "isolatedModules": true,
-    "types": ["@types/node", "@types/ziggy-js"],
+    "types": [
+      "@types/node",
+      "@types/ziggy-js",
+      "vite/client"
+    ],
     "paths": {
       "@/": ["./resources/js/*"]
     },

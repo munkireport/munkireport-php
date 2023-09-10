@@ -1,39 +1,34 @@
 <script lang="ts">
-    import AppLayout from '../../Layouts/AppLayout.svelte'
-    import {Col, Container, Row, Table} from 'sveltestrap';
-    import CodeMirror from "svelte-codemirror-editor";
-    // import { graphql } from 'cm6-graphql';
+    import {page} from '@inertiajs/svelte';
+    import {Col, Container, Row, Table, Column, Spinner, Alert, Button, ButtonGroup} from 'sveltestrap';
+    import {createClient} from '../../graphql'
+    import {queryStore, gql} from "@urql/svelte";
 
-    import {getContextClient, queryStore, gql} from '@urql/svelte';
-    let value = `
-    query($first: Int!, $page: Int) {
-        reportData(first: $first, page: $page) {
-            data {
-                serial_number
-                console_user
-                long_username
-            }
-            paginatorInfo {
-                total
+    let client = createClient($page.props.graphql_url)
+    let first: number = 10;
+    let pageNumber: number = 1;
+    type QueryVariables = {
+        first: number;
+        page: number;
+    }
+
+    type QueryResultItem = {
+        serial_number: string;
+        console_user: string;
+        long_username: string;
+    }
+
+    type QueryResult = {
+        reportData: {
+            data: QueryResultItem[];
+            paginatorInfo: {
+                total: number;
             }
         }
     }
-    `;
-    /// TODO: This should probably not live in a visual component
-    import { Client, setContextClient, cacheExchange, fetchExchange } from '@urql/svelte';
 
-    const client = new Client({
-        url: '/graphql',
-        exchanges: [cacheExchange, fetchExchange],
-    });
-
-    setContextClient(client);
-
-    let first: number = 10;
-    let page: number = 1;
-
-    $: data = queryStore({
-        client: getContextClient(),
+    $: data = queryStore<QueryResult, QueryVariables>({
+        client,
         query: gql`
             query($first: Int!, $page: Int) {
                 reportData(first: $first, page: $page) {
@@ -48,38 +43,31 @@
                 }
             }
         `,
-        variables: { first, page }
+        variables: { first, page: pageNumber }
     })
 </script>
 
-<AppLayout>
-    <Container fluid>
-        <Row>
-            <Col>
-                <CodeMirror bind:value />
-            </Col>
-        </Row>
-        <Row>
-            <Col>
-                {#if $data.fetching}
-                    <p>Loading...</p>
-                {:else if $data.error}
-                    <p>Got an error</p>
-                {:else}
-                    <Table>
-                        <tbody>
-                        {#each $data.data.reportData.data as rowData}
-                            <tr>
-                                <td>{rowData.serial_number}</td>
-                                <td>{rowData.console_user}</td>
-                                <td>{rowData.long_username}</td>
-                            </tr>
-                        {/each}
-                        </tbody>
-                    </Table>
-                {/if}
-            </Col>
-        </Row>
-    </Container>
 
-</AppLayout>
+<Container fluid>
+    <Row class="mt-4">
+        <Col>
+            {#if $data.fetching}
+                <Spinner size="sm" type="grow" />
+            {:else if $data.error}
+                <Alert color="danger">
+                    <h4 class="alert-heading text-capitalize">Error Loading Table</h4>
+                    <p>
+                        {$data.error}
+                    </p>
+                    <small>Try refreshing this table again</small>
+                </Alert>
+            {:else}
+                <Table rows={$data.data.reportData.data} let:row>
+                    <Column header="Serial" width="8rem">
+                        {row.serial_number}
+                    </Column>
+                </Table>
+            {/if}
+        </Col>
+    </Row>
+</Container>

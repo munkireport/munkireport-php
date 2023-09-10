@@ -89,6 +89,9 @@ Route::middleware(['auth'])->group(function () {
 
     if (config('_munkireport.alpha_features.dashboards', false)) {
         Route::get('/dashboards/{slug?}', 'DashboardsController@index');
+
+        // We also provide an (unused implementation) of Blade based Dashoards
+        Route::get('/blade-dashboards/{slug?}', 'DashboardsController@bladeIndex');
     }
 
     if (config('_munkireport.alpha_features.flexible_query', false)) {
