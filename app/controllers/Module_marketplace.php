@@ -55,7 +55,7 @@ class Module_marketplace extends Controller
         // Process each package
         foreach ($composer_pkgs as $pkg) {
             // Process each munkireport or munkireport module package
-            if (strpos(strtolower($pkg['description']), 'module for munkireport') !== false || substr( $pkg['name'], 0, 12 ) === "munkireport/"){
+            if ((array_key_exists("description", $pkg) && strpos(strtolower($pkg['description']), 'module for munkireport') !== false) || substr( $pkg['name'], 0, 12 ) === "munkireport/"){
 
                 $name_array = explode("/",$pkg['name']);
 
