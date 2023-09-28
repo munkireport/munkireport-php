@@ -77,7 +77,8 @@ def main():
 
     # Print MunkiReport's current config
     if options.show_config:
-        receipt_info = get_receipt_info()
+        if os.path.isfile("/private/var/db/receipts/com.github.munkireport.plist"):
+            receipt_info = get_receipt_info()
         prefs.print_config()
         print ('')
         if os.path.isfile("/usr/local/munkireport/munkireport-python3"):
