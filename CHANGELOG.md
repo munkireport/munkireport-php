@@ -1,7 +1,10 @@
 ### [6.0.0-beta.3](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.3...wip) (Unreleased)
 
 - Theme and Language settings are moved into the user profile to make search bar more prominent.
-- Migrate local user authentication from laravel/ui package to laravel/fortify package
+- Migrate local user authentication from laravel/ui package to laravel/fortify package.
+
+DEPENDENCY UPDATES
+- Laravel 9.x
 
 
 ### [6.0.0-beta.2](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.2...wip) (Jan 15, 2022)
