@@ -2,9 +2,10 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path'
 import laravel from 'laravel-vite-plugin';
 import gql from 'vite-plugin-simple-gql';
-import vue from '@vitejs/plugin-vue';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import basicSsl from '@vitejs/plugin-basic-ssl'
+import {svelte} from '@sveltejs/vite-plugin-svelte';
+import sveltePreprocess from 'svelte-preprocess';
 import staticCopyFiles from './vite.copy';
 
 export default defineConfig({
@@ -16,13 +17,9 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        vue({
-            template: {
-                transformAssetUrls: {
-                    base: null,
-                    includeAbsolute: false,
-                },
-            },
+        svelte({
+            preprocess: sveltePreprocess({ typescript: true }),
+            configFile: false,
         }),
         gql(),
         basicSsl(),
@@ -34,6 +31,7 @@ export default defineConfig({
     ],
     optimizeDeps: {
         exclude: [
+            '@urql/svelte',   // https://formidable.com/open-source/urql/docs/basics/svelte/#installation
             'codemirror'      // https://github.com/touchifyapp/svelte-codemirror-editor#usage-with-vite--svelte-kit
         ]
     },
@@ -56,7 +54,7 @@ export default defineConfig({
                 // This entry point is for full SPA
                 app: resolve(__dirname, 'resources/js/app.ts'),
 
-                // This entry point for hybrid jQuery/Vue pages where Vue is only used on part of the page eg.
+                // This entry point for hybrid jQuery/Svelte pages where Svelte is only used on part of the page eg.
                 // For the search box
                 hybrid: resolve(__dirname, 'resources/js/app-hybrid.ts'),
             }

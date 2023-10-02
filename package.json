@@ -3,8 +3,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.1.9",
@@ -14,8 +13,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/svelte-fontawesome": "^0.2.0",
     "@inertiajs/inertia": "^0.11.1",
-    "@inertiajs/svelte": "^1.0.5",
-    "@urql/svelte": "^4.0.2",
+    "@inertiajs/vue3": "^1.0.11",
+    "@vitejs/plugin-vue": "^4.3.4",
     "bootstrap": "^4.6.2",
     "bootstrap-4-autocomplete": "^1.3.2",
     "bootstrap-markdown": "^2.10.0",
@@ -35,33 +34,26 @@
     "moment": "^2.29.1",
     "nvd3": "^1.8.6",
     "popper.js": "^1.16.1",
-    "svelte": "^3.58.0",
-    "svelte-codemirror-editor": "^1.1.0",
-    "svelte-grid": "^5.1.1",
-    "svelte-i18next": "^1.2.2",
-    "sveltestrap": "^4.2.1",
     "typeahead.js": "^0.11.1",
     "uiv": "^1.4.1",
+    "vue": "^3.3.4",
     "whatwg-fetch": "^3.6.2",
     "ziggy-js": "^1.5.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^4.0.1",
     "@graphql-codegen/client-preset": "^4.0.1",
-    "@sveltejs/vite-plugin-svelte": "^1.4.0",
-    "@tsconfig/svelte": "^4.0.1",
     "@types/ziggy-js": "^1.3.2",
-    "@vitejs/plugin-basic-ssl": "^0.1.2",
+    "@vitejs/plugin-basic-ssl": "^1.0.0",
+    "@vue/tsconfig": "^0.4.0",
     "axios": "^0.27",
     "graphql": "^16.7.1",
-    "laravel-vite-plugin": "^0.6.1",
+    "laravel-vite-plugin": "^0.8.1",
     "lodash": "^4.17.19",
-    "svelte-check": "^3.2.0",
-    "svelte-preprocess": "^5.0.3",
     "tslib": "^2.5.0",
     "typescript": "^5.1.6",
-    "vite": "^3.2.6",
+    "vite": "^4.4.0",
     "vite-plugin-simple-gql": "^0.5.0",
-    "vite-plugin-static-copy": "^0.9.0"
+    "vite-plugin-static-copy": "^0.17.0"
   }
 }

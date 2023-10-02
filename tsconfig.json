@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
+  "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -27,8 +27,7 @@
   "include": [
     "resources/js/**/*.d.ts",
     "resources/js/**/*.ts",
-    "resources/js/**/*.js",
-    "resources/js/**/*.svelte"
+    "resources/js/**/*.js"
   ],
   "exclude": [
     "node_modules",
