@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Jenssegers\Agent\Agent;
 use Inertia\Inertia;
+use Jenssegers\Agent\Agent;
+use Laravel\Fortify\Features;
+use Laravel\Jetstream\Http\Controllers\Inertia\Concerns\ConfirmsTwoFactorAuthentication;
+use Laravel\Jetstream\Jetstream;
 
 class UserProfileController extends Controller
 {
+    use ConfirmsTwoFactorAuthentication;
+
     /**
      * Show the general profile settings screen.
      *
@@ -22,16 +26,11 @@ class UserProfileController extends Controller
     {
         Inertia::setRootView('layouts.inertia');
 
-        $locales = [];
-        foreach (scandir(PUBLIC_ROOT.'assets/locales') AS $list_url) {
-            if (strpos($list_url, 'json')) {
-                $locales[] = strtok($list_url, '.');
-            }
-        }
+        $this->validateTwoFactorAuthenticationState($request);
 
-        return Inertia::render('Profile/Show', [
+        return Jetstream::inertia()->render($request, 'Profile/Show', [
+            'confirmsTwoFactorAuthentication' => Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm'),
             'sessions' => $this->sessions($request)->all(),
-            'locales' => $locales,
         ]);
     }
 
@@ -49,9 +48,9 @@ class UserProfileController extends Controller
 
         return collect(
             DB::connection(config('session.connection'))->table(config('session.table', 'sessions'))
-                    ->where('user_id', $request->user()->getAuthIdentifier())
-                    ->orderBy('last_activity', 'desc')
-                    ->get()
+                ->where('user_id', $request->user()->getAuthIdentifier())
+                ->orderBy('last_activity', 'desc')
+                ->get()
         )->map(function ($session) use ($request) {
             $agent = $this->createAgent($session);
 
