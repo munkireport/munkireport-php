@@ -129,28 +129,21 @@ const clearPhotoFileInput = () => {
 
             <!-- Name -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="Name" />
-                <TextInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    autocomplete="name"
-                />
-                <InputError :message="form.errors.name" class="mt-2" />
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" v-model="form.name" />
+                <div v-text="form.errors.name" class="invalid-feedback" />
+              </div>
             </div>
 
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="email" value="Email" />
-                <TextInput
-                    id="email"
-                    v-model="form.email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    autocomplete="username"
-                />
-                <InputError :message="form.errors.email" class="mt-2" />
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" v-model="form.email" />
+                <div v-text="form.errors.email" class="invalid-feedback" />
+              </div>
+
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2">

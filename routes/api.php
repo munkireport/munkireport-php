@@ -22,9 +22,6 @@ use Illuminate\Support\Facades\Route;
  * Route group reserved for pure Laravel API middleware based API's
  */
 Route::group(['prefix' => 'v6', 'namespace' => 'Api', 'middleware' => 'auth'], function () {
-    Route::post('/me/tokens', 'MeController@createToken');
-    Route::get('/me/tokens', 'MeController@listTokens');
-
     Route::get('/system/php', 'SystemInformationController@php');
     Route::get('/system/database', 'SystemInformationController@database');
 });

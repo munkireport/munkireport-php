@@ -1,6 +1,9 @@
 <script lang="ts" setup>
   import { ref, defineProps, computed } from 'vue'
   import { Link, usePage } from '@inertiajs/vue3'
+  import { useTranslation } from "i18next-vue";
+  const { t, i18next } = useTranslation();
+
   import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
   import {
     faPowerOff,
@@ -45,15 +48,15 @@
 
         <!-- Dashboards -->
         <li v-if="dashboards.length < 2" class="nav-item">
-          <Link class="nav-link" href="/">
+          <a class="nav-link" href="/">
             <FontAwesomeIcon :icon="faThLarge" />
-            {{ $t('nav.main.dashboard') }}
-          </Link>
+            {{ t('nav.main.dashboard') }}
+          </a>
         </li>
         <li v-else class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
             <FontAwesomeIcon :icon="faThLarge" />
-            {{ $t('nav.main.dashboard_plural') }}
+            {{ t('nav.main.dashboard_plural') }}
           </a>
           <div class="dashboard dropdown-menu">
             <a v-for="dashboard in dashboards"
@@ -68,7 +71,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-expanded="false">
             <FontAwesomeIcon :icon="faChartBar" />
-            {{ $t('nav.main.reports')}}
+            {{ t('nav.main.reports')}}
           </a>
           <div class="dropdown-menu">
             <a
@@ -76,7 +79,7 @@
                 class="dropdown-item"
                 :class="[report.class]"
                 :href="report.url"
-            >{{ $t(report.i18n) }}</a>
+            >{{ t(report.i18n) }}</a>
           </div>
         </li>
 
@@ -85,7 +88,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
             <FontAwesomeIcon :icon="faListAlt" />
-            {{ $t('nav.main.listings')}}
+            {{ t('nav.main.listings')}}
           </a>
           <div class="dropdown-menu">
             <a
@@ -101,7 +104,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
             <FontAwesomeIcon :icon="faListAlt" />
-            {{ $t('nav.main.admin')}}
+            {{ t('nav.main.admin')}}
           </a>
           <div class="dropdown-menu">
             <a
@@ -109,7 +112,7 @@
                 :href="item.url"
                 class="dropdown-item"
                 :className="item.class"
-            >{{ $t(item.i18n) }}</a>
+            >{{ t(item.i18n) }}</a>
           </div>
         </li>
       </ul>
@@ -136,14 +139,14 @@
           {{ user.email }}
         </a>
         <div class="dropdown-menu">
-          <Link class="dropdown-item" href="/user/profile">{{$t('nav.user.profile')}}</Link>
-          <a class="dropdown-item" href="/api/documentation">{{$t('nav.api.documentation')}}</a>
+          <Link class="dropdown-item" href="/user/profile">{{ t('nav.user.profile')}}</Link>
+          <a class="dropdown-item" href="/api/documentation">{{ t('nav.api.documentation')}}</a>
           <a class="dropdown-item dropdown-divider"></a>
 
           <form action="/auth/logout" method="POST">
             <button type="submit" class="dropdown-item">
               <FontAwesomeIcon :icon="faPowerOff" />
-              <span>{{ $t("nav.user.logout") }}</span>
+              <span>{{ t("nav.user.logout") }}</span>
             </button>
           </form>
         </div>
