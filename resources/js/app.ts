@@ -5,6 +5,7 @@ import { Ziggy } from './ziggy'
 import i18next from 'i18next'
 import I18NextVue from 'i18next-vue'
 import Fetch from 'i18next-fetch-backend';
+import urql, { cacheExchange, fetchExchange } from '@urql/vue';
 
 i18next
     .use(Fetch)
@@ -33,6 +34,19 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(I18NextVue, {i18next})
+            .use(urql, {
+                url: '/graphql',
+                exchanges: [cacheExchange, fetchExchange],
+                fetchOptions: () => {
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').content
+                    return {
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    }
+                }
+            })
             .mount(el)
     },
 });
+
