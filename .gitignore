@@ -11,8 +11,6 @@ config.php
 
 *.zip
 
-vendor/*
-
 composer.lock
 .env
 composer.local.*
@@ -26,18 +24,26 @@ local/module_configs/*.yml
 local/modules/*
 local/views/widgets/*
 
-.php_cs.cache
+
 composer
 storage/framework/down
-node_modules
 
-.phpunit.result.cache
+
+# File uploads
+public/storage
+
 storage/oauth-private.key
 storage/oauth-public.key
 storage/*.index
 storage/public/app/*
 
+# Outputs of testing/linting tools
+.php_cs.cache
+.phpunit.result.cache
 
+# Do not commit dependencies
+node_modules
+vendor/*
 
 # Laravel mix / Webpack output
 public/js/*.js
@@ -55,3 +61,13 @@ public/hot
 programmatic-types.graphql
 schema-directives.graphql
 _lighthouse_ide_helper.php
+
+# JS/CSS published from Laravel Packages
+public/vendor
+
+# Auto-generated Ziggy routes should be packaged at build time
+resources/js/ziggy.d.ts
+resources/js/ziggy.js
+
+# Auto-generated GraphQL types should be packaged at build time
+resources/js/gql
