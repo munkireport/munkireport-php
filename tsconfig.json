@@ -20,7 +20,8 @@
       "vite/client"
     ],
     "paths": {
-      "@/": ["./resources/js/*"]
+      "@/": ["./resources/js/*"],
+      "ziggy-js": ["./vendor/tightenco/ziggy"]
     },
     "outDir": "./public/build/assets"
   },
@@ -31,6 +32,7 @@
   ],
   "exclude": [
     "node_modules",
-    "public"
+    "public",
+    "vendor"
   ]
 }

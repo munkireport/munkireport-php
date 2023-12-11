@@ -1,5 +1,0 @@
-# Azure App Service Build (Not Container Mode)
-version: 1
-
-post-build: |
-  npm run build

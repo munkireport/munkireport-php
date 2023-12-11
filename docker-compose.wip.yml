@@ -4,7 +4,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: ghcr.io/munkireport/munkireport-php:wip
+    image: munkireport-php:wip
     restart: always
     environment:
       - MODULES=applications, directory_service, disk_report, displays_info, extensions, filevault_status, homebrew, homebrew_info, ibridge, installhistory, inventory, localadmin, managedinstalls, mdm_status, munkiinfo, munkireport, munkireportinfo, network, power, printer, profile, security, softwareupdate, sophos, supported_os, timemachine, usage_stats, user_sessions, warranty, wifi
