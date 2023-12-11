@@ -37,10 +37,7 @@ storage/oauth-public.key
 storage/*.index
 storage/public/app/*
 
-# Lighthouse-PHP Generated Helper Definitions
-programmatic-types.graphql
-schema-directives.graphql
-_lighthouse_ide_helper.php
+
 
 # Laravel mix / Webpack output
 public/js/*.js
@@ -48,3 +45,13 @@ public/css/*.css
 
 # Azure Deployment Parameters
 parameters.json
+
+# Local Development Only
+public/phpinfo.php
+public/xdebug.php
+public/hot
+
+# Lighthouse-PHP Generated Helper Definitions
+programmatic-types.graphql
+schema-directives.graphql
+_lighthouse_ide_helper.php

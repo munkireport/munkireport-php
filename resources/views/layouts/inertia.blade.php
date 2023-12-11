@@ -15,7 +15,7 @@ Depending on whether this is successful it may be renamed.
     <meta name=apple-mobile-web-app-capable content=yes>
     <meta content="text/html; charset=utf-8" http-equiv="content-type" />
 
-    <title>{{ config('app.name', 'MunkiReport') }}</title>
+    <title inertia>{{ config('app.name', 'MunkiReport') }}</title>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
@@ -58,9 +58,9 @@ Depending on whether this is successful it may be renamed.
         <!-- bootstrap.min.js is loaded locally using the `Default` theme -->
     @endif
 
-    @vite('resources/js/app.ts')
-    @inertiaHead
     @routes
+    @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
+    @inertiaHead
 </head>
 <body class="mr-inertia-layout">
     @inertia

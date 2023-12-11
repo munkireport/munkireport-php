@@ -37,9 +37,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
-                'locale' => $input['locale'],
+                'locale' => $input['locale'] ?? 'en',
             ])->save();
         }
+
+        // TODO:
+        //             'locale' => $request->getLocale(),
+        //            'current_theme' => $request->session()->get('theme', config('_munkireport.default_theme')),
     }
 
     /**

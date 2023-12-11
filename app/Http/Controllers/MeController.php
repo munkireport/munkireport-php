@@ -18,16 +18,6 @@ class MeController extends Controller
     }
 
     /**
-     * Display a list of API Tokens (From Laravel Sanctum) and allow the user to create or delete those tokens.
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\View\View|void
-     */
-    public function tokens(Request $request) {
-        return view('me.tokens');
-    }
-
-    /**
      * Display the user profile including personal settings.
      *
      * @param Request $request
