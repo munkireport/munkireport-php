@@ -65,6 +65,8 @@ RUN mkdir -p app/db && \
 
 RUN cp .env.example .env
 
+RUN php please ziggy:generate --types
+
 # Laravel storage items such as logs, caches, rendered views, etc.
 VOLUME /var/munkireport/storage
 
