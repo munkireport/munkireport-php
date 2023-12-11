@@ -215,7 +215,7 @@ $page = url()->current();
 
                     <div class="dropdown-menu" aria-labelledby="userMenuLink">
                         <a class="dropdown-item" href="{{ url('/user/profile') }}" data-i18n="nav.user.profile">My Profile</a>
-                        <a class="dropdown-item" href="{{ url('/me/tokens') }}" data-i18n="nav.user.tokens">My API Tokens</a>
+                        <a class="dropdown-item" href="{{ url('/user/api-tokens') }}" data-i18n="nav.user.tokens">My API Tokens</a>
                         <a class="dropdown-item" href="{{ url('/api/documentation') }}" data-i18n="nav.api.documentation">API Documentation</a>
                         <div class="dropdown-divider"></div>
 

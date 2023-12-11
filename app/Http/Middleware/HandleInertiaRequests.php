@@ -14,7 +14,7 @@ class HandleInertiaRequests extends Middleware
      * @see https://inertiajs.com/server-side-setup#root-template
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = 'inertia';
 
     /**
      * Determines the current asset version.
@@ -57,6 +57,13 @@ class HandleInertiaRequests extends Middleware
 
         $admin_pages_v5 = $modules->getDropdownData('admin_pages', 'module', '');
 
+        $locales = [];
+        foreach(scandir(public_path('assets/locales')) as $list_url) {
+            if (strpos($list_url, 'json')) {
+                $locales[] = strtok($list_url, '.');
+            }
+        }
+
         return array_merge(parent::share($request), [
             //
             'appName' => config('app.name'),
@@ -66,7 +73,9 @@ class HandleInertiaRequests extends Middleware
             'admin' => $admin_pages_legacy + $admin_pages_v5,
             'user' => $request->user(),
             'csrf_token' => csrf_token(),  // Needed if doing XHR/Ajax outside of InertiaJS client.
-            'graphql_url' => route('graphql')
+            'graphql_url' => route('graphql'),
+            'current_theme' => $request->session()->get('theme', config('_munkireport.default_theme')),
+            'locales' => $locales
         ]);
     }
 }
