@@ -1,8 +1,8 @@
 import {createApp, h} from 'vue'
 import type {DefineComponent} from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
-import routeFn from 'ziggy-js'
-//import { ZiggyVue } from 'ziggy-js/dist/vue.m.js'
+// import routeFn from 'ziggy-js'
+import { ZiggyVue } from 'ziggy-js/dist/vue.es.js'
 //import { Ziggy } from './ziggy.js'
 import i18next from 'i18next'
 import I18NextVue from 'i18next-vue'
@@ -11,9 +11,9 @@ import urql, { cacheExchange, fetchExchange } from '@urql/vue';
 
 
 
-declare global {
-    var route: typeof routeFn;
-}
+// declare global {
+//     var route: typeof routeFn;
+// }
 
 i18next
     .use(Fetch)
@@ -41,7 +41,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
-//            .use(ZiggyVue, Ziggy)
+            .use(ZiggyVue)
             .use(I18NextVue, {i18next})
             .use(urql, {
                 url: '/graphql',
