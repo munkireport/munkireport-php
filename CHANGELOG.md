@@ -1,3 +1,10 @@
+### [6.0.0-beta.4](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.4...wip) (Unreleased)
+
+- Laravel 10.x
+- PHP 8.1.x now required
+- Composer 2.2.x now required
+
+
 ### [6.0.0-beta.3](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.3...wip) (Unreleased)
 
 - Theme and Language settings are moved into the user profile to make search bar more prominent.
