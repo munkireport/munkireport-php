@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vue-tsc && vite build",
+        "build": "npm run type-check && vite build",
+        "type-check": "vue-tsc --noEmit",
         "preview": "vite preview",
         "codegen": "graphql-codegen"
     },
