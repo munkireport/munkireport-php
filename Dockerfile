@@ -41,8 +41,8 @@ RUN php please migrate
 
 RUN chown -R www-data app/db storage
 
-RUN cp .env.example .env && php please key:generate
-
+RUN cp .env.example .env
+RUN php please ziggy:generate --types
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
 

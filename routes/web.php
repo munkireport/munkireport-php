@@ -102,10 +102,6 @@ Route::middleware(['auth'])->group(function () {
 
     //Route::get('/search/{model}/{query}', 'Api\SearchController@searchModel')->where('query', '.*');
 
-    // Laravel JetStream-Alike Grafting
-//    Route::get('/user/profile', [UserProfileController::class, 'show'])
-//        ->name('profile.show');
-
     // Developer-Only Routes (Should Never Be Visible in release)
     if (App::environment('local')) {
         Route::get('/test', 'TestController@index');

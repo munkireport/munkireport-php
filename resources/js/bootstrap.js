@@ -11,6 +11,7 @@ import jquery from 'jquery';
 
 //try {
 
+    // @ts-ignore
     window.Popper = popper;
     window.$ = window.jQuery = jquery;
     import bootstrap from 'bootstrap';

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
  * Based on the python unserializer
  * Does not convert objects
  *
+ * @todo Replace with eg. xkerman/restricted-unserialize
  */
 class Unserializer
 {

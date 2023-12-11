@@ -109,7 +109,7 @@
         "rodneyrehm/plist": "^2.0",
         "socialiteproviders/microsoft-azure": "^5.1.0",
         "symfony/yaml": "^5.4",
-        "tightenco/ziggy": "^1.0",
+        "tightenco/ziggy": "^1.8",
         "wikimedia/composer-merge-plugin": "^2.0",
         "xkerman/restricted-unserialize": "^1.1",
         "zircote/swagger-php": "^4.7"
