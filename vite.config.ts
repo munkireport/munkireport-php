@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import staticCopyFiles from './vite.copy';
+// import * as path from "path";
 
 export default defineConfig({
     plugins: [
@@ -41,6 +42,7 @@ export default defineConfig({
         alias: {
             '@': '/resources/js',
             '@vendor': '/vendor',
+            // 'ziggy-js': path.resolve('vendor/tightenco/ziggy/dist/vue.es.js'),
         }
     },
     server: {
