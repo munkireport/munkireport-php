@@ -49,6 +49,8 @@ const createApiToken = () => {
 const manageApiTokenPermissions = (token) => {
     updateApiTokenForm.permissions = token.abilities;
     managingPermissionsFor.value = token;
+
+    //this.$bvModal.show('permissions-modal')
 };
 
 const updateApiToken = () => {
@@ -70,6 +72,7 @@ const deleteApiToken = () => {
         onSuccess: () => (apiTokenBeingDeleted.value = null),
     });
 };
+
 </script>
 
 <template>
@@ -86,29 +89,21 @@ const deleteApiToken = () => {
 
             <template #form>
                 <!-- Token Name -->
-                <div class="col-span-6 sm:col-span-4">
-                    <InputLabel for="name" value="Name" />
-                    <TextInput
-                        id="name"
-                        v-model="createApiTokenForm.name"
-                        type="text"
-                        class="mt-1 block w-full"
-                        autofocus
-                    />
-                    <InputError :message="createApiTokenForm.errors.name" class="mt-2" />
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text"
+                         id="name"
+                         v-model="createApiTokenForm.name"
+                         autofocus />
+                  <div v-text="createApiTokenForm.errors.name" class="invalid-feedback" />
                 </div>
 
                 <!-- Token Permissions -->
-                <div v-if="availablePermissions.length > 0" class="col-span-6">
-                    <InputLabel for="permissions" value="Permissions" />
-
-                    <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div v-for="permission in availablePermissions" :key="permission">
-                            <label class="flex items-center">
-                                <Checkbox v-model:checked="createApiTokenForm.permissions" :value="permission" />
-                                <span class="ml-2 text-sm text-gray-600">{{ permission }}</span>
-                            </label>
-                        </div>
+                <div v-if="availablePermissions.length > 0" class="form-group">
+                    <label for="permissions">Permissions</label>
+                    <div v-for="permission in availablePermissions" :key="permission" class="form-check form-check-inline">
+                      <input class="form-check-input" type="checkbox" :checked="createApiTokenForm.permissions" :value="permission" :id="permission" />
+                      <label class="form-check-label" :for="permission">{{ permission }}</label>
                     </div>
                 </div>
             </template>
@@ -140,31 +135,37 @@ const deleteApiToken = () => {
 
                     <!-- API Token List -->
                     <template #content>
-                        <div class="space-y-6">
-                            <div v-for="token in tokens" :key="token.id" class="flex items-center justify-between">
-                                <div class="break-all">
-                                    {{ token.name }}
-                                </div>
-
-                                <div class="flex items-center ml-2">
-                                    <div v-if="token.last_used_ago" class="text-sm text-gray-400">
-                                        Last used {{ token.last_used_ago }}
-                                    </div>
-
-                                    <button
-                                        v-if="availablePermissions.length > 0"
-                                        class="cursor-pointer ml-6 text-sm text-gray-400 underline"
-                                        @click="manageApiTokenPermissions(token)"
-                                    >
-                                        Permissions
-                                    </button>
-
-                                    <button class="cursor-pointer ml-6 text-sm text-red-500" @click="confirmApiTokenDeletion(token)">
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Name</th>
+                              <th scope="col">Last used</th>
+                              <th scope="col">Permissions</th>
+                              <th scope="col">Delete</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="token in tokens" :key="token.id">
+                              <td>{{ token.name }}</td>
+                              <td>{{ token.last_used_ago }}</td>
+                              <td>
+                                <button
+                                    v-if="availablePermissions.length > 0"
+                                    type="button"
+                                    class="btn btn-light"
+                                    @click="manageApiTokenPermissions(token)"
+                                >
+                                  Permissions
+                                </button>
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-danger" @click="confirmApiTokenDeletion(token)">
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                     </template>
                 </ActionSection>
             </div>
