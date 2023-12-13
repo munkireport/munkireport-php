@@ -14,6 +14,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TextInput from '@/Components/TextInput.vue';
+import BootstrapModal from '@/Components/BootstrapModal.vue';
 
 const props = defineProps({
     tokens: Array,
@@ -92,6 +93,7 @@ const deleteApiToken = () => {
                 <div class="form-group">
                   <label for="name">Name</label>
                   <input type="text"
+                         class="form-control"
                          id="name"
                          v-model="createApiTokenForm.name"
                          autofocus />
@@ -100,9 +102,9 @@ const deleteApiToken = () => {
 
                 <!-- Token Permissions -->
                 <div v-if="availablePermissions.length > 0" class="form-group">
-                    <label for="permissions">Permissions</label>
+                    <div class="d-inline-block pr-4">Permissions</div>
                     <div v-for="permission in availablePermissions" :key="permission" class="form-check form-check-inline">
-                      <input class="form-check-input" type="checkbox" :checked="createApiTokenForm.permissions" :value="permission" :id="permission" />
+                      <input class="form-check-input" type="checkbox" :checked="createApiTokenForm.permissions" :value="permission" />
                       <label class="form-check-label" :for="permission">{{ permission }}</label>
                     </div>
                 </div>
@@ -182,9 +184,9 @@ const deleteApiToken = () => {
                     Please copy your new API token. For your security, it won't be shown again.
                 </div>
 
-                <div v-if="$page.props.jetstream.flash.token" class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 break-all">
-                    {{ $page.props.jetstream.flash.token }}
-                </div>
+                <pre v-if="$page.props.jetstream.flash.token" class="mt-4 px-4 py-2 rounded">
+                    <code class="user-select-all">{{ $page.props.jetstream.flash.token }}</code>
+                </pre>
             </template>
 
             <template #footer>
@@ -201,7 +203,8 @@ const deleteApiToken = () => {
             </template>
 
             <template #content>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="row">
+                <div class="col">
                     <div v-for="permission in availablePermissions" :key="permission">
                         <label class="flex items-center">
                             <Checkbox v-model:checked="updateApiTokenForm.permissions" :value="permission" />
@@ -209,21 +212,12 @@ const deleteApiToken = () => {
                         </label>
                     </div>
                 </div>
+              </div>
             </template>
 
             <template #footer>
-                <SecondaryButton @click="managingPermissionsFor = null">
-                    Cancel
-                </SecondaryButton>
-
-                <PrimaryButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': updateApiTokenForm.processing }"
-                    :disabled="updateApiTokenForm.processing"
-                    @click="updateApiToken"
-                >
-                    Save
-                </PrimaryButton>
+                <button class="btn btn-secondary" @click="managingPermissionsFor = null">Cancel</button>
+                <button class="btn btn-primary ml-3" :disabled="updateApiTokenForm.processing" @click="updateApiToken">Save</button>
             </template>
         </DialogModal>
 
@@ -238,18 +232,12 @@ const deleteApiToken = () => {
             </template>
 
             <template #footer>
-                <SecondaryButton @click="apiTokenBeingDeleted = null">
-                    Cancel
-                </SecondaryButton>
-
-                <DangerButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': deleteApiTokenForm.processing }"
+                <button class="btn btn-secondary" @click="apiTokenBeingDeleted = null">Cancel</button>
+                <button
+                    class="btn btn-danger ml-3"
                     :disabled="deleteApiTokenForm.processing"
                     @click="deleteApiToken"
-                >
-                    Delete
-                </DangerButton>
+                >Delete</button>
             </template>
         </ConfirmationModal>
     </div>

@@ -30,22 +30,18 @@ const close = () => {
         :closeable="closeable"
         @close="close"
     >
-      <div class="modal" tabindex="-1" id="permissions-modal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">
-                <slot name="title" />
-              </h5>
-            </div>
-            <div class="modal-body">
-              <slot name="content" />
-            </div>
-            <div class="modal-footer">
-              <slot name="footer" />
-            </div>
-          </div>
+      <div class="px-6 py-4">
+        <h4>
+          <slot name="title" />
+        </h4>
+
+        <div class="mt-4">
+          <slot name="content" />
         </div>
+      </div>
+
+      <div class="d-flex flex-row justify-end px-6 py-4 text-right">
+        <slot name="footer" />
       </div>
     </Modal>
 </template>
