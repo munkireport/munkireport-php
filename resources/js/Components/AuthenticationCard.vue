@@ -1,11 +1,14 @@
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        <div>
-            <slot name="logo" />
-        </div>
-
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+  <div class="container-sm d-flex justify-content-center" style="height: 100vh">
+    <div class="d-flex flex-column justify-content-center">
+        <div class="card">
+          <div class="card-header">
+            <slot name="header" />
+          </div>
+          <div class="card-body">
             <slot />
+          </div>
         </div>
     </div>
+  </div>
 </template>
