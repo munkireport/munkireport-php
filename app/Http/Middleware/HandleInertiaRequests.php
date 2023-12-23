@@ -64,6 +64,15 @@ class HandleInertiaRequests extends Middleware
             }
         }
 
+        $themes = [];
+        foreach(scandir(public_path('assets/themes')) AS $theme)
+        {
+            if( $theme != 'fonts' && strpos($theme, '.') === false)
+            {
+                $themes[] = $theme;
+            }
+        }
+
         return array_merge(parent::share($request), [
             //
             'appName' => config('app.name'),
@@ -75,6 +84,7 @@ class HandleInertiaRequests extends Middleware
             'csrf_token' => csrf_token(),  // Needed if doing XHR/Ajax outside of InertiaJS client.
             'graphql_url' => route('graphql'),
             'current_theme' => $request->session()->get('theme', config('_munkireport.default_theme')),
+            'themes' => $themes,
             'locales' => $locales
         ]);
     }

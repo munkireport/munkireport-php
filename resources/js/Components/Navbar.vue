@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { ref, defineProps, computed } from 'vue'
-  import { Link, usePage } from '@inertiajs/vue3'
+  import {Link, router, usePage} from '@inertiajs/vue3'
   import { useTranslation } from "i18next-vue";
   const { t, i18next } = useTranslation();
 
@@ -24,6 +24,10 @@
   const user = computed(() => page.props.user)
 
   let navbarOpen = ref(true)
+
+  const logout = () => {
+    router.post(route('logout'));
+  };
 
   let appName = "MunkiReport"
 </script>
@@ -73,7 +77,7 @@
             <FontAwesomeIcon :icon="faChartBar" />
             {{ t('nav.main.reports')}}
           </a>
-          <div class="dropdown-menu">
+          <div class="report dropdown-menu">
             <a
                 v-for="report in reports"
                 class="dropdown-item"
@@ -143,7 +147,7 @@
           <a class="dropdown-item" href="/api/documentation">{{ t('nav.api.documentation')}}</a>
           <a class="dropdown-item dropdown-divider"></a>
 
-          <form action="/auth/logout" method="POST">
+          <form action="/auth/logout" method="POST" @submit.prevent="logout">
             <button type="submit" class="dropdown-item">
               <FontAwesomeIcon :icon="faPowerOff" />
               <span>{{ t("nav.user.logout") }}</span>

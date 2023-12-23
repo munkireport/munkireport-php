@@ -84,6 +84,7 @@ const updatePassword = () => {
         </template>
 
         <template #actions>
+          <div class="d-flex justify-content-end">
             <ActionMessage :on="form.recentlySuccessful" class="mr-3">
                 Saved.
             </ActionMessage>
@@ -91,6 +92,7 @@ const updatePassword = () => {
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Save
             </PrimaryButton>
+          </div>
         </template>
     </FormSection>
 </template>

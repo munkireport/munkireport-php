@@ -35,7 +35,7 @@ class UserResetLinkCommand extends Command
             $resetToken = Password::createToken($user);
             $appUrl = env('APP_URL', 'http://localhost:8080');
             $this->info(
-                "The user, `{$user->email}`, may reset their password at {$appUrl}/password/reset/{$resetToken}"
+                "The user, `{$user->email}`, may reset their password at {$appUrl}/reset-password/{$resetToken}"
             );
 
             return Command::SUCCESS;
