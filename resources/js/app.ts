@@ -1,19 +1,12 @@
 import {createApp, h} from 'vue'
 import type {DefineComponent} from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
-// import routeFn from 'ziggy-js'
 import { ZiggyVue } from 'ziggy-js/dist/vue.es.js'
-//import { Ziggy } from './ziggy.js'
 import i18next from 'i18next'
 import I18NextVue from 'i18next-vue'
 import Fetch from 'i18next-fetch-backend';
 import urql, { cacheExchange, fetchExchange } from '@urql/vue';
 
-
-
-// declare global {
-//     var route: typeof routeFn;
-// }
 
 i18next
     .use(Fetch)
@@ -21,6 +14,7 @@ i18next
         lng: 'en',
         fallbackLng: 'en',
         ns: ['translation', 'event'],
+        fallbackNS: ['event'],
         backend: {
             loadPath: '/locales/{{lng}}/{{ns}}.json',
             allowMultiLoading: false,

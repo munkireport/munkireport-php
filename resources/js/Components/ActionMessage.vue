@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div class="valid-feedback" role="alert" v-show="on">
+  <span class="text-success" role="alert" v-show="on">
     <slot />
-  </div>
+  </span>
 </template>
