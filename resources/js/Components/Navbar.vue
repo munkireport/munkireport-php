@@ -15,6 +15,7 @@
     faChartBar,
     faListAlt,
   } from '@fortawesome/free-regular-svg-icons'
+  import Dropdown from "./Dropdown.vue";
 
   const page = usePage()
   const dashboards = computed(() => page.props.dashboards)
@@ -29,12 +30,12 @@
     router.post(route('logout'));
   };
 
-  let appName = "MunkiReport"
+  let appName = "MunkiReport 6.0"
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
-    <Link class="navbar-brand" href="/" v-text="appName" />
+  <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
+    <a class="navbar-brand" href="/" v-text="appName" />
     <button
         class="navbar-toggler"
         type="button"
@@ -70,91 +71,94 @@
           </div>
         </li>
 
-
         <!-- Reports -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-expanded="false">
-            <FontAwesomeIcon :icon="faChartBar" />
-            {{ t('nav.main.reports')}}
-          </a>
-          <div class="report dropdown-menu">
-            <a
-                v-for="report in reports"
-                class="dropdown-item"
-                :class="[report.class]"
-                :href="report.url"
-            >{{ t(report.i18n) }}</a>
-          </div>
-        </li>
+        <Dropdown>
+          <template #toggle="toggleProps">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-expanded="false" @click="toggleProps.toggle">
+              <FontAwesomeIcon :icon="faChartBar" />
+              {{ t('nav.main.reports')}}
+            </a>
+          </template>
+          <a
+              v-for="report in reports"
+              class="dropdown-item"
+              :class="[report.class]"
+              :href="report.url"
+          >{{ t(report.i18n) }}</a>
+        </Dropdown>
 
 
         <!-- Listings -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            <FontAwesomeIcon :icon="faListAlt" />
-            {{ t('nav.main.listings')}}
-          </a>
-          <div class="dropdown-menu">
-            <a
-                v-for="listing in listings"
-                :href="listing.url"
-                class="dropdown-item"
-                :class="[listing.class]"
-            >{{ $t(listing.i18n) }}</a>
-          </div>
-        </li>
+        <Dropdown>
+          <template #toggle="toggleProps">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="listingsMenuLink" data-toggle="dropdown" aria-expanded="false" @click="toggleProps.toggle">
+              <FontAwesomeIcon :icon="faListAlt" />
+              {{ t('nav.main.listings')}}
+            </a>
+          </template>
+          <a
+              v-for="listing in listings"
+              :href="listing.url"
+              class="dropdown-item"
+              :class="[listing.class]"
+          >{{ $t(listing.i18n) }}</a>
+        </Dropdown>
 
         <!-- Admin -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-            <FontAwesomeIcon :icon="faListAlt" />
-            {{ t('nav.main.admin')}}
-          </a>
-          <div class="dropdown-menu">
-            <a
-                v-for="item in admin"
-                :href="item.url"
-                class="dropdown-item"
-                :className="item.class"
-            >{{ t(item.i18n) }}</a>
-          </div>
-        </li>
+        <Dropdown>
+          <template #toggle="toggleProps">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="adminMenuLink" data-toggle="dropdown" aria-expanded="false" @click="toggleProps.toggle">
+              <FontAwesomeIcon :icon="faListAlt" />
+              {{ t('nav.main.admin')}}
+            </a>
+          </template>
+          <a
+              v-for="item in admin"
+              :href="item.url"
+              class="dropdown-item"
+              :class="item.class"
+          >{{ t(item.i18n) }}</a>
+        </Dropdown>
       </ul>
     </div>
 
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a href="#" id="filter-popup" class="nav-link filter-popup">
-          filter
-        </a>
-      </li>
+<!--      <li class="nav-item">-->
+<!--        <a href="#" id="filter-popup" class="nav-link filter-popup">-->
+<!--          -->
+<!--        </a>-->
+<!--      </li>-->
 
-      <li class="nav-item dropdown">
-        <!-- theme -->
-      </li>
+<!--      <li class="nav-item dropdown">-->
+<!--        &lt;!&ndash; theme &ndash;&gt;-->
+<!--      </li>-->
 
-      <li class="nav-item dropdown">
-        <!-- locale -->
-      </li>
+<!--      <li class="nav-item dropdown">-->
+<!--        &lt;!&ndash; locale &ndash;&gt;-->
+<!--      </li>-->
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          <FontAwesomeIcon :icon="faUser" />
-          {{ user.email }}
-        </a>
-        <div class="dropdown-menu">
-          <Link class="dropdown-item" href="/user/profile">{{ t('nav.user.profile')}}</Link>
-          <a class="dropdown-item" href="/api/documentation">{{ t('nav.api.documentation')}}</a>
-          <a class="dropdown-item dropdown-divider"></a>
 
-          <form action="/auth/logout" method="POST" @submit.prevent="logout">
-            <button type="submit" class="dropdown-item">
-              <FontAwesomeIcon :icon="faPowerOff" />
-              <span>{{ t("nav.user.logout") }}</span>
-            </button>
-          </form>
-        </div>
-      </li>
+      <!-- User -->
+      <Dropdown right>
+        <template #toggle="toggleProps">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="userMenuLink" data-toggle="dropdown" aria-expanded="false" @click="toggleProps.toggle">
+            <FontAwesomeIcon :icon="faUser" />
+            {{ user.email }}
+          </a>
+        </template>
+
+        <Link class="dropdown-item" href="/user/profile">{{ t('nav.user.profile')}}</Link>
+        <a class="dropdown-item" href="/api/documentation">{{ t('nav.api.documentation')}}</a>
+        <a class="dropdown-item dropdown-divider"></a>
+
+        <form action="/auth/logout" method="POST" @submit.prevent="logout">
+          <button type="submit" class="dropdown-item">
+            <FontAwesomeIcon :icon="faPowerOff" />
+            <span>{{ t("nav.user.logout") }}</span>
+          </button>
+        </form>
+      </Dropdown>
+
     </ul>
   </nav>
 </template>

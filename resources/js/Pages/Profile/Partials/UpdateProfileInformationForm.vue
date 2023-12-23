@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-import { Link, router, useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+
+import { useTranslation } from "i18next-vue";
+const { t, i18next } = useTranslation();
 
 const props = defineProps({
     user: Object,
@@ -18,11 +17,13 @@ const form = useForm({
     name: props.user.name,
     email: props.user.email,
     photo: null,
+    locale: props.user.locale,
 });
 
 const verificationLinkSent = ref(null);
 const photoPreview = ref(null);
 const photoInput = ref(null);
+const selectLocale = ref(null);
 
 const updateProfileInformation = () => {
     if (photoInput.value) {
@@ -32,7 +33,10 @@ const updateProfileInformation = () => {
     form.post(route('user-profile-information.update'), {
         errorBag: 'updateProfileInformation',
         preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
+        onSuccess: () => {
+          clearPhotoFileInput()
+          i18next.changeLanguage(props.user.locale)
+        }
     });
 };
 
@@ -103,6 +107,18 @@ const clearPhotoFileInput = () => {
               <div v-text="form.errors.email" class="invalid-feedback" />
             </div>
 
+            <!-- Locale -->
+            <div class="form-group">
+              <label for="localeSelection">Locale</label>
+              <select class="form-control" id="localeSelection" ref="selectLocale" v-model="form.locale">
+                <option value="en_US">English (US)</option>
+                <option value="de_DE">Deutsch (DE)</option>
+                <option value="es_ES">Español (Spain)</option>
+                <option value="fr_FR">Français (France)</option>
+                <option value="nl_NL">Nederlands</option>
+              </select>
+              <div v-text="form.errors.locale" class="invalid-feedback" />
+            </div>
         </template>
 
         <template #actions>

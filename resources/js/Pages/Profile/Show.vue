@@ -44,10 +44,10 @@ defineProps({
 <!--              <SectionBorder />-->
 <!--          </div>-->
 
-          <div>
-            <UpdateLocaleForm :user="$page.props.auth.user" class="mt-10" />
-            <SectionBorder />
-          </div>
+<!--          <div>-->
+<!--            <UpdateLocaleForm :user="$page.props.auth.user" class="mt-10" />-->
+<!--            <SectionBorder />-->
+<!--          </div>-->
 
           <div>
             <UpdateThemeForm :user="$page.props.auth.user" :themes="$page.props.themes" class="mt-10" />

@@ -33,4 +33,18 @@ As per https://laravel.com/docs/10.x/upgrade
 
 ### Monolog 3
 
+### Jetstream 3 -> 4
 
+As per https://github.com/laravel/jetstream/blob/4.x/UPGRADE.md
+Nothing to note (?)
+
+### Scout 9.x -> 10.x
+
+Since there arent any published features in MunkiReport with Scout support, we can just upgrade it.
+
+### GraphiQL / Lighthouse
+
+As per https://github.com/nuwave/lighthouse/blob/master/UPGRADE.md
+
+- laravel-graphiql https://github.com/mll-lab/laravel-graphiql no change required, still broken(?)
+- 
