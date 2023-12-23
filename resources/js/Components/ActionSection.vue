@@ -1,9 +1,11 @@
 <script setup>
 import SectionTitle from './SectionTitle.vue';
+import Card from './Card.vue';
 </script>
 
 <template>
-    <div>
+    <div class="row">
+      <div class="col-sm-4">
         <SectionTitle>
             <template #title>
                 <slot name="title" />
@@ -12,9 +14,14 @@ import SectionTitle from './SectionTitle.vue';
                 <slot name="description" />
             </template>
         </SectionTitle>
-
-        <div class="mt-5">
+      </div>
+      <div class="col-sm">
+        <Card>
           <slot name="content" />
-        </div>
+          <template #footer>
+            <slot name="actions" />
+          </template>
+        </Card>
+      </div>
     </div>
 </template>

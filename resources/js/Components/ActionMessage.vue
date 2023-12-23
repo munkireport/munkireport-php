@@ -1,13 +1,18 @@
-<script setup>
-defineProps({
-    on: Boolean,
-});
+<script setup lang="ts">
+import { defineProps, withDefaults } from "vue"
+
+export interface Props {
+  on?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  on: false,
+})
+
 </script>
 
 <template>
-    <div>
-      <div class="alert alert-primary" role="alert" v-show="on">
-        <slot />
-      </div>
-    </div>
+  <div class="valid-feedback" role="alert" v-show="on">
+    <slot />
+  </div>
 </template>
