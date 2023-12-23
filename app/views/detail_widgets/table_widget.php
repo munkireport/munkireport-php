@@ -8,6 +8,9 @@
             <?=isset($i18n_title) ? "data-i18n=\"$i18n_title\"" : ''?>
             <?=isset($class) ? "class=\"$class\"" : ''?>
         ></span>
+    
+        <?=isset($tab_link) ? "<a data-toggle=\"tab\" title=\"Details…\" class=\"btn btn-xs pull-right\" href=\"detail\#$tab_link-tab\" aria-expanded=\"false\"><i class=\"fa fa-arrow-right\"></i></a>" : ''?>   
+
     </h4>
     <table
         <?=isset($table_id) ? "id=\"$table_id\"" : ''?>
