@@ -10,6 +10,7 @@ const { t, i18next } = useTranslation();
 
 const props = defineProps({
     user: Object,
+    themes: Array,
 });
 
 const form = useForm({
@@ -18,12 +19,14 @@ const form = useForm({
     email: props.user.email,
     photo: null,
     locale: props.user.locale,
+    theme: props.current_theme,
 });
 
 const verificationLinkSent = ref(null);
 const photoPreview = ref(null);
 const photoInput = ref(null);
 const selectLocale = ref(null);
+const themeSelect = ref(null);
 
 const updateProfileInformation = () => {
     if (photoInput.value) {
@@ -119,6 +122,14 @@ const clearPhotoFileInput = () => {
               </select>
               <div v-text="form.errors.locale" class="invalid-feedback" />
             </div>
+
+          <!-- Theme -->
+          <div class="form-group">
+            <label for="themeSelection">Theme</label>
+            <select class="form-control" id="themeSelection" ref="themeSelect" v-model="form.theme" @change="updateTheme">
+              <option v-for="theme in themes" :key="theme" :value="theme">{{ theme }}</option>
+            </select>
+          </div>
         </template>
 
         <template #actions>

@@ -2,6 +2,7 @@ export {};
 declare global {
     export namespace inertia {
         export interface Props {
+            current_theme: string;
             user: {
                 id: number;
                 name: string;
@@ -14,6 +15,7 @@ declare global {
             };
             errorBags: unknown;
             errors: unknown;
+            themes: string[];
         }
     }
 }

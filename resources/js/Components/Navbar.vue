@@ -10,10 +10,11 @@
     faThLarge,
     faSearch,
     faUser,
+    faQuestion
   } from '@fortawesome/free-solid-svg-icons'
   import {
     faChartBar,
-    faListAlt,
+    faListAlt
   } from '@fortawesome/free-regular-svg-icons'
   import Dropdown from "./Dropdown.vue";
 
@@ -148,8 +149,9 @@
         </template>
 
         <Link class="dropdown-item" href="/user/profile">{{ t('nav.user.profile')}}</Link>
+        <Link class="dropdown-item" href="/user/api-tokens">{{ t('nav.user.tokens')}}</Link>
         <a class="dropdown-item" href="/api/documentation">{{ t('nav.api.documentation')}}</a>
-        <a class="dropdown-item dropdown-divider"></a>
+        <div class="dropdown-divider"></div>
 
         <form action="/auth/logout" method="POST" @submit.prevent="logout">
           <button type="submit" class="dropdown-item">
@@ -159,6 +161,11 @@
         </form>
       </Dropdown>
 
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/munkireport/munkireport-php/wiki" target="_blank">
+          <FontAwesomeIcon :icon="faQuestion" />
+        </a>
+      </li>
     </ul>
   </nav>
 </template>

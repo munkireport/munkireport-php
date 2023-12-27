@@ -27,7 +27,8 @@ Depending on whether this is successful it may be renamed.
     <meta name="msapplication-config" content="{{ asset('assets/images/favicons/browserconfig.xml') }}">
     <meta name="theme-color" content="#5d5858">
 
-    <link rel="stylesheet" href="{{ asset('assets/themes/' . session('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" />
+    <!-- the bootstrap theme stylesheet is moved into the InertiaJS Head component so that it may be modified on the fly -->
+    <!-- <link rel="stylesheet" href="{{ asset('assets/themes/' . session('theme', 'Default') . '/bootstrap.min.css') }}" id="bootstrap-stylesheet" /> -->
 
     <!-- munkireport.custom_css -->
     @if (config('_munkireport.custom_css'))
