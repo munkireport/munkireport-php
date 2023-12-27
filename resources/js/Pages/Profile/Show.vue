@@ -19,7 +19,7 @@ defineProps({
     <AppLayout title="Profile">
         <div class="container">
           <div v-if="$page.props.jetstream.canUpdateProfileInformation">
-              <UpdateProfileInformationForm :user="$page.props.auth.user" />
+              <UpdateProfileInformationForm :user="$page.props.auth.user" :themes="$page.props.themes" />
 
               <SectionBorder />
           </div>
@@ -49,10 +49,10 @@ defineProps({
 <!--            <SectionBorder />-->
 <!--          </div>-->
 
-          <div>
-            <UpdateThemeForm :user="$page.props.auth.user" :themes="$page.props.themes" class="mt-10" />
-            <SectionBorder />
-          </div>
+<!--          <div>-->
+<!--            <UpdateThemeForm :user="$page.props.auth.user" :themes="$page.props.themes" class="mt-10" />-->
+<!--            <SectionBorder />-->
+<!--          </div>-->
 
           <LogoutOtherBrowserSessionsForm :sessions="sessions" class="mt-10 sm:mt-0" />
 

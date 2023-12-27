@@ -7,7 +7,6 @@ import I18NextVue from 'i18next-vue'
 import Fetch from 'i18next-fetch-backend';
 import urql, { cacheExchange, fetchExchange } from '@urql/vue';
 
-
 i18next
     .use(Fetch)
     .init({

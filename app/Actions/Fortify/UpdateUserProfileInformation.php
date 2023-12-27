@@ -23,7 +23,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
             'locale' => [
                 'string'
-            ]
+            ],
+            'theme' => ['string']
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -42,7 +43,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         }
 
         if (isset($input['theme'])) {
-            $request->session()->set('theme', $input['theme']);
+            // Session is not available in this context?
+//            session()->set('theme', $input['theme']);
         }
 
         if (isset($input['locale'])) {
