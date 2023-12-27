@@ -52,7 +52,7 @@
 
 <div id="graphiql">Loading...</div>
 <script src="{{ \MLL\GraphiQL\DownloadAssetsCommand::jsPath() }}"></script>
-<script src="{{ \MLL\GraphiQL\DownloadAssetsCommand::explorerPluginPath() }}"></script>
+<script src="{{ \MLL\GraphiQL\DownloadAssetsCommand::pluginExplorerPath() }}"></script>
 <script>
     const fetcher = GraphiQL.createFetcher({
         url: '{{ $url }}',
