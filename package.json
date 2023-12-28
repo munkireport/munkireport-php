@@ -5,6 +5,7 @@
         "build": "npm run type-check && vite build",
         "type-check": "vue-tsc --noEmit",
         "lint": "eslint resources/js/**/*.{js,ts,vue}",
+        "lint-fix": "eslint --fix resources/js/**/*.{js,ts,vue}",
         "preview": "vite preview",
         "codegen": "graphql-codegen"
     },

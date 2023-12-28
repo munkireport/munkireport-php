@@ -15,7 +15,10 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <Link :href="href" :class="classes">
-        <slot />
-    </Link>
+  <Link
+    :href="href"
+    :class="classes"
+  >
+    <slot />
+  </Link>
 </template>

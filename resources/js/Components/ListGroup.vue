@@ -17,11 +17,15 @@ const props = withDefaults(defineProps<Props<any>>(), {
 </script>
 
 <template>
-  <ul class="list-group" :class="{ 'list-group-flush': props.flush }">
-    <li class="list-group-item"
-        v-for="item in items"
-        :key="props.key"
-        :class="{ 'active': item.active, 'disabled': item.disabled }"
+  <ul
+    class="list-group"
+    :class="{ 'list-group-flush': props.flush }"
+  >
+    <li
+      v-for="item in items"
+      :key="props.key"
+      class="list-group-item"
+      :class="{ 'active': item.active, 'disabled': item.disabled }"
     />
   </ul>
 </template>

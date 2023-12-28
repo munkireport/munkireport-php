@@ -22,11 +22,15 @@ const props = withDefaults(defineProps<Props>(), {
 <template>
   <Head>
     <title>{{ title }}</title>
-    <link rel="stylesheet" :href="`/assets/themes/${theme}/bootstrap.min.css`" id="bootstrap-stylesheet" />
+    <link
+      id="bootstrap-stylesheet"
+      rel="stylesheet"
+      :href="`/assets/themes/${theme}/bootstrap.min.css`"
+    >
   </Head>
   <Navbar />
   <main style="padding-top: 56px;">
-    <slot></slot>
+    <slot />
   </main>
   <Footer />
 </template>
