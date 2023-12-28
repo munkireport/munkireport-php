@@ -71,48 +71,54 @@ const closeModal = () => {
 </script>
 
 <template>
-    <span>
-        <span @click="startConfirmingPassword">
-            <slot />
-        </span>
-
-        <DialogModal :show="confirmingPassword" @close="closeModal">
-            <template #title>
-                {{ title }}
-            </template>
-
-            <template #content>
-                {{ content }}
-
-                <div class="mt-4">
-                    <TextInput
-                        ref="passwordInput"
-                        v-model="form.password"
-                        type="password"
-                        class="mt-1 block w-3/4"
-                        placeholder="Password"
-                        autocomplete="current-password"
-                        @keyup.enter="confirmPassword"
-                    />
-
-                    <InputError :message="form.error" class="mt-2" />
-                </div>
-            </template>
-
-            <template #footer>
-                <SecondaryButton @click="closeModal">
-                    Cancel
-                </SecondaryButton>
-
-                <PrimaryButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                    @click="confirmPassword"
-                >
-                    {{ button }}
-                </PrimaryButton>
-            </template>
-        </DialogModal>
+  <span>
+    <span @click="startConfirmingPassword">
+      <slot />
     </span>
+
+    <DialogModal
+      :show="confirmingPassword"
+      @close="closeModal"
+    >
+      <template #title>
+        {{ title }}
+      </template>
+
+      <template #content>
+        {{ content }}
+
+        <div class="mt-4">
+          <TextInput
+            ref="passwordInput"
+            v-model="form.password"
+            type="password"
+            class="mt-1 block w-3/4"
+            placeholder="Password"
+            autocomplete="current-password"
+            @keyup.enter="confirmPassword"
+          />
+
+          <InputError
+            :message="form.error"
+            class="mt-2"
+          />
+        </div>
+      </template>
+
+      <template #footer>
+        <SecondaryButton @click="closeModal">
+          Cancel
+        </SecondaryButton>
+
+        <PrimaryButton
+          class="ml-3"
+          :class="{ 'opacity-25': form.processing }"
+          :disabled="form.processing"
+          @click="confirmPassword"
+        >
+          {{ button }}
+        </PrimaryButton>
+      </template>
+    </DialogModal>
+  </span>
 </template>

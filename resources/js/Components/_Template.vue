@@ -14,6 +14,6 @@ import {useTranslation} from 'i18next-vue'
 </script>
 
 <template>
-  <div></div>
+  <div />
 </template>
 

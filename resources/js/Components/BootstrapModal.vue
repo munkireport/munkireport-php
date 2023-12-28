@@ -7,17 +7,19 @@ const open = ref(false)
 </script>
 
 <template>
-
   <button
-      type="button"
-      class="btn btn-primary"
-      @click="open = true"
+    type="button"
+    class="btn btn-primary"
+    @click="open = true"
   >
     Launch demo modal
   </button>
 
   <Teleport to="body">
-    <div v-if="open" class="vmodal">
+    <div
+      v-if="open"
+      class="vmodal"
+    >
       <slot />
     </div>
   </Teleport>

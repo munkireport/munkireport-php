@@ -12,7 +12,11 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <span class="text-success" role="alert" v-show="on">
+  <span
+    v-show="on"
+    class="text-success"
+    role="alert"
+  >
     <slot />
   </span>
 </template>
