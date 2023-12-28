@@ -1,7 +1,15 @@
-<?php $this->view('partials/head'); ?>
+<?php
+/*
+    This view should no longer be used but is sometimes referenced directly by a module, so it can't be fully deleted
+    until people stop include'ing it
+*/
+
+$this->view('partials/head'); ?>
 
 <div class="container-fluid">
-
+    <div class="alert alert-warning" role="alert">
+        This module is using an older version of the dashboard template. Bug the author(s) to update the view to a v6 Blade template.
+    </div>
 	<?php foreach($dashboard_layout AS $row):?>
 
 	<div class="row pt-4">

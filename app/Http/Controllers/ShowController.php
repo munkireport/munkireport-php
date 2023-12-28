@@ -44,6 +44,7 @@ class ShowController extends Controller
      *
      * The dashboard template defaults to dashboard/dashboard unless overridden.
      *
+     * @deprecated Use DashboardsController show method which can handle blade components.
      * @param string $which
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|void
      */

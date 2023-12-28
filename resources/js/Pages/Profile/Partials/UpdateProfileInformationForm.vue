@@ -98,7 +98,9 @@ const clearPhotoFileInput = () => {
             <!-- Name -->
             <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" v-model="form.name" />
+              <input type="text" class="form-control" id="name" v-model="form.name"
+                     :class="{ 'is-invalid': !!form.errors.name }"
+              />
               <div v-text="form.errors.name" class="invalid-feedback" />
             </div>
 
@@ -106,14 +108,18 @@ const clearPhotoFileInput = () => {
             <!-- Removed from vendor template: e-mail verification -->
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" v-model="form.email" />
+              <input type="email" class="form-control" id="email" v-model="form.email"
+                     :class="{ 'is-invalid': !!form.errors.email }"
+              />
               <div v-text="form.errors.email" class="invalid-feedback" />
             </div>
 
             <!-- Locale -->
             <div class="form-group">
               <label for="localeSelection">Locale</label>
-              <select class="form-control" id="localeSelection" ref="selectLocale" v-model="form.locale">
+              <select class="form-control" id="localeSelection" ref="selectLocale" v-model="form.locale"
+                      :class="{ 'is-invalid': !!form.errors.locale }"
+              >
                 <option value="en_US">English (US)</option>
                 <option value="de_DE">Deutsch (DE)</option>
                 <option value="es_ES">Español (Spain)</option>
@@ -126,7 +132,9 @@ const clearPhotoFileInput = () => {
           <!-- Theme -->
           <div class="form-group">
             <label for="themeSelection">Theme</label>
-            <select class="form-control" id="themeSelection" ref="themeSelect" v-model="form.theme" @change="updateTheme">
+            <select class="form-control" id="themeSelection" ref="themeSelect" v-model="form.theme" @change="updateTheme"
+                    :class="{ 'is-invalid': !!form.errors.theme }"
+            >
               <option v-for="theme in themes" :key="theme" :value="theme">{{ theme }}</option>
             </select>
           </div>
