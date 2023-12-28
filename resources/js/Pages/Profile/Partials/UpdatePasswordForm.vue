@@ -53,6 +53,7 @@ const updatePassword = () => {
                    ref="currentPasswordInput"
                    v-model="form.current_password"
                    autocomplete="current-password"
+                   :class="{ 'is-invalid': !!form.errors.current_password }"
             />
             <div v-text="form.errors.current_password" class="invalid-feedback" />
           </div>
@@ -66,6 +67,7 @@ const updatePassword = () => {
                 v-model="form.password"
                 type="password"
                 autocomplete="new-password"
+                :class="{ 'is-invalid': !!form.errors.password }"
             />
             <div v-text="form.errors.password" class="invalid-feedback" />
           </div>
@@ -78,6 +80,7 @@ const updatePassword = () => {
                 type="password"
                 class="form-control"
                 autocomplete="new-password"
+                :class="{ 'is-invalid': !!form.errors.password_confirmation }"
             />
             <div v-text="form.errors.password_confirmation" class="invalid-feedback" />
           </div>

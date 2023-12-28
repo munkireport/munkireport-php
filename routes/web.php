@@ -78,23 +78,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/show', 'ShowController@index');
     Route::get('/show/custom/{which?}', 'ShowController@custom');
-    Route::get('/show/dashboard/default', 'DashboardsController@default'); // Temporary override for testing Widget Components
-    Route::get('/show/dashboard/{dashboard?}', 'ShowController@dashboard');
+
+    // The /show/dashboard route used to point to ShowController::dashboard which used php view templates. This is now aliased
+    // To the template which uses a blade component directive
+    Route::get('/show/dashboard/default', 'DashboardsController@default');
+    Route::get('/show/dashboard/{dashboard?}', 'DashboardsController@show');
+    Route::get('/dashboards/default', 'DashboardsController@default');
+    Route::get('/dashboards/{dashboard?}', 'DashboardsController@show');
+
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
     Route::get('/show/report/{report}/{action}', 'ShowController@report');
     Route::get('/show/kiss_layout', 'ShowController@kiss_layout'); // For comparison of head.php/foot.php against blade layouts eg. mr.blade.php
 
-    Route::get('/me', 'MeController@index');
-    Route::get('/me/tokens', 'MeController@tokens');
-
     Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
-
-    if (config('_munkireport.alpha_features.dashboards', false)) {
-        Route::get('/dashboards/{slug?}', 'DashboardsController@index');
-
-        // We also provide an (unused implementation) of Blade based Dashoards
-        Route::get('/blade-dashboards/{slug?}', 'DashboardsController@bladeIndex');
-    }
 
     if (config('_munkireport.alpha_features.flexible_query', false)) {
         Route::get('/query', 'QueryController@index');

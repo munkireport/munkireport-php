@@ -167,4 +167,22 @@ class Dashboard
       mr_view($view, $data);
 
     }
+
+    /**
+     * Get detail about a loaded dashboard.
+     *
+     * @since 6.0.0
+     * @param string $dashboard The name of the dashboard to get information about
+     * @return array|null Dashboard associative array or null if dashboard did not exist.
+     */
+    public function get(string $dashboard): ?array
+    {
+        if (!isset($this->dashboards[$dashboard])) {
+            return null;
+        }
+
+        return [
+            'dashboard_layout' => $this->dashboards[$dashboard]['dashboard_layout']
+        ];
+    }
 }
