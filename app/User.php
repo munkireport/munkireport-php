@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,6 +63,20 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
         'profile_photo_url',
     ];
 
+    //// Business Units V1
+
+    /**
+     * Retrieve legacy business unit membership rows where this user is a member
+     * (via their username) having a role of manager, archiver, or user.
+     * @return mixed
+     */
+    public function memberOfLegacyBusinessUnits() {
+        return LegacyBusinessUnit::members()
+            ->where('value', '=', $this->name);
+    }
+
+    //// Business Units V2 (Alpha)
+
     /**
      * Retrieve business units where this user is a member (manager or normal user).
      *
@@ -88,6 +103,15 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      */
     public function userOfBusinessUnits() {
         return $this->memberOfBusinessUnits()->wherePivot('role', 'user');
+    }
+
+    /**
+     * Retrieve business units where this user holds the given role name.
+     *
+     * @param string $role The role name to filter by, only business units will be returned if the user holds a role in them.
+     */
+    public function businessUnitsWithRole(string $role): BelongsToMany {
+        return $this->memberOfBusinessUnits()->wherePivot('role', $role);
     }
 
     //// LegacyUser Interface for MunkiReport
@@ -156,11 +180,35 @@ class User extends Authenticatable implements LegacyUser, HasLocalePreference
      * - MunkiReport 5.6.5 sets this information on the session when you log in
      * - Backwards compatibility for session-based machine groups is provided by App\Auth\Listeners\MachineGroupMembership
      *
+     * This was moved from a session value to a database query because machine groups need to be queried for authz decisions in
+     * stateless access such as via REST API.
+     *
      * @return array
      */
     public function machineGroups(): array
     {
-        return session('machine_groups') ?? [];
+        //return session('machine_groups') ?? [];
+        if (!config('_munkireport.enable_business_units', false) || $this->role === 'admin') {
+            // Can access all defined groups (from machine_group)
+            // and used groups (from reportdata)
+            $mg = new Machine_group;
+            $reportedMachineGroups = ReportData::select('machine_group')
+                ->groupBy('machine_group')
+                ->get()
+                ->pluck('machine_group')
+                ->toArray();
+            $reportedMachineGroups = $reportedMachineGroups ? $reportedMachineGroups : [0];
+            $machineGroups = array_unique(array_merge($reportedMachineGroups, $mg->get_group_ids()));
+        } else {
+            $businessUnitMembership = LegacyBusinessUnit::members()->where('value', $this->name)->first();
+            $machineGroups = LegacyBusinessUnit::where('unitid', $businessUnitMembership->unitid)
+                ->where('property', 'machine_group')
+                ->get()
+                ->pluck('value')
+                ->toArray();
+        }
+
+        return $machineGroups;
     }
 
     /**

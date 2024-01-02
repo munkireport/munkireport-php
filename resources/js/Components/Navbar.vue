@@ -88,6 +88,7 @@
           <div class="dashboard dropdown-menu">
             <a
               v-for="dashboard in dashboards"
+              :key="dashboard.url"
               class="dropdown-item"
               :class="[dashboard.class]"
               :href="dashboard.url"
@@ -113,6 +114,7 @@
           </template>
           <a
             v-for="report in reports"
+            :key="report.i18n"
             class="dropdown-item"
             :class="[report.class]"
             :href="report.url"
@@ -138,6 +140,7 @@
           </template>
           <a
             v-for="listing in listings"
+            :key="listing.i18n"
             :href="listing.url"
             class="dropdown-item"
             :class="[listing.class]"
@@ -162,6 +165,7 @@
           </template>
           <a
             v-for="item in admin"
+            :key="item.i18n"
             :href="item.url"
             class="dropdown-item"
             :class="item.class"

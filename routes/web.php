@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Oauth2Controller;
-use App\Http\Controllers\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,7 +87,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');
     Route::get('/show/report/{report}/{action}', 'ShowController@report');
-    Route::get('/show/kiss_layout', 'ShowController@kiss_layout'); // For comparison of head.php/foot.php against blade layouts eg. mr.blade.php
 
     Route::delete('/manager/delete_machine/{serial_number}', 'ManagerController@delete_machine');
 
@@ -101,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     // Developer-Only Routes (Should Never Be Visible in release)
     if (App::environment('local')) {
         Route::get('/test', 'TestController@index');
+        Route::get('/show/kiss_layout', 'ShowController@kiss_layout'); // For comparison of head.php/foot.php against blade layouts eg. mr.blade.php
     }
 });
 

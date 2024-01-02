@@ -126,4 +126,33 @@ class ReportDataModelPolicy
             return false;
         }
     }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * With business units enabled:
+     * - Admins can always view.
+     * - Manager or User can only view their own Business Unit.
+     * - Nobody role cannot view anything.
+     *
+     * @param User $user
+     * @param ReportData $reportData
+     * @return mixed
+     */
+    public function view(User $user, ReportData $reportData)
+    {
+        if ($user->isAdmin()) return true;
+
+        // there are no view restrictions when BU is turned off
+        if (!config('_munkireport.enable_business_units', false)) return true;
+
+        // Determine whether the user can view based on their machine groups which was decided by the MachineGroupMembership Auth Listener
+        // TODO: cannot use session when ths authz is API key based
+        $machineGroups = session()->get('machine_groups', []);
+        $matchMachineGroup = $reportData->machine_group;
+        if (in_array((string)$matchMachineGroup, $machineGroups)) return true;
+
+
+        return false;
+    }
 }

@@ -1,3 +1,6 @@
+// This Tailwind Config is installed via Laravel Jetstream but it should not be needed when we can eliminate all
+// tailwind classes from Jetstream Vue Components.
+
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 /** @type {import('tailwindcss').Config} */

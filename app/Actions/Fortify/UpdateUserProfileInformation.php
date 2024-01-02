@@ -47,11 +47,6 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 //            session()->set('theme', $input['theme']);
         }
 
-        if (isset($input['locale'])) {
-            $user->locale = $input['locale'];
-            $user->save();
-        }
-
         // TODO:
         //             'locale' => $request->getLocale(),
         //            'current_theme' => $request->session()->get('theme', config('_munkireport.default_theme')),

@@ -152,7 +152,7 @@
                     <span data-i18n="nav.main.listings"></span>
                     <b class="caret"></b>
                 </a>
-                <div class="listing dropdown-menu" aria-labelledby="listingMenuLink">
+                <div class="listing dropdown-menu overflow-auto vh-100" aria-labelledby="listingMenuLink">
                 <?php foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item): ?>
                     <a class="dropdown-item <?=$item->class?>" href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
                 <?php endforeach; ?>
@@ -198,17 +198,7 @@
         </div><!-- div navbar-nav mr-auto (left aligned) -->
 
         <div class="navbar-nav ml-auto">
-            <?php if (config('_munkireport.alpha_features.search', false)): ?>
-            <form class="form-inline my-2 my-lg-0">
-                <li class="dropdown" data-reference="parent">
-                    <div class="search-results dropdown-menu">
-                        <a class="dropdown-item" href="#">No results</a>
-                    </div>
-                </li>
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-            <?php endif ?>
+
 
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" id="userMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -219,6 +209,7 @@
                 <div class="dropdown-menu" aria-labelledby="userMenuLink">
                     <a class="dropdown-item" href="<?php echo url('/user/profile'); ?>" data-i18n="nav.user.profile">My Profile</a>
                     <a class="dropdown-item" href="<?php echo url('/user/api-tokens'); ?>" data-i18n="nav.user.tokens">My API Tokens</a>
+                    <a class="dropdown-item" href="<?php echo url('/api/documentation'); ?>" data-i18n="nav.apidocs">API Documentation</a>
                     <div class="dropdown-divider"></div>
 
                     <form action="<?php echo route('logout'); ?>" method="POST">

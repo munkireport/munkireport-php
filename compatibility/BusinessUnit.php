@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Business Unit Model (from v5).
+ * Business Unit Model (from v5). AKA Legacy Business Unit
  *
  * Currently business units are implemented as a key - value table containing three things:
  * 
@@ -118,7 +118,7 @@ class BusinessUnit extends Model
     //// SCOPES
 
     /**
-     * Return only BusinessUnit rows with details about Managers and Users.
+     * Return only BusinessUnit rows with details about members.
      *
      * @param Builder $query
      * @return Builder The amended query
@@ -129,6 +129,16 @@ class BusinessUnit extends Model
             BusinessUnit::PROP_USER,
             BusinessUnit::PROP_ARCHIVER,
         ]);
+    }
+
+    /**
+     * Return only BusinessUnit rows with details about Machine Groups
+     *
+     * @param Builder $query
+     * @return Builder The amended query
+     */
+    public function scopeMachineGroups(Builder $query): Builder {
+        return $query->where('property', '=', BusinessUnit::PROP_MACHINE_GROUP);
     }
 
     /**

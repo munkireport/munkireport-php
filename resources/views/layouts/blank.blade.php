@@ -55,7 +55,7 @@ MunkiReport v5 frontend stack (Bootstrap/jQuery/Datatables.NET)
     @endif
 
 </head>
-<body style="padding-top: 56px;">
+<body class="mr-blank-layout" style="padding-top: 56px;">
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'MunkiReport') }}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

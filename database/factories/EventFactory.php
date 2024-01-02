@@ -20,14 +20,14 @@ class EventFactory extends Factory
             ['danger', 'munkireport', 'munki.error', ['count' => 10]],
         ];
 
-        list($type, $module, $msg, $data) = $this->faker->randomElement($messages);
+        list($type, $module, $msg, $data) = fake()->randomElement($messages);
 
         return [
             'type' => $type,
             'module' => $module,
             'msg' => $msg,
             'data' => json_encode($data),
-            'timestamp' =>$this->faker->dateTimeBetween('-1 month')->format('U'),
+            'timestamp' => fake()->dateTimeBetween('-1 month')->format('U'),
         ];
     }
 
