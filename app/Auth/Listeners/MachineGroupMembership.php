@@ -18,17 +18,9 @@ use munkireport\models\Machine_group;
 class MachineGroupMembership
 {
     public function handle(Login $event) {
-        Log::info('evaluating machinegroup memberships');
-        if( session()->has('business_unit')){
-            // Only retrieve machinegroups for this business unit
-            $businessUnitId = session()->get('business_unit');
-            $machineGroups = BusinessUnit::where('unitid', $businessUnitId)
-            ->where('property', 'machine_group')
-            ->get()
-            ->pluck('value')
-            ->toArray();
-        }
-        else{
+        Log::debug('evaluating machinegroup memberships');
+
+        if (!config('_munkireport.enable_business_units', false) || $event->user->role === 'admin') {
             // Can access all defined groups (from machine_group)
             // and used groups (from reportdata)
             $mg = new Machine_group;
@@ -39,8 +31,17 @@ class MachineGroupMembership
                 ->toArray();
             $reportedMachineGroups = $reportedMachineGroups ? $reportedMachineGroups : [0];
             $machineGroups = array_unique(array_merge($reportedMachineGroups, $mg->get_group_ids()));
+        } else {
+            // Only retrieve machinegroups for this business unit
+            $businessUnitId = session()->get('business_unit');
+            $machineGroups = BusinessUnit::where('unitid', $businessUnitId)
+                ->where('property', 'machine_group')
+                ->get()
+                ->pluck('value')
+                ->toArray();
         }
-        Log::info('found machinegroup memberships: ', $machineGroups);
+
+        Log::debug('found machinegroup memberships: ', $machineGroups);
         session()->put('machine_groups', $machineGroups);
     }
 }
