@@ -26,9 +26,16 @@ class SystemInformationController
         $connection = DB::connection(DB::getDefaultConnection());
         $pdo = DB::getPdo();
 
+        // The method PDO::getServerVersion is not always available.
+        if (method_exists($pdo, 'getServerVersion')) {
+            $serverVersion = $pdo->getServerVersion();
+        } else {
+            $serverVersion = "Unavailable";
+        }
+
         $response = [
             'database_name' => $connection->getDatabaseName(),
-            'server_version' => $pdo->getServerVersion(),
+            'server_version' => $serverVersion,
             'client_version' => $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION),
             'driver_name' => $pdo->getAttribute(\PDO::ATTR_DRIVER_NAME),
 //            'server_info' => $pdo->getAttribute(\PDO::ATTR_SERVER_INFO),

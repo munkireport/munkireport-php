@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Machine;
 use App\ReportData;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use munkireport\lib\Modules;
 use Compatibility\Kiss\ConnectDbTrait;
+use Illuminate\Http\Request;
 
 class ClientsController extends Controller
 {
@@ -132,7 +131,7 @@ class ClientsController extends Controller
      * @param string $sn serial number
      * @author abn290
      **/
-    public function detail(string $sn = '')
+    public function detail(Request $request, string $sn = '')
     {
         $data = array('serial_number' => $sn);
         $data['scripts'] = array("clients/client_detail.js");
@@ -143,6 +142,11 @@ class ClientsController extends Controller
 
         $reportData = ReportData::where('serial_number', $sn)
             ->firstOrFail();
+
+        if ($request->user()->cannot('view', $machine)) {
+            abort(403);
+        }
+
         $data['reportData'] = $reportData;
 
         // Tab list, each item should contain:

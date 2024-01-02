@@ -33,7 +33,10 @@ class UnitController extends Controller
     }
 
     /**
-     * Get machine group data for current user
+     * Get machine group data for current user.
+     *
+     * This endpoint is different to the admin endpoint because it provides an "Unassigned" option. It is used to
+     * populate the filter modal and inside machine_detail.js.
      *
      * @author
      **/

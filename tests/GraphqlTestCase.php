@@ -3,18 +3,17 @@
 namespace Tests;
 
 use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
-use Nuwave\Lighthouse\Testing\ClearsSchemaCache;
+use Nuwave\Lighthouse\Testing\RefreshesSchemaCache;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 class GraphqlTestCase extends AuthorizationTestCase
 {
     use CreatesApplication;
-    use ClearsSchemaCache;
+    use RefreshesSchemaCache;
     use MakesGraphQLRequests;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->bootClearsSchemaCache();
     }
 }

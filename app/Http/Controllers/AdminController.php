@@ -526,6 +526,12 @@ class AdminController extends Controller
                     'managers' => [],
                     'archivers' => [],
                     'machine_groups' => [],
+                    'name' => '',
+                    'unitid' => 0,
+                    'address' => '',
+                    'link' => '',
+                    'groupid' => '',
+                    'key' => '',
                 ];
             }
             switch ($obj->property) {

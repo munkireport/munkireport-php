@@ -148,5 +148,6 @@ class BusinessUnitSeeder extends Seeder
 
         DB::table('business_unit')->insert($userRoles);
 
+
     }
 }

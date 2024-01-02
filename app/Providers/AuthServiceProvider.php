@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Extensions\YamlUserProvider;
+use App\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        // The delete action should really be a policy, but the ManagerController::delete_machine action does not resolve a Machine model instance
         Gate::define('delete_machine', function (\App\User $user, string $serial_number) {
             if ($user->isAdmin()) return true;
 
@@ -68,7 +70,7 @@ class AuthServiceProvider extends ServiceProvider
             return false;
         });
 
-        Gate::define('global', function ($user) {
+        Gate::define('global', function (User $user): bool {
             $authorizations = config('_munkireport.authorization', []);
             // No archive authorizations defined: it would not be possible to pass this gate.
             if (!isset($authorizations['global'])) {

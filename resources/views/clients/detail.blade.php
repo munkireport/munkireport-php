@@ -21,11 +21,11 @@
 </script>
 
 <div class="container-fluid">
-    <div class="row pt-4">
+    <div class="row mt-4">
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="showTabMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="showTabMenuButton" data-toggle="dropdown" aria-expanded="false">
                         <span data-i18n="show" class="hidden-sm hidden-xs"></span>
                         <i class="fa fa-list fa-fw"></i>
                     </button>

@@ -11,14 +11,14 @@ class CommentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'serial_number' => $this->faker->unique()->regexify('[A-Z0-9]{3}[CDFGHJKLMNPQRSTVWXYZ][123456789CDFGHJKLMNPQRTVWXY][A-Z0-9]{3}P7QM'),
-            'section' => $this->faker->randomElement(['client']),
-            'user' => $this->faker->userName,
-            'text' => $this->faker->text,
-            'html' => $this->faker->randomHtml,
+            'serial_number' => fake()->unique()->regexify('[A-Z0-9]{3}[CDFGHJKLMNPQRSTVWXYZ][123456789CDFGHJKLMNPQRTVWXY][A-Z0-9]{3}P7QM'),
+            'section' => fake()->randomElement(['client']),
+            'user' => fake()->userName(),
+            'text' => fake()->text(),
+            'html' => fake()->randomHtml(),
             'timestamp' => time(),
         ];
     }

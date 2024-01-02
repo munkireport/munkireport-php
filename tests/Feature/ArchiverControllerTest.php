@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Tests\AuthorizationTestCase;
 use Machine_model;
 
@@ -57,12 +58,13 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testAdminCanArchiveMachine()
     {
+        Config::set('_munkireport.enable_business_units', false);
         $reportData = \App\ReportData::factory()->create([
             'archive_status' => 0,
         ]);
         $machine = Machine::factory()->create(['serial_number' => $reportData->serial_number]);
         $response = $this->actingAs($this->adminUser)
-                         ->post("/archiver/update_status/${machine['serial_number']}", [
+                         ->post("/archiver/update_status/{$machine['serial_number']}", [
                              'status' => 1,
                          ]);
         $response->assertStatus(200);
@@ -71,12 +73,13 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testManagerCanArchiveMachine()
     {
+        Config::set('_munkireport.enable_business_units', false);
         $reportData = \App\ReportData::factory()->create([
             'archive_status' => 0,
         ]);
         $machine = Machine::factory()->create(['serial_number' => $reportData->serial_number]);
         $response = $this->actingAs($this->managerUser)
-                        ->post("/archiver/update_status/${machine['serial_number']}", [
+                        ->post("/archiver/update_status/{$machine['serial_number']}", [
                             'status' => 1,
                         ]);
         $response->assertStatus(200);
@@ -85,12 +88,13 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testArchiverCanArchiveMachine()
     {
+        Config::set('_munkireport.enable_business_units', false);
         $reportData = \App\ReportData::factory()->create([
             'archive_status' => 0,
         ]);
         $machine = Machine::factory()->create(['serial_number' => $reportData->serial_number]);
         $response = $this->actingAs($this->archiverUser)
-            ->post("/archiver/update_status/${machine['serial_number']}", [
+            ->post("/archiver/update_status/{$machine['serial_number']}", [
                 'status' => 1,
             ]);
         $response->assertStatus(200);
@@ -99,6 +103,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
     public function testUserCannotArchiveMachine()
     {
+        Config::set('_munkireport.enable_business_units', false);
         $reportData = \App\ReportData::factory()->create([
             'archive_status' => 0,
         ]);
@@ -106,7 +111,7 @@ class ArchiverControllerTest extends AuthorizationTestCase
 
         $this->expectException(AuthorizationException::class);
         $response = $this->actingAs($this->user)
-            ->post("/archiver/update_status/${machine['serial_number']}", [
+            ->post("/archiver/update_status/{$machine['serial_number']}", [
                 'status' => 1,
             ]);
         $response->assertStatus(403);

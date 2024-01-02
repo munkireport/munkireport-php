@@ -5,7 +5,7 @@ import {useTranslation} from 'i18next-vue'
 
 export interface Props<TItem> {
   items: TItem[];
-  key: any;
+  itemKey: any;
 
   flush: boolean;
 }
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props<any>>(), {
   >
     <li
       v-for="item in items"
-      :key="props.key"
+      :key="item[props.itemKey]"
       class="list-group-item"
       :class="{ 'active': item.active, 'disabled': item.disabled }"
     />

@@ -2,6 +2,7 @@
 
 use App\Notifications\GeneralEvent;
 use App\User;
+use App\Machine;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -228,24 +229,17 @@ function authorized(?string $what = null)
 }
 
 /**
- * Check if current user may access data for serial number
+ * Check if current user may access data for serial number.
+ *
+ * Ported to Laravel using MachinePolicy, previously used a joined query.
  *
  * @return boolean TRUE if authorized
- * @author
- * @todo This has not been converted to Laravel at all, the functionality is missing.
+ * @author Mosen
  **/
 function authorized_for_serial(string $serial_number): bool
 {
-    // Make sure the reporting script is authorized
-    if (isset($GLOBALS['auth']) && $GLOBALS['auth'] == 'report') {
-        return true;
-    }
-
-    // TODO: needs new BU membership check
-
-//    $user = new User;
-//    return $user->canAccessMachineGroup(get_machine_group($serial_number));
-    return true;
+    $machine = Machine::where('serial_number', $serial_number)->firstOrFail();
+    return request()->user()->can('view', $machine);
 }
 
 /**
@@ -276,7 +270,7 @@ function get_machine_group(string $serial_number = '')
  * @param string $prefix optional prefix default 'WHERE'
  * @author
  **/
-function get_machine_group_filter($prefix = 'WHERE', $reportdata = 'reportdata')
+function get_machine_group_filter(string $prefix = 'WHERE', string $reportdata = 'reportdata'): string
 {
     $sql = '';
     // Get filtered groups

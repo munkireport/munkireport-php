@@ -114,39 +114,32 @@ $page = url()->current();
                     </a>
                 </li>
             @endif
-            @if(config('_munkireport.alpha_features.dashboards', false))
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboards/default">
+
+            @if($dashboard->getCount() === 1)
+                <li {{ Route::is('/') ? 'class="nav-item active"' : 'class="nav-item"' }}>
+                    <a class="nav-link" href="{{ url('/') }}">
                         <i class="fa fa-th-large"></i>
                         <span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
                     </a>
                 </li>
             @else
-                @if($dashboard->getCount() === 1)
-                    <li {{ Route::is('/') ? 'class="nav-item active"' : 'class="nav-item"' }}>
-                        <a class="nav-link" href="{{ url('/') }}">
-                            <i class="fa fa-th-large"></i>
-                            <span class="visible-lg-inline" data-i18n="nav.main.dashboard"></span>
+                <li class="nav-item dropdown {{ Route::is('/show/dashboard') ? " active" : "" }}">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="dashboardsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-th-large"></i>
+                        <span data-i18n="nav.main.dashboard_plural"></span>
+                        <b class="caret"></b>
+                    </a>
+                    <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
+                    @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
+                        <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}">
+                            <span class="pull-right">{{ strtoupper($item->hotkey) }}</span>
+                            <span class="dropdown-link-text ">{{ $item->display_name }}</span>
                         </a>
-                    </li>
-                @else
-                    <li class="nav-item dropdown {{ Route::is('/show/dashboard') ? " active" : "" }}">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" id="dashboardsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-th-large"></i>
-                            <span data-i18n="nav.main.dashboard_plural"></span>
-                            <b class="caret"></b>
-                        </a>
-                        <div class="dashboard dropdown-menu" aria-labelledby="dashboardsMenuLink">
-                        @foreach($dashboard->getDropdownData('show/dashboard', $page) as $item)
-                            <a class="dropdown-item {{ $item->class }}" href="{{ $item->url }}">
-                                <span class="pull-right">{{ strtoupper($item->hotkey) }}</span>
-                                <span class="dropdown-link-text ">{{ $item->display_name }}</span>
-                            </a>
-                        @endforeach
-                        </div>
-                    </li>
-                @endif
+                    @endforeach
+                    </div>
+                </li>
             @endif
+
                 <li class="nav-item dropdown {{ Route::is('/show/reports') ? " active" : "" }}">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="reportsMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bar-chart-o"></i>
@@ -166,7 +159,7 @@ $page = url()->current();
                         <span data-i18n="nav.main.listings"></span>
                         <b class="caret"></b>
                     </a>
-                    <div class="listing dropdown-menu" aria-labelledby="listingMenuLink">
+                    <div class="listing dropdown-menu overflow-auto vh-100" aria-labelledby="listingMenuLink">
                     @foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item)
                         <a class="dropdown-item {{ $item->class }} {{ Route::is($item->url) ? " active" : "" }}" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                     @endforeach

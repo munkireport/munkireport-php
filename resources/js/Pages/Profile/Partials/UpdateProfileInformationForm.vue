@@ -39,6 +39,7 @@ const updateProfileInformation = () => {
         onSuccess: () => {
           clearPhotoFileInput()
           i18next.changeLanguage(props.user.locale)
+
         }
     });
 };
