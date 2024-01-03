@@ -25,16 +25,17 @@
         <div class="col">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="showTabMenuButton" data-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="showTabMenuButton" data-toggle="dropdown" data-display="static" aria-expanded="false">
                         <span data-i18n="show" class="hidden-sm hidden-xs"></span>
                         <i class="fa fa-list fa-fw"></i>
                     </button>
                     <div class="dropdown-menu client-tabs" role="tablist" aria-labelledby="showTabMenuButton">
                         @foreach($tab_list as $name => $data)
-                            <a class="dropdown-item" href="#{{ $name }}" data-toggle="tab"><span data-i18n="{{ $data['i18n'] }}"></span>
-                            @isset($data['badge'])
-                                <span id="{{ $data['badge'] }}" class="badge badge-secondary">0</span>
-                            @endisset
+                            <a class="dropdown-item" href="#" data-target="#{{ $name }}" role="tab">
+                                <span data-i18n="{{ $data['i18n'] }}"></span>
+                                @isset($data['badge'])
+                                    <span id="{{ $data['badge'] }}" class="badge badge-secondary">0</span>
+                                @endisset
                             </a>
                         @endforeach
                     </div>

@@ -64,17 +64,6 @@ $(document).on('appReady', function(e, lang) {
 	// Set h4 classes on headings
 	$('#summary h4').addClass('alert alert-info');
 
-	// Fix for using a regular dropdown for tabs
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-		// Remove 'active' class from all li's
-		$(e.target).closest('ul').children().removeClass('active');
-
-		// Add 'active' to current li
-		$(e.target).parent().addClass('active');
-
-	});
-
 	// Get client data
 	$.getJSON( appUrl + '/clients/get_data/' + serialNumber, function( data ) {
 
@@ -122,10 +111,6 @@ $(document).on('appReady', function(e, lang) {
 			});
 		});
 
-		// get archive status
-		var getArchiveStatus = function(){
-			return $
-		}
 		//set archive status
 		var setArchiveStatus = function(status){
 			if(status == 1){
@@ -187,12 +172,4 @@ $(document).on('appReady', function(e, lang) {
 	});
 
 	// ------------------------------------ End Hotkeys
-
-
-	loadHash();
-
-	// Update hash when changing tab
-	$('a[data-toggle="tab"]').on('shown.bs.tab', updateHash);
-
-
 });

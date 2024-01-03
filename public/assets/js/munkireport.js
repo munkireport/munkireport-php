@@ -4,51 +4,20 @@
 mr.loadTheme();
 
 $(document).on('appReady', function(e, lang) {
-
     $('html.no-js').removeClass('no-js');
-
-    // addMenuItem({
-    //     menu: 'admin',
-    //     i18n: 'notification.menu_link',
-    //     url: appUrl + '/module/notification/manage'
-    // });
-
-    addMenuItem({
-        menu: 'admin',
-        i18n: 'systemstatus.menu_link',
-        url: appUrl + '/system/status'
-    });
-
-    addMenuItem({
-        menu: 'admin',
-        i18n: 'system.database.menu_link',
-        url: appUrl + '/system/database'
-    });
-
-    addMenuItem({
-        menu: 'admin',
-        i18n: 'widget.gallery',
-        url: appUrl + '/system/widgets'
-    });
-
-    addMenuItem({
-        menu: 'admin',
-        i18n: 'module_marketplace.module_marketplace',
-        url: appUrl + '/module_marketplace'
-    });
-
-    // Sort admin menu, after other items are added
-    mr.sortMenu('ul.admin');
-
-    // Add list link
-    $('list-link').each(function( index ){
-        var url = appUrl + $(this).data('url');
-        $(this).after('<a href="'+url+'" class="btn btn-xs pull-right"><i class="fa fa-list"></i></a>');
-        $(this).remove();
-    });
-
 });
 
+$(function () {
+  // client_details tab
+  $('.client-tabs a.dropdown-item').on('click', function(e) {
+    e.preventDefault();
+    $(e.currentTarget).tab('show');
+  }).on('shown.bs.tab', function(e) {
+    // bs.tab is not keeping track of the active link correctly.
+    $('.client-tabs a.active').removeClass('active');
+    $(e.currentTarget).addClass('active');
+  });
+});
 
 $( document ).ready(function() {
 
@@ -138,79 +107,9 @@ $( document ).ready(function() {
     });
 });
 
-$(window).on("hashchange", function (e) {
-     loadHash();
-})
-
-// Update hash in url
-var updateHash = function(e){
-		var url = String(e.target)
-		if(url.indexOf("#") != -1)
-		{
-			var hash = url.substring(url.indexOf("#"));
-			// Save scroll position
-			var yScroll=document.body.scrollTop;
-			window.location.hash = '#tab_'+hash.slice(1);
-			document.body.scrollTop=yScroll;
-		}
-	},
-	loadHash = function(){
-		// Activate correct tab depending on hash
-		var hash = window.location.hash.slice(5);
-		if(hash){
-			$('.client-tabs a[href="#'+hash+'"]').tab('show');
-		}
-		else{
-			$('.client-tabs a[href="#summary"]').tab('show');
-		}
-	},
-    addMenuItem = function(conf){
-        // Add menu item
-        conf.menu = conf.menu || 'listing';
-        conf.name = conf.name || 'no_name';
-        conf.i18n = conf.i18n || '';
-        conf.url = conf.url || appUrl + '/show/' + conf.menu + '/' + conf.name;
-        $('.dropdown-menu.' + conf.menu)
-            .append($('<a>')
-                    .attr('href', conf.url)
-              .addClass('dropdown-item')
-                    .text(function(){
-                        if(conf.i18n){
-                            return i18n.t(conf.i18n);
-                        }
-                        return conf.name;
-                    }));
-    },
-	addTab = function(conf){
-
-		// Add tab link
-		$('.client-tabs .divider')
-			.before($('<li>')
-				.append($('<a>')
-					.attr('href', '#'+conf.id)
-					.attr('data-toggle', 'tab')
-					.on('show.bs.tab', function(){
-						// We have to remove the active class from the
-						// previous tab manually, unfortunately
-						$('.client-tabs li').removeClass('active');
-					})
-					.on('shown.bs.tab', updateHash)
-					.text(conf.linkTitle)));
-
-		// Add tab
-		$('div.tab-content')
-			.append($('<div>')
-				.attr('id', conf.id)
-				.addClass('tab-pane')
-				.append($('<h2>')
-					.text(conf.tabTitle))
-				.append(conf.tabContent));
-	},
-	removeTab = function(id){
-		// remove tab
-		$('#'+id).remove();
-		$('.client-tabs [href=#'+id+']').parent().remove();
-	}
+var loadHash = function() {
+  // Intentionally empty so older scripts don't throw an Exception
+};
 
 var showFilterModal = function(e) {
 	e.preventDefault();
@@ -448,30 +347,6 @@ function state(id, data)
 	  localStorage.setItem( id, JSON.stringify(data) );
 	}
 }
-
-// Debug function to dump js objects
-function dumpj(obj)
-  {
-    type = typeof(obj)
-    if(type == 'object')
-    {
-      var out = {}
-      for (var key in obj) {
-        type = typeof(obj[key])
-        if ( type == 'object')
-        {
-          out[key] = 'object'
-        }
-        else{
-          out[key] = obj[key];
-        }
-      }
-    }
-    else{
-      out = obj
-    }
-    alert(JSON.stringify(out));
-  }
 
 // Filesize formatter (uses 1000 as base)
 function fileSize(size, decimals){

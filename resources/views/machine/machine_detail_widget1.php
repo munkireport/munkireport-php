@@ -1,7 +1,7 @@
 <div class="col">
     <div class="row">
         <div class="col">
-            <img id="apple_hardware_icon" class="img-responsive">
+            <img id="apple_hardware_icon" class="img-fluid" alt="An image of this hardware model">
         </div>
         <div class="col">
             <span>macOS <span class="machine-os_version"></span></span><br>
@@ -10,7 +10,11 @@
             <span><span class="reportdata-remote_ip"></span></span><br>
         </div>
     </div>
-    <span class="machine-machine_desc"></span> <a class="machine-refresh-desc" href=""><i class="fa fa-refresh"></i></a>
+    <div class="row">
+        <div class="col">
+            <span class="machine-machine_desc"></span> <a class="machine-refresh-desc" href=""><i class="fa fa-refresh"></i></a>
+        </div>
+    </div>
 </div>
 
 <script>

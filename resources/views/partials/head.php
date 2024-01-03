@@ -183,9 +183,7 @@
                     }
                     ?>
                     <?php foreach($modules->getDropdownData('admin_pages', 'module', $page) as $item): ?>
-                        <!-- <li class="<?=$item->class?>"> -->
-                            <a class="dropdown-item" href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
-                        <!-- </li> -->
+                        <a class="dropdown-item <?=$item->class?>" href="<?=$item->url?>" data-i18n="<?=$item->i18n?>"></a>
                     <?php endforeach; ?>
                 </div>
             </li>
