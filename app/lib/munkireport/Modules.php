@@ -161,6 +161,18 @@ class Modules
             'core' => true,
         ];
 
+        // These listings/menus were client side only for no real reason, they have been
+        // consolidated into the Module Manager so that the sorting only needs to happen once.
+        $this->moduleList['core'] = [
+            'core' => true,
+            'path' => realpath(__DIR__ . '../'),
+            'admin_pages' => [
+                'systemstatus' => ['i18n' => 'systemstatus.menu_link', 'url' => url('/system/status')],
+                'system.database' => ['i18n' => 'system.database.menu_link', 'url' => url('/system/database')],
+                'widget.gallery' => ['i18n' => 'widget.gallery', 'url' => url('/system/widgets')],
+                'module_marketplace' => ['i18n' => 'module_marketplace.module_marketplace', 'url' => url('/module_marketplace')],
+            ]
+        ];
     }
 
     /**
@@ -444,6 +456,9 @@ class Modules
     /**
      * Get data to create dropdown nav
      *
+     * Change in v6.0 beta to support item data key `url` which replaces the auto generated path with a specific, absolute
+     * URL.
+     * 
      * @param string $kind 'reports' or 'listings'
      * @param string $baseUrl 'show/report' or 'show/listing'
      * @param string $page current page url path
@@ -462,7 +477,7 @@ class Modules
                 }
                 $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
                 $out[] = (object) [
-                  'url' => mr_url($baseUrl.'/'.$module.'/'.$itemName),
+                  'url' => isset($itemData['url']) ? $itemData['url'] : mr_url($baseUrl.'/'.$module.'/'.$itemName),
                   'name' => $itemName,
                   'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
                   'i18n' => $i18n,
