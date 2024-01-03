@@ -2,7 +2,7 @@
 
 $this->view('listings/default',
 [
-  "i18n_title" => 'event.event_plural',
+  "i18n_title" => 'events.event_plural',
   "js_link" => "module/event/js/format_event_data",
   "table" => [
     [
