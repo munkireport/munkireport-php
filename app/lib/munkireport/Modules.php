@@ -155,7 +155,7 @@ class Modules
                 'messages' => ['view' => 'messages_widget'],
             ],
             'listings' => [
-                'event' => ['view' => 'event_listing', 'i18n' => 'event.event_plural'],
+                'event' => ['view' => 'event_listing', 'i18n' => 'events.event_plural'],
             ],
             'path' => realpath(__DIR__ . '../'),
             'core' => true,
