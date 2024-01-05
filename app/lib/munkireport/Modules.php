@@ -2,6 +2,8 @@
 
 namespace munkireport\lib;
 
+use App\Packages;
+use Illuminate\Foundation\PackageManifest;
 use Illuminate\Support\Arr;
 use Symfony\Component\Yaml\Yaml;
 
@@ -16,22 +18,22 @@ class Modules
     /**
      * @var array The complete list of available modules with their listings, widgets, etc.
      */
-    private $moduleList = [];
+    private array $moduleList = [];
 
     /**
      * @var array The complete list of available widgets (probably superseded by Widgets class)
      */
-    private $widgetList = [];
+    private array $widgetList = [];
 
     /**
      * @var array A list of paths that may be scanned for v5 modules.
      */
-    private $moduleSearchPaths = [];
+    private array $moduleSearchPaths = [];
 
     /**
      * @var string[] A list of modules that are always enabled effectively, without being declared.
      */
-    private $allowedModules = [
+    private array $allowedModules = [
       'machine',
       'reportdata',
       'tag',
@@ -42,7 +44,7 @@ class Modules
     /**
      * @var bool When generating a list of modules, whether to skip modules not explicitly enabled.
      */
-    private $skipInactiveModules = False;
+    private bool $skipInactiveModules = False;
 
     public function __construct()
     {
@@ -79,7 +81,7 @@ class Modules
      * Widgets have been omitted because addModuleWidgets() always assumes views are in the same path as the module.
      * There is a function called addCoreWidgets() which adds them separately.
      */
-    protected function addCoreModules()
+    protected function addCoreModules(): void
     {
         $this->moduleList['reportdata'] = [
             'detail_widgets' => [
@@ -181,7 +183,7 @@ class Modules
      *
      * @return array
      */
-    public function getModuleSearchPaths()
+    public function getModuleSearchPaths(): array
     {
         return $this->moduleSearchPaths;
     }
@@ -457,13 +459,18 @@ class Modules
     /**
      * Get data to create dropdown nav
      *
-     * Change in v6.0 beta to support item data key `url` which replaces the auto generated path with a specific, absolute
-     * URL.
+     * As of v6, the URL to the target is not automatically always $base/$module/$item.
+     * Each module may provide an extra key as the link of the dropdown item:
+     *
+     * * `url` - an absolute URL to use for the link
+     * * `route` - a route alias to use for the link
+     *
+     * If both of these are missing, the behaviour falls back to v5 (the link is constructed using the module name)
      * 
      * @param string $kind 'reports' or 'listings'
      * @param string $baseUrl 'show/report' or 'show/listing'
      * @param string $page current page url path
-     * @return array
+     * @return array An array of (object) that contain a `url`, `name`, `class` and `i18n` property, sorted alphabetically.
      */
     public function getDropdownData(string $kind, string $baseUrl, string $page): array
     {
@@ -476,11 +483,20 @@ class Modules
                 if(isset($itemData['hide_from_menu']) && $itemData['hide_from_menu']){
                     continue;
                 }
-                $i18n = isset($itemData['i18n']) ? $itemData['i18n'] : 'nav.' . $kind . '.' . $itemName;
+                $i18n = $itemData['i18n'] ?? 'nav.' . $kind . '.' . $itemName;
+
+                if (isset($itemData['url'])) {
+                    $url = $itemData['url'];
+                } else if (isset($itemData['route'])) {
+                    $url = route($itemData['route']);
+                } else {
+                    $url = mr_url($baseUrl.'/'.$module.'/'.$itemName);
+                }
+
                 $out[] = (object) [
-                  'url' => isset($itemData['url']) ? $itemData['url'] : mr_url($baseUrl.'/'.$module.'/'.$itemName),
+                  'url' => $url,
                   'name' => $itemName,
-                  'class' => $page == $baseUrl.'/'.$module.'/'.$itemName ? 'active' : '',
+                  'class' => $page == $url ? 'active' : '',
                   'i18n' => $i18n,
                 ];
             }
@@ -591,6 +607,30 @@ class Modules
                     $this->moduleList[$module] = require $basePath.$module.'/provides.php';
                     $this->moduleList[$module]['path'] = $basePath.$module.'/';
                 }
+            }
+        }
+
+        $this->collectPackageInformation();
+    }
+
+    /**
+     * Collect information from all v6 modules which use the Laravel Package Auto-Discovery mechanism
+     * (composer.json extra.munkireport section)
+     *
+     * @return void
+     */
+    private function collectPackageInformation()
+    {
+        $packages = new Packages();
+        $modulePackages = $packages->modules();
+
+        foreach ($modulePackages as $mp) {
+            if (Arr::has($mp->getExtra(), 'munkireport')) {
+                $meta = $mp->getExtra()['munkireport'];
+                $this->moduleList[$mp->getName()] = [
+                    'listings' => Arr::get($meta, 'navigation.listings', []),
+                    'path' => ''
+                ];
             }
         }
     }

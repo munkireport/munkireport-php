@@ -61,7 +61,7 @@ function run_migrations() {
 function start_web() {
 
   echo "Caching configuration..."
-  (cd /var/munkireport && php please config:cache && php please route:cache)  # && php please view:cache
+  (cd /var/munkireport && php please config:cache && php please route:cache && php please lighthouse:cache)  # && php please view:cache
 
   if [[ -z "${APP_URL}" || "${APP_URL}" == "http://localhost:8080" ]]; then
     echo "APP_URL not set, or APP_URL set to default (http://localhost:8080). Please fix this otherwise you may be redirected to a nonexistent host"

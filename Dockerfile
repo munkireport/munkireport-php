@@ -1,7 +1,7 @@
 FROM node:lts as frontend
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN npm install && NODE_ENV=production npm run build
+RUN npm install && npm run build
 
 FROM php:8.3-apache
 LABEL maintainer="MunkiReport PHP Team <munkireport@noreply.users.github.com>"
@@ -35,10 +35,9 @@ RUN apt-get update && \
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip opcache
 
-COPY . $APP_DIR
-COPY --from=frontend /usr/src/app/public/ /var/munkireport/public/
+COPY --chown=www-data:www-data . $APP_DIR
+COPY --chown=www-data:www-data --from=frontend /usr/src/app/public/ /var/munkireport/public/
 WORKDIR $APP_DIR
-RUN chown -R www-data:www-data $APP_DIR
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
@@ -51,13 +50,14 @@ COPY build/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 RUN cp "build/php.d/upload.ini" "$PHP_INI_DIR/conf.d/"
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-#RUN ./build/setup_composer.sh
 
 USER www-data
 
 RUN composer install --no-dev && \
-    composer dumpautoload -o
+    composer dumpautoload -o && \
+    composer clear-cache
 
+# You should not use this directory for SQLite as Laravel defines one. However, it is provided for backwards compatibility.
 RUN mkdir -p app/db && \
 	touch app/db/db.sqlite
 
