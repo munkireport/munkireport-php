@@ -155,16 +155,9 @@ class ClientsController extends Controller
         // Optionally:
         // 'view_vars' => array with variables to pass to the views
         // 'badge' => id of a badge for this tab
-        $tab_list = [
-            'summary' => [
-                'view' => 'client/summary_tab',
-                'view_vars' => [
-                    'widget_list' => [],
-                ],
-                'i18n' => 'client.tab.summary',
-            ],
-        ];
+        // 'blade' => truthy value means "use a blade template instead of a .php one" (Added in v6)
 
+        $tab_list = [];
         // Include module tabs
         $modules = app(Modules::class)->loadInfo();
         $modules->addTabs($tab_list);
@@ -172,13 +165,26 @@ class ClientsController extends Controller
         // Add custom tabs
         $tab_list = array_merge($tab_list, conf('client_tabs', []));
 
+        ksort($tab_list);
+        
+        // Prepend the summary after items are sorted by name so it appears at the top.
+        $tab_list = array_merge([
+            'summary' => [
+                'blade' => true,
+                'view' => 'client/summary_tab',
+                'view_vars' => [
+                    'widget_list' => [],
+                ],
+                'i18n' => 'client.tab.summary',
+            ],
+        ], $tab_list);
+
 
         // Add widgets to summary tab
         $modules->addWidgets(
             $tab_list['summary']['view_vars']['widget_list'],
             conf('detail_widget_list', [])
         );
-
         $data['tab_list'] = $tab_list;
 
         return view("clients.detail", $data);

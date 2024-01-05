@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\SystemInformation;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use munkireport\lib\Dashboard;
 use Compatibility\Kiss\Database;
 use munkireport\lib\Modules;
+use Munkireport\Osquery\Tables\SystemInfo;
 
 /**
  * Class SystemController
@@ -16,84 +20,6 @@ use munkireport\lib\Modules;
  */
 class SystemController extends Controller
 {
-    /**
-     * DataBase
-     *
-     * Get Database info and status
-     *
-     */
-    public function DataBaseInfo()
-    {
-        $out = array(
-            'db.driver' => '',
-            'db.connectable' => false,
-            'db.writable' => false,
-            'db.size' => '',
-            'error' => '',
-            'version' => ''
-        );
-
-        $db = new Database(conf('connection'));
-        //echo '<pre>'; var_dump($db);
-        if ($db->connect()) {
-            $out['db.connectable'] = true;
-            $out['db.driver'] = $db->get_driver();
-
-            if ($db->isWritable()) {
-                $out['db.writable'] = true;
-            } else {
-                $out['error'] = $db->getError();
-            }
-            $out['db.size'] = $db->size();
-            $out['version'] = $db->get_version();
-
-        } else {
-            $out['error'] = $db->getError();
-        }
-        //echo '<pre>'; var_dump($db);
-        // Get engine
-        // Get permissions
-        // Do a write
-        // Do a read
-        // Get tables
-        // Get size
-
-        return response()->json($out);
-    }
-
-    /**
-     * php information
-     *
-     * Retrieve information about php
-     *
-     */
-    public function phpInfo()
-    {
-        ob_start();
-        phpinfo(11);
-        $raw = ob_get_clean();
-        $phpinfo = array('phpinfo' => array());
-
-        // Remove credits
-        $nocreds = preg_replace('#<h1>PHP Credits.*#s', '', $raw);
-        if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', $nocreds, $matches, PREG_SET_ORDER)) {
-            foreach ($matches as $match) {
-                if (strlen($match[1])) {
-                    $phpinfo[$match[1]] = array();
-                } elseif (isset($match[3])) {
-                    $keys1 = array_keys($phpinfo);
-                    $phpinfo[end($keys1)][$match[2]] = isset($match[4]) ? $match[3] . ' ('.$match[4].')' : str_replace(',', ', ', $match[3]);
-                } else {
-                    $keys1 = array_keys($phpinfo);
-                    $phpinfo[end($keys1)][] = trim(strip_tags($match[2]));
-                }
-            }
-        }
-        //echo '<pre>';print_r($phpinfo);return;
-
-        return response()->json($phpinfo);
-    }
-
     /**
      * Display the Widget Gallery
      */
@@ -121,16 +47,35 @@ class SystemController extends Controller
      */
     public function status()
     {
-        $data['page'] = 'clients';
-        $data['scripts'] = array("clients/client_list.js");
+        Gate::authorize('global');
+
+        $data = [
+            'connection' => SystemInformation::getDatabaseInformation(),
+            'php' => SystemInformation::getPhpInformationByFunc(),
+        ];
+
         return view('system.status', $data);
     }
 
     /**
-     * Display database tools
+     * Get the content of phpinfo() behind an admin gate
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|null
+     */
+    public function php_info()
+    {
+        Gate::authorize('global');
+
+        return view('system.phpinfo');
+    }
+
+    /**
+     * Display database migration tools
      */
     public function database()
     {
+        Gate::authorize('global');
+
         return view('system.database');
     }
 }

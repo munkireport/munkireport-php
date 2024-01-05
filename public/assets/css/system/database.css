@@ -1,14 +1,11 @@
 .table-console {
-    color: darkgrey;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size: 1.4rem;
-
+    font-size: 1rem;
     padding: 1rem;
 }
 
 .table-console > tbody {
     /*overflow-y: scroll;*/
-    display: none;
 }
 
 .table-console td {
@@ -22,23 +19,6 @@
 
 .log-level-info {
     color: darkgrey;
-}
-
-.disclosure {
-    cursor: pointer;
-}
-
-.disclosure > .glyphicon {
-    transition-property: transform;
-    transition-duration: 100ms;
-}
-
-.disclosure-active > .glyphicon {
-    transform: rotate(90deg);
-}
-
-.table-console.disclosure-active tbody {
-    display: block;
 }
 
 .loading {

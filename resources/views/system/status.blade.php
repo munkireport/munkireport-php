@@ -1,149 +1,50 @@
 @extends('layouts.mr')
 
-@push('stylesheets')
-@endpush
-
-@push('scripts')
-    <script type="text/javascript" src="{{ asset('assets/js/clients/client_list.js') }}"></script>
-    <script>
-      $(document).on('appReady', function(e, lang) {
-
-        // Get database info
-        $.getJSON( appUrl + '/system/DataBaseInfo', function( data ) {
-          var table = $('#mr-db table').empty();
-          for(var prop in data) {
-            if(data[prop] === false){
-              data[prop] = '<span class="label label-danger">No</span>';
-            }
-            if(data[prop] === true){
-              data[prop] = '<span class="label label-success">Yes</span>';
-            }
-            if(prop == 'db.size' && data[prop]){
-              data[prop] = parseFloat(data[prop]).toFixed(2) + ' MB'
-            }
-
-            table.append($('<tr>')
-              .append($('<th>')
-                .html(i18n.t(prop)))
-              .append($('<td>')
-                .html(data[prop])))
-          }
-        })
-          .fail(function( jqxhr, textStatus, error ) {
-            var err = textStatus + ", " + error;
-            $('#mr-db table tr td')
-              .empty()
-              .addClass('text-danger')
-              .text(i18n.t('errors.loading', {error:err}));
-          });
-
-        // Get php info
-        $.getJSON( appUrl + '/system/phpInfo', function( data ) {
-          var table = $('#mr-phpinfo table').empty();
-
-          //console.log(data);
-
-          // Create php info dom structure
-          var phpinfo = $('<table>').addClass('table table-striped');
-          for(var section in data) {
-            phpinfo
-              .append($('<tr>')
-                .append($('<th>')
-                  .attr('colspan', 2)
-                  .addClass('info')
-                  .append($('<h4>')
-                    .text(section))))
-
-            for(var sectiondata in data[section]){
-              phpinfo.append($('<tr>')
-                .append($('<th>')
-                  .text(sectiondata))
-                .append($('<td>')
-                  .html(data[section][sectiondata])));
-            }
-
-          }
-
-          // There is a difference between servers on how to find PHP version
-          var phpVersion = data.Core ? data.Core['PHP Version'] : (data.phpinfo ? data.phpinfo[0] : 'Could not find version');
-
-          // Get Core variables
-          var coreVars = data.Core ? data.Core : (data['HTTP Headers Information'] ? data['HTTP Headers Information'] : {});
-
-          // Create table with required php items
-          var list = {
-            'php.version': phpVersion,
-            'php.dom': data.dom ? data.dom['DOM/XML'] : false || false,
-            'php.allow_url_fopen': coreVars['allow_url_fopen'] || false,
-            'php.pdo': data.PDO ? data.PDO['PDO support'] : false || false,
-            'php.pdodrivers': data.PDO ? data.PDO['PDO drivers'] : false || false
-          };
-          for(var prop in list) {
-
-            if(list[prop] === false){
-              list[prop] = '<span class="label label-danger">No</span>';
-            }
-            if(list[prop] === true){
-              list[prop] = '<span class="label label-success">Yes</span>';
-            }
-
-            table.append($('<tr>')
-              .append($('<th>')
-                .html(i18n.t(prop)))
-              .append($('<td>')
-                .html(list[prop])))
-
-          }
-
-          table.after($('<button>')
-            .addClass('btn btn-info')
-            .text(i18n.t('php.moreinfo'))
-            .click(function(){
-              // Create large modal
-              $('#myModal .modal-dialog').addClass('modal-lg');
-              $('#myModal .modal-title')
-                .empty()
-                .append(i18n.t("php.moreinfo"))
-              $('#myModal .modal-body')
-                .empty()
-                .append(phpinfo);
-
-              $('#myModal button.ok').text(i18n.t("dialog.close"));
-
-              // Set ok button
-              $('#myModal button.ok')
-                .off()
-                .click(function(){$('#myModal').modal('hide')});
-
-              $('#myModal').modal('show');
-            }))
-        })
-          .fail(function( jqxhr, textStatus, error ) {
-            var err = textStatus + ", " + error;
-            $('#mr-phpinfo table tr td')
-              .empty()
-              .addClass('text-danger')
-              .text(i18n.t('errors.loading', {error:err}));
-          });
-      });
-    </script>
-@endpush
-
 @section('content')
     <div class="container">
         <div class="row pt-4">
-            <h3 class="display-4" data-i18n="system.status"></h3>
+            <h3 class="display-4" data-i18n="system.status">MunkiReport System Status</h3>
         </div>
 
         <div class="row pt-4">
             <div id="mr-phpinfo" class="col">
-                <h4 data-i18n="php.php"></h4>
-                <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
+                <h4 data-i18n="php.php">PHP</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th data-i18n="php.version">PHP Version</th>
+                        <td>{{ $php['php.version'] }}</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="php.uname">Operating System</th>
+                        <td>{{ $php['php.uname'] }}</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="php.ini_loaded_file">INI File</th>
+                        <td>{{ $php['php.ini_loaded_file'] }}</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="php.ini_scanned_files">Additional scanned INI files</th>
+                        <td>{{ $php['php.ini_scanned_files'] }}</td>
+                    </tr>
+                    <tr>
+                        <th data-i18n="php.memory_peak_usage">Memory Peak Usage</th>
+                        <td>{{ $php['php.memory_peak_usage'] }}</td>
+                    </tr>
+                </table>
+
+                <a class="btn btn-info" data-i18n="php.moreinfo" href="/system/php_info">Extended PHP info</a>
             </div>
 
             <div id="mr-db" class="col">
-                <h4 data-i18n="database"></h4>
-                <table class="table table-striped"><tr><td data-i18n="loading"></td></tr></table>
+                <h4 data-i18n="database">Database</h4>
+                <table class="table table-striped">
+                    @foreach ($connection as $name => $value)
+                        <tr>
+                            <th data-i18n="{{ $name }}">{{ $name }}</th>
+                            <td>{{ $value }}</td>
+                        </tr>
+                    @endforeach
+                </table>
             </div>
         </div>
 

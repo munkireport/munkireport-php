@@ -11,14 +11,17 @@ use \View;
  */
 class Listing
 {
-    private $listingData;
+    private object $listingData;
 
     /**
      * @var string The template to render (usually for .yaml listings only).
      */
-    private $template;
+    private string $template;
 
-    public function __construct($listingData)
+    /**
+     * @param object $listingData A stdClass type object with properties for 'module', 'view', and 'view_path'
+     */
+    public function __construct(object $listingData)
     {
         $this->listingData = $listingData;
         $this->template = 'listings/default';
@@ -42,7 +45,15 @@ class Listing
         }
     }
 
-    private function _renderPHP($listingData, $data)
+    /**
+     * Render a listing which uses a plain PHP template by capturing the KISSMVC view's output buffer
+     * and returning it.
+     *
+     * @param object $listingData Information about the path and view name to render.
+     * @param array $data Data to be passed to the view template.
+     * @return string
+     */
+    private function _renderPHP(object $listingData, array $data): string
     {
         return mr_view_output($listingData->view, $data, $listingData->view_path);
     }
@@ -61,12 +72,12 @@ class Listing
         exit;
     }
 
-    private function _getType($pathComponents)
+    private function _getType($pathComponents): string
     {
         return is_readable($this->_getPath($pathComponents, 'yml')) ? 'yaml' : 'php';
     }
 
-    private function _getPath($pathComponents, $extension)
+    private function _getPath($pathComponents, $extension): string
     {
         return $pathComponents->view_path . $pathComponents->view . '.' . $extension;
     }

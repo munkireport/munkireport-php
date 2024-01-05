@@ -91,6 +91,39 @@ class Widgets
         return $widget;
     }
 
+    /**
+     * Get information about a `detail` widget (used on client detail summary page), similar to Widgets::get().
+     * 
+     * The output array is mapped into the same format as a dashboard widget so that all widget data
+     * appears the same, even though client detail widgets are declared using a totally different structure in v5.
+     *
+     * @param array $data Widget data, including the widget name.
+     * @param string|null $name Optional name to override the widget to render.
+     * @return array Widget info which will be used to render the widget.
+     */
+    public function getDetail(array $data, ?string $name = null): array
+    {
+        $widget = [
+            'widget' => $data['widget'] ?? $name,
+            'vars' => $data['view_vars'] ?? [],
+            'path' => $data['view_path'],
+            'file' => $data['view'],
+        ];
+
+//        $view = $data['view'];
+//        $view_path = $data['view_path'] ?? resource_path('views');
+//        $view_vars = $data['view_vars'] ?? [];
+//
+//        // Check if Yaml
+//        if(is_readable($view_path . $view . '.yml')){
+//            $view_vars = Yaml::parseFile($view_path . $view . '.yml');
+//            $view = 'detail_widgets/' . $view_vars['type'] . '_widget';
+//            $view_path = conf('view_path');
+//        }
+
+        return $widget;
+    }
+
     public function view($viewObj, $widgetName, $data = [])
     {
         $widget = $this->get($widgetName, $data);
@@ -162,7 +195,49 @@ class Widgets
         }
     }
 
-    public function addComponent(string $widgetName, string $component, ?array $data = null)
+    /**
+     * Get the name of a Laravel Blade View Component (For the client detail summary) that matches the name of the widget.
+     *
+     * If a newer style component can be found, it will be returned, otherwise you will get the x-widget.legacy component
+     * which just wraps over the Widget->view().
+     *
+     * @param array $data Data to merge that will be passed to the widget view.
+     * @return array ['component name', $data]
+     */
+    public function getDetailComponent(array $data){
+
+        $widget = $this->getDetail($data);
+
+        if (isset($widget['version']) && $widget['version'] == 6) {
+            return [$widget['component'], $data];
+        } else {
+            if ($this->getType($widget['path'], $widget['file']) == 'yaml') {
+                try {
+                    $data = array_merge($data ?? [], Yaml::parseFile($widget['path'] . $widget['file'] . '.yml'));
+
+                    switch ($data['type']) {
+                        case 'table':
+                            return ['widget.detail.table', $data];
+                        case 'unknown':
+                        default:
+                            return ['widget.detail.unknown', $data];
+                    }
+                } catch (\Throwable $th) {
+                    $data = [
+                        'type' => 'error',
+                        'title' => 'YAML error',
+                        'msg' => $th->getMessage()
+                    ];
+
+                    return ['widget.detail.unknown', $data];
+                }
+            } else {
+                return ['widget.detail.legacy', $data];
+            }
+        }
+    }
+
+    public function addComponent(string $widgetName, string $component, ?array $data = null): void
     {
         $this->widgetList[$widgetName] = (object) [
             'vars' => '',

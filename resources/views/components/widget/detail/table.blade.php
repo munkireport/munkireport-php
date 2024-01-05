@@ -10,20 +10,22 @@
         ></span>
     </h4>
     <table @isset($table_id) id="{{ $table_id }}"@endisset>
-        @foreach($table as $row)
-        <tr>
-            <th data-i18n="{{ $row['i18n_header'] }}"></th>
-            <td>
-                @isset($row['prepend'])
-                    {{ $row['prepend'] }}
-                @endisset
-                <span class="{{ $row['class'] }}"></span>
-                @isset($row['append'])
-                    {{ $row['append'] }}
-                @endisset
-            </td>
-        </tr>
-        @endforeach
+        @isset($table)
+            @foreach($table as $row)
+            <tr>
+                <th data-i18n="{{ $row['i18n_header'] }}"></th>
+                <td>
+                    @isset($row['prepend'])
+                        {!! $row['prepend'] !!}
+                    @endisset
+                    <span class="{{ $row['class'] }}"></span>
+                    @isset($row['append'])
+                        {!! $row['append'] !!}
+                    @endisset
+                </td>
+            </tr>
+            @endforeach
+        @endisset
     </table>
 </div>
 
