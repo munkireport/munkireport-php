@@ -1,9 +1,9 @@
 FROM node:lts as frontend
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN npm install && npm run build
+RUN npm install && NODE_ENV=production npm run build
 
-FROM php:8.1-apache
+FROM php:8.3-apache
 LABEL maintainer="MunkiReport PHP Team <munkireport@noreply.users.github.com>"
 LABEL architecture="x86_64" \
 	  io.k8s.display-name="MunkiReport" \
@@ -18,10 +18,7 @@ ENV COMPOSER_HOME /tmp
 
 ENV AUTH_METHODS LOCAL
 ENV APP_URL http://localhost:8080
-ENV APP_NAME MunkiReport
-ENV ENABLE_BUSINESS_UNITS FALSE
 ENV LOG_CHANNEL stderr
-ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
@@ -53,7 +50,8 @@ RUN a2enmod rewrite
 COPY build/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 RUN cp "build/php.d/upload.ini" "$PHP_INI_DIR/conf.d/"
 
-RUN ./build/setup_composer.sh
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+#RUN ./build/setup_composer.sh
 
 USER www-data
 

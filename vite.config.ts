@@ -56,11 +56,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 // This entry point is for full SPA
-                app: resolve(__dirname, 'resources/js/app.ts'),
-
-                // This entry point for hybrid jQuery/Vue pages where Vue is only used on part of the page eg.
-                // For the search box. These components are globally registered.
-                hybrid: resolve(__dirname, 'resources/js/app-hybrid.ts'),
+                app: resolve(__dirname, 'resources/js/app.ts')
             }
         }
     }
