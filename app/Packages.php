@@ -33,7 +33,7 @@ class Packages
 
         // When invoked from the web application, Composer will assume public/ contains a composer.json
         // So, we need to hint the actual location of composer.json
-        $composer = Factory::create($io);
+        $composer = Factory::create($io, base_path('/composer.local.json'));
 
         $this->composer = $composer;
         $this->io = $io;
@@ -79,7 +79,7 @@ class Packages
      *
      * @return array|null
      */
-    public function modules()
+    public function modules(bool $includeLegacy = false)
     {
         $mr = $this->composer->getPackage();
 
@@ -99,8 +99,12 @@ class Packages
                 if (Arr::has($p->getExtra(), 'munkireport')) {
                     $packages[] = $p;
                 } else {
-                    if (!Str::startsWith($p->getName(), 'munkireport/')) continue;
-                    $packages[] = $p;
+                    if ($includeLegacy) {
+                        if (!Str::startsWith($p->getName(), 'munkireport/')) {
+                            continue;
+                        }
+                        $packages[] = $p;
+                    }
                 }
             }
         }

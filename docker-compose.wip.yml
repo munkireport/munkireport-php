@@ -34,9 +34,9 @@ services:
     ports:
       - 8080:8080  # You should avoid privileged ports, here and in kubernetes
     volumes:
-      - ./munkireport-db/:/var/munkireport/app/db
-      - ./user//:/var/munkireport/local/users
-
+      - ./.docker/db:/var/munkireport/app/db
+      - ./.docker/local:/var/munkireport/local
+      - ./.docker/storage:/var/munkireport/storage
   # Queue Worker (If you are using Queues)
   queue:
     image: munkireport-php:wip

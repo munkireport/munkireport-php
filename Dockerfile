@@ -1,7 +1,7 @@
 FROM node:lts as frontend
 COPY . /usr/src/app
 WORKDIR /usr/src/app
-RUN npm install && NODE_ENV=production npm run build
+RUN npm install && npm run build
 
 FROM php:8.3-apache
 MAINTAINER MunkiReport PHP Team <munkireport@noreply.users.github.com>
@@ -23,13 +23,12 @@ ENV COMPOSER_HOME /tmp
 
 ENV SITENAME MunkiReport
 ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
-ENV INDEX_PAGE ""
 ENV AUTH_METHODS LOCAL
 ENV APP_URL http://localhost:8080
 ENV LOG_CHANNEL stderr
 
-COPY . $APP_DIR
-COPY --from=frontend /usr/src/app/public/ /var/munkireport/public/
+COPY --chown=www-data:www-data . $APP_DIR
+COPY --chown=www-data:www-data --from=frontend /usr/src/app/public/ /var/munkireport/public/
 WORKDIR $APP_DIR
 
 COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer
@@ -37,7 +36,8 @@ COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer
 USER www-data
 
 RUN composer install --no-dev && \
-    composer dumpautoload -o
+    composer dumpautoload -o && \
+    composer clear-cache
 
 RUN mkdir -p app/db
 
@@ -47,6 +47,7 @@ RUN chown -R www-data app/db storage
 
 RUN cp .env.example .env
 RUN php please ziggy:generate --types
+
 RUN rm -rf /var/www/html && \
     ln -s /var/munkireport/public /var/www/html
 
