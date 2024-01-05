@@ -60,7 +60,7 @@ Depending on whether this is successful it may be renamed.
     @endif
 
     @routes
-    @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
+    @vite(['resources/js/app.ts'])
     @inertiaHead
 </head>
 <body class="mr-inertia-layout">

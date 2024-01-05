@@ -352,6 +352,5 @@ $page = url()->current();
 </script>
 
 @stack('scripts')
-@vite('resources/js/app-hybrid.ts')
 </body>
 </html>

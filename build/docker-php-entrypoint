@@ -1,31 +1,120 @@
 #!/bin/bash
 set -e
 
-if [ -z "${APP_KEY}" ]; then
-  echo "The environment variable APP_KEY was not supplied, you can use the key generated below in your container environment:"
-  php please key:generate --show
+##################################
+# Ensure that required Environment Variables are set and required configuration is valid
+#
+# Globals:
+#   APP_KEY
+#   APP_ENV
+# Arguments:
+#   None
+# Outputs:
+#   Writes warnings to stdout
+##################################
+function preflight() {
+  if [[ -z "${APP_KEY}" ]]; then
+    echo "The environment variable APP_KEY was not supplied, you can use the key generated below in your container environment:"
+    php please key:generate --show
 
-  echo "Please include the base64 portion, eg: APP_KEY=base64:aabbbcc"
-else
-  echo "APP_KEY supplied. Not generating an APP_KEY."
-fi
+    echo "Please include the base64 portion, eg: APP_KEY=base64:aabbbcc"
+  else
+    echo "APP_KEY supplied. Not generating an APP_KEY."
+  fi
 
-echo "Sleeping 2 seconds for MariaDB"  # TODO put a health check in
-sleep 2
+  if [[ "${APP_ENV}" != "production" ]]; then
+    echo "WARNING: This application is running with APP_ENV: '${APP_ENV}', error pages could display more information than necessary about your system."
+  fi
+}
 
-php please config:debug
-php please migrate --force
-php please db:seed
+##################################
+# Run database migrations (at start) on the currently configured database connection "default".
+# Displays current configuration to stdout.
+#
+# Arguments:
+#   None
+# Outputs:
+#   Writes warnings to stdout
+##################################
+function run_migrations() {
+  echo "Running Database Migrations..."
+  echo "Sleeping 2 seconds for MariaDB" # TODO put a health check in
+  sleep 2
 
-if [[ -z "${APP_URL}" || "${APP_URL}" == "http://localhost:8080" ]]; then
-  echo "APP_URL not set, or APP_URL set to default (http://localhost:8080). Please fix this otherwise you may be redirected to a nonexistent host"
-fi
+  php please config:debug
+  php please migrate --force
+  php please db:seed  # Refuses to run in APP_ENV=production
+}
 
+##################################
+# Start the container as a web application
+#
+# Also performs caching of assets to increase performance.
+#
+# Globals:
+#   APP_URL
+# Arguments:
+#   None
+# Outputs:
+#   Writes warnings to stdout
+##################################
+function start_web() {
 
-# first arg is `-f` or `--some-option`
-if [ "${1#-}" != "$1" ]; then
-	set -- apache2-foreground "$@"
-fi
+  echo "Caching configuration..."
+  (cd /var/munkireport && php please config:cache && php please route:cache)  # && php please view:cache
 
-exec "$@"
+  if [[ -z "${APP_URL}" || "${APP_URL}" == "http://localhost:8080" ]]; then
+    echo "APP_URL not set, or APP_URL set to default (http://localhost:8080). Please fix this otherwise you may be redirected to a nonexistent host"
+  fi
 
+  exec apache2-foreground
+}
+
+##################################
+# Start the container as a command scheduler
+#
+# Arguments:
+#   None
+# Outputs:
+#   Writes warnings to stdout
+##################################
+function start_scheduler() {
+  echo "Running Scheduler..."
+  while true; do
+    php /var/munkireport/please schedule:run --verbose --no-interaction &
+    sleep 60
+  done
+}
+
+##################################
+# Start the container as a queue worker
+#
+# Arguments:
+#   None
+# Outputs:
+#   Writes warnings to stdout
+##################################
+function start_queue_worker() {
+  echo "Running Queue Worker..."
+  php /var/munkireport/please queue:work --verbose --tries=3 --timeout=90
+}
+
+preflight
+
+case "${1}" in
+app)
+  run_migrations
+  start_web
+  ;;
+scheduler)
+  start_scheduler
+  ;;
+queue)
+  start_queue_worker
+  ;;
+*)
+  echo "No command matches '${1}', running as web application"
+  run_migrations
+  start_web
+  ;;
+esac
