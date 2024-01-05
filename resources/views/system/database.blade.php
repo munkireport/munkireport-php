@@ -8,8 +8,10 @@
     <div class="container">
         <div class="row pt-4">
             <div id="mr-migrations" class="col-lg-12 loading">
-                <h1>Upgrade Database</h1>
-                <h3>Click the update button to begin database upgrade.</h3>
+                <h1>Upgrade Database
+
+                </h1>
+                Click the update button to begin a database upgrade.
             </div>
         </div>
 
@@ -27,9 +29,7 @@
                     <thead>
                     <tr>
                         <th colspan="1">
-                            <a class="disclosure" href="#">
-                                <span class="glyphicon glyphicon-chevron-right"></span> <span data-i18n="database.log">Upgrade Log</span>
-                            </a>
+                            <span data-i18n="database.log">Upgrade Log</span>
                         </th>
                     </tr>
                     </thead>
@@ -41,8 +41,7 @@
                 </table>
             </div>
         </div>
-
-    </div>  <!-- /container -->
+    </div>
 @endsection
 
 @push('scripts')
@@ -54,26 +53,6 @@
           level = level || 'info';
           tbody.append('<tr><td class="log-level-' + level + '">' + message + '</td></tr>');
         }
-
-        function disclose () {
-          var logDiv = $('#database-upgrade-log');
-          var disclosureEl = logDiv.find('.disclosure');
-          var logTbl = logDiv.find('table');
-
-          if (!disclosureEl.hasClass('disclosure-active')) {
-            disclosureEl.addClass('disclosure-active');
-          }
-
-          if (!logTbl.hasClass('disclosure-active')) {
-            logTbl.addClass('disclosure-active');
-          }
-        }
-
-        // Show/Hide the upgrade log
-        $('.disclosure').click(function () {
-          $(this).toggleClass('disclosure-active');
-          $(this).closest('table').toggleClass('disclosure-active');
-        });
 
         $('#db-upgrade').click(function (e) {
           $(this).attr('disabled', true);
@@ -97,14 +76,7 @@
               }
             }
 
-            if (data.notes) {
-              for (var i = 0; i < data.notes.length; i++) {
-                tbody.append($('<tr><td>' + data.notes[i] + '</td></tr>')); // .text(data.notes[i])
-              }
-            }
-
             if (data.error) {
-              disclose();
               log(data.error, 'error');
 
               if (data.error_trace) {

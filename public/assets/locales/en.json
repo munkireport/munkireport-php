@@ -134,8 +134,14 @@
     "db": {
         "connectable": "Connectable",
         "driver": "Driver",
+        "info": "Information",
         "writable": "Writable",
-        "size": "Size"
+        "size": "Size",
+        "prefix": "Table Prefix",
+        "method": "Connection Method",
+        "client": {
+            "version": "Client Version"
+        }
     },
     "delete": "Delete",
     "description": "Description",
@@ -409,6 +415,7 @@
         "tag": "Tag"
     },
     "text": "Text",
+    "timeout": "Timeout",
     "total_clients": "Total Clients",
     "trackpad": "Trackpad",
     "type": "Type",

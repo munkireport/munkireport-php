@@ -87,6 +87,7 @@ class Modules
             ],
             'listings' => array(
                 'clients' => array('view' => 'clients_listing', 'i18n' => 'client.clients'),
+//                'clients' => array('url' => url('/clients'), 'i18n' => 'client.clients'),
             ),
 //            'widgets' => array()
 //                'client' => array('view' => 'client_widget'),
@@ -485,7 +486,9 @@ class Modules
             }
         }
 
-        return $out;
+        $sorted = collect($out)->sortBy('name', SORT_NATURAL)->toArray();
+
+        return $sorted;
     }
 
     /**

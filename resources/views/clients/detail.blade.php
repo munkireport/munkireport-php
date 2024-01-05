@@ -67,19 +67,22 @@
             <div class="tab-content">
                 @foreach($tab_list as $name => $data)
                 <div class="tab-pane @isset($data['class']) active @endisset" id="{{ $name }}">
-{{--                    @isset($data['module'])--}}
-{{--                        {{ "{$data['module']}::{$data['view']}" }}--}}
-{{--                        @include("{$data['module']}::{$data['view']}", $data['view_vars'] ?? [])--}}
-{{--                    @else--}}
-{{--                        @include($data['view'], $data['view_vars'] ?? [])--}}
-{{--                    @endisset--}}
-
+                    @isset($data['blade'])
+                        @isset($data['module'])
+                            <!-- {{ "{$data['module']}::{$data['view']}" }} -->
+                            @include("{$data['module']}::{$data['view']}", $data['view_vars'] ?? [])
+                        @else
+                            <!-- blade {{ $data['view'] }} -->
+                            @include($data['view'], $data['view_vars'] ?? [])
+                        @endisset
+                    @else
                     <?php
                     mr_view(
                         $data['view'],
                         $data['view_vars'] ?? array(),
                         $data['view_path'] ?? conf('view_path'));
                     ?>
+                    @endisset
                 </div>
                 @endforeach
             </div>

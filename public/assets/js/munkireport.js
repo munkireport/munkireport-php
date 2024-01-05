@@ -62,8 +62,6 @@ $( document ).ready(function() {
 
         // Sort menus
         mr.sortMenu('ul.report');
-        mr.sortMenu('ul.listing');
-        mr.sortMenu('ul.client-tabs');
 
         // Put summary on top
         $('ul.client-tabs').prepend($('ul.client-tabs a[href="#summary"]').closest('li'));

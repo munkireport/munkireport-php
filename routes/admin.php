@@ -26,8 +26,9 @@ Route::middleware(['auth', 'can:global'])->group(function () {
 
     // TODO: Deprecated /system/show for /system, add redirect
     //Route::get('/system/show/{which?}', 'SystemController@show');
-    Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
-    Route::get('/system/phpInfo', 'SystemController@phpInfo');
+//    Route::get('/system/DataBaseInfo', 'SystemController@DataBaseInfo');
+//    Route::get('/system/phpInfo', 'SystemController@phpInfo'); // Ajax/XHR deprecated for actual phpinfo page because zero parsing errors or maintenance.
+    Route::get('/system/php_info', 'SystemController@php_info');
     Route::get('/system/status', 'SystemController@status');
     Route::get('/system/database', 'SystemController@database');
     Route::get('/system/widgets', 'SystemController@widgets');

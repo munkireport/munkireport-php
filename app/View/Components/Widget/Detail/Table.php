@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Widget;
+namespace App\View\Components\Widget\Detail;
 
 use Illuminate\View\Component;
 
@@ -12,13 +12,21 @@ use Illuminate\View\Component;
 class Table extends Component
 {
     /**
+     * @var string Widget name/template name
+     */
+    public $name;
+
+    public $data;
+
+    /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $name, ?array $data)
     {
-        //
+        $this->name = $name;
+        $this->data = $data;
     }
 
     /**
@@ -28,6 +36,6 @@ class Table extends Component
      */
     public function render()
     {
-        return view('components.widget.table');
+        return view('components.widget.detail.table', $this->data);
     }
 }
