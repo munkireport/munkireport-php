@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2021 Greg Neagle.
+# Copyright 2009-2023 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -74,7 +74,7 @@ def readPlist(filepath):
     plistData = NSData.dataWithContentsOfFile_(filepath)
     dataObject, dummy_plistFormat, error = (
         NSPropertyListSerialization.
-            propertyListFromData_mutabilityOption_format_errorDescription_(
+        propertyListFromData_mutabilityOption_format_errorDescription_(
             plistData, NSPropertyListMutableContainers, None, None))
     if dataObject is None:
         if error:
@@ -95,7 +95,7 @@ def readPlistFromString(data):
             "Could not convert string to NSData")
     dataObject, dummy_plistFormat, error = (
         NSPropertyListSerialization.
-            propertyListFromData_mutabilityOption_format_errorDescription_(
+        propertyListFromData_mutabilityOption_format_errorDescription_(
             plistData, NSPropertyListMutableContainers, None, None))
     if dataObject is None:
         if error:
@@ -113,7 +113,7 @@ def writePlist(dataObject, filepath):
     '''
     plistData, error = (
         NSPropertyListSerialization.
-            dataFromPropertyList_format_errorDescription_(
+        dataFromPropertyList_format_errorDescription_(
             dataObject, NSPropertyListXMLFormat_v1_0, None))
     if plistData is None:
         if error:
@@ -133,7 +133,7 @@ def writePlistToString(rootObject):
     '''Return 'rootObject' as a plist-formatted (byte)string.'''
     plistData, error = (
         NSPropertyListSerialization.
-            dataFromPropertyList_format_errorDescription_(
+        dataFromPropertyList_format_errorDescription_(
             rootObject, NSPropertyListXMLFormat_v1_0, None))
     if plistData is None:
         if error:

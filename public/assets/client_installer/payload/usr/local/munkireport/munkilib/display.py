@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2021 Greg Neagle.
+# Copyright 2009-2023 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -13,8 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-display.py
+"""display.py.
 
 Created by Greg Neagle on 2016-12-13.
 
@@ -26,15 +25,13 @@ import sys
 import warnings
 
 from . import munkilog
+from . import prefs
 from . import reports
-# from . import munkistatus
 from .wrappers import unicode_or_str
 
 
 def _getsteps(num_of_steps, limit):
-    """
-    Helper function for display_percent_done
-    """
+    """Helper function for display_percent_done."""
     steps = []
     current = 0.0
     for i in range(0, num_of_steps):
@@ -44,32 +41,6 @@ def _getsteps(num_of_steps, limit):
             steps.append(int(round(current)))
         current += float(limit)/float(num_of_steps-1)
     return steps
-
-
-# def display_percent_done(current, maximum):
-#     """
-#     Mimics the command-line progress meter seen in some
-#     of Apple's tools (like softwareupdate), and tells
-#     MunkiStatus to display percent done via progress bar.
-#     """
-#     if current >= maximum:
-#         percentdone = 100
-#     else:
-#         percentdone = int(float(current)/float(maximum)*100)
-#     if munkistatusoutput:
-#         munkistatus.percent(str(percentdone))
-#
-#     if verbose:
-#         step = _getsteps(16, maximum)
-#         output = ''
-#         indicator = ['\t0', '.', '.', '20', '.', '.', '40', '.', '.',
-#                      '60', '.', '.', '80', '.', '.', '100\n']
-#         for i in range(0, 16):
-#             if current >= step[i]:
-#                 output += indicator[i]
-#         if output:
-#             sys.stdout.write('\r' + output)
-#             sys.stdout.flush()
 
 
 def str_to_ascii(a_string):
@@ -115,42 +86,6 @@ def _concat_message(msg, *args):
                 'String format does not match concat args: %s'
                 % (str(sys.exc_info())))
     return msg.rstrip()
-
-
-def display_status_major(msg, *args):
-    """
-    Displays major status messages, formatting as needed
-    for verbose/non-verbose and munkistatus-style output.
-    """
-    msg = _concat_message(msg, *args)
-    munkilog.log(msg)
-    if munkistatusoutput:
-        munkistatus.message(msg)
-        munkistatus.detail('')
-        munkistatus.percent(-1)
-    if verbose:
-        if msg.endswith('.') or msg.endswith(u'…'):
-            print('%s' % msg)
-        else:
-            print('%s...' % msg)
-        sys.stdout.flush()
-
-
-def display_status_minor(msg, *args):
-    """
-    Displays minor status messages, formatting as needed
-    for verbose/non-verbose and munkistatus-style output.
-    """
-    msg = _concat_message(msg, *args)
-    munkilog.log(u'    ' + msg)
-    if munkistatusoutput:
-        munkistatus.detail(msg)
-    if verbose:
-        if msg.endswith('.') or msg.endswith(u'…'):
-            print('    %s' % msg)
-        else:
-            print('    %s...' % msg)
-        sys.stdout.flush()
 
 
 def display_info(msg, *args):
@@ -240,9 +175,8 @@ def display_error(msg, *args):
 # module globals
 # pylint: disable=invalid-name
 verbose = 1
-munkistatusoutput = True
 # pylint: enable=invalid-name
 
 
-if __name__ == '__main__':
-    print('This is a library of support tools for the Munki Suite.')
+if __name__ == "__main__":
+    print("This is a library of support tools for the Munki Suite.")

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {ref, defineProps} from 'vue'
-import vClickOutside from 'click-outside-vue3'
+import { onClickOutside } from '@vueuse/core'
 
 export interface Props {
   label?: string;
@@ -15,7 +15,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 let open = ref(false);
+const target = ref(null);
 
+onClickOutside(target, event => open.value = false)
 const toggle = () => open.value = ! open.value;
 
 const hide = () => {
@@ -27,7 +29,7 @@ const hide = () => {
 
 <template>
   <div
-    v-click-outside="hide"
+    ref="target"
     class="dropdown"
   >
     <slot

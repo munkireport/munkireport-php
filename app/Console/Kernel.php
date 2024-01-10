@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\ConfigDebugCommand::class,
         Commands\MigrateCommand::class,
         Commands\ModuleCommand::class,
+        Commands\ModuleCacheCommand::class,
         Commands\MunkiReportMakeMigrationCommand::class,
 //        Commands\SeedCommand::class,
         Commands\PasswordResetCommand::class,

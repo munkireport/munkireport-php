@@ -21,7 +21,7 @@ class ModuleGraphQLSchemaProvider extends ServiceProvider
             function(): string {
                 $schema = "";
                 $moduleMgr = new ModuleMgr;
-                $moduleMgr->loadinfo(true);
+                $moduleMgr->loadInfo(true);
                 foreach($moduleMgr->getInfo() as $moduleName => $info) {
                     $moduleGqlPath = $moduleMgr->getPath($moduleName) . 'schema.graphql';
                     if (file_exists($moduleGqlPath) && is_readable($moduleGqlPath)) {

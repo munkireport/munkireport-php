@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2021 Greg Neagle.
+# Copyright 2009-2023 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -47,50 +47,17 @@ from .wrappers import is_a_string
 # managed installs preferences/metadata
 #####################################################
 
-DEFAULT_INSECURE_REPO_URL = 'http://munki/repo'
-
 DEFAULT_PREFS = {
     'AdditionalHttpHeaders': None,
-    'AggressiveUpdateNotificationDays': 14,
-    'AppleSoftwareUpdatesOnly': False,
-    'CatalogURL': None,
-    'ClientCertificatePath': None,
-    'ClientIdentifier': '',
-    'ClientKeyPath': None,
-    'ClientResourcesFilename': None,
-    'ClientResourceURL': None,
-    'DaysBetweenNotifications': 1,
-    'EmulateProfileSupport': False,
-    'FollowHTTPRedirects': 'none',
-    'HelpURL': None,
-    'IconURL': None,
-    'IgnoreSystemProxies': False,
-    'InstallRequiresLogout': False,
-    'InstallAppleSoftwareUpdates': False,
-    'LastNotifiedDate': NSDate.dateWithTimeIntervalSince1970_(0),
-    'LocalOnlyManifest': None,
-    'LogFile': '/Library/Managed Installs/Logs/ManagedSoftwareUpdate.log',
-    'LoggingLevel': 1,
-    'LogToSyslog': False,
-    'ManagedInstallDir': '/Library/Managed Installs',
-    'ManifestURL': None,
-    'PackageURL': None,
-    'PackageVerificationMode': 'hash',
-    'PerformAuthRestarts': False,
-    'RecoveryKeyFile': None,
-    'ShowOptionalInstallsForHigherOSVersions': False,
-    'SoftwareRepoCACertificate': None,
-    'SoftwareRepoCAPath': None,
-    'SoftwareRepoURL': DEFAULT_INSECURE_REPO_URL,
-    'SoftwareUpdateServerURL': None,
-    'SuppressAutoInstall': False,
-    'SuppressLoginwindowInstall': False,
-    'SuppressStopButtonOnInstall': False,
-    'SuppressUserNotification': False,
-    'UnattendedAppleUpdates': False,
-    'UseClientCertificate': False,
-    'UseClientCertificateCNAsClientIdentifier': False,
-    'UseNotificationCenterDays': 3,
+    'BaseUrl': None,
+    'FollowHTTPRedirects': False,
+    'HttpConnectionTimeout': 60,
+    # 'IgnoreSystemProxies': False,
+    'LogFile': '/Library/MunkiReport/Logs/MunkiReport.log',
+    'LogToSyslog': False, 
+    'Passphrase': None,
+    'scriptTimeOut': 30,
+    'UseAdditionalHttpHeaders': False,
 }
 
 
@@ -149,48 +116,49 @@ class Preferences(object):
         """Return a preference or the default value"""
         if not pref_name in self:
             return default
-        return self.__getitem__(pref_name)
+        else:
+            return self.__getitem__(pref_name)
 
 
 class ManagedInstallsPreferences(Preferences):
     """Preferences which are read using 'normal' OS X preferences precedence:
         Managed Preferences (MCX or Configuration Profile)
-        ~/Library/Preferences/ByHost/ManagedInstalls.XXXX.plist
-        ~/Library/Preferences/ManagedInstalls.plist
-        /Library/Preferences/ManagedInstalls.plist
+        ~/Library/Preferences/ByHost/MunkiReport.XXXX.plist
+        ~/Library/Preferences/MunkiReport.plist
+        /Library/Preferences/MunkiReport.plist
     Preferences are written to
-        /Library/Preferences/ManagedInstalls.plist
+        /Library/Preferences/MunkiReport.plist
     Since this code is usually run as root, ~ is root's home dir"""
     # pylint: disable=too-few-public-methods
     def __init__(self):
-        Preferences.__init__(self, 'ManagedInstalls', kCFPreferencesAnyUser)
+        Preferences.__init__(self, 'MunkiReport', kCFPreferencesAnyUser)
 
 
 class SecureManagedInstallsPreferences(Preferences):
     """Preferences which are read using 'normal' OS X preferences precedence:
         Managed Preferences (MCX or Configuration Profile)
-        ~/Library/Preferences/ByHost/ManagedInstalls.XXXX.plist
-        ~/Library/Preferences/ManagedInstalls.plist
-        /Library/Preferences/ManagedInstalls.plist
+        ~/Library/Preferences/ByHost/MunkiReport.XXXX.plist
+        ~/Library/Preferences/MunkiReport.plist
+        /Library/Preferences/MunkiReport.plist
     Preferences are written to
-        ~/Library/Preferences/ByHost/ManagedInstalls.XXXX.plist
+        ~/Library/Preferences/ByHost/MunkiReport.XXXX.plist
     Since this code is usually run as root, ~ is root's home dir"""
     # pylint: disable=too-few-public-methods
     def __init__(self):
-        Preferences.__init__(self, 'ManagedInstalls', kCFPreferencesCurrentUser)
+        Preferences.__init__(self, 'MunkiReport', kCFPreferencesCurrentUser)
 
 
 def reload_prefs():
     """Uses CFPreferencesAppSynchronize(BUNDLE_ID)
     to make sure we have the latest prefs. Call this
-    if you have modified /Library/Preferences/ManagedInstalls.plist
-    or /var/root/Library/Preferences/ManagedInstalls.plist directly"""
+    if you have modified /Library/Preferences/MunkiReport.plist
+    or /var/root/Library/Preferences/MunkiReport.plist directly"""
     CFPreferencesAppSynchronize(BUNDLE_ID)
 
 
 def set_pref(pref_name, pref_value):
     """Sets a preference, writing it to
-    /Library/Preferences/ManagedInstalls.plist.
+    /Library/Preferences/MunkiReport.plist.
     This should normally be used only for 'bookkeeping' values;
     values that control the behavior of munki may be overridden
     elsewhere (by MCX, for example)"""
@@ -207,9 +175,9 @@ def pref(pref_name):
     """Return a preference. Since this uses CFPreferencesCopyAppValue,
     Preferences can be defined several places. Precedence is:
         - MCX/configuration profile
-        - /var/root/Library/Preferences/ByHost/ManagedInstalls.XXXXXX.plist
-        - /var/root/Library/Preferences/ManagedInstalls.plist
-        - /Library/Preferences/ManagedInstalls.plist
+        - /var/root/Library/Preferences/ByHost/MunkiReport.XXXXXX.plist
+        - /var/root/Library/Preferences/MunkiReport.plist
+        - /Library/Preferences/MunkiReport.plist
         - .GlobalPreferences defined at various levels (ByHost, user, system)
         - default_prefs defined here.
     """
@@ -240,33 +208,33 @@ def get_config_level(domain, pref_name, value):
          'domain': domain,
          'user': kCFPreferencesCurrentUser,
          'host': kCFPreferencesCurrentHost
-         },
+        },
         {'file': '/var/root/Library/Preferences/%s.plist' % domain,
          'domain': domain,
          'user': kCFPreferencesCurrentUser,
          'host': kCFPreferencesAnyHost
-         },
+        },
         {'file': ('/var/root/Library/Preferences/ByHost/'
                   '.GlobalPreferences.xxxx.plist'),
          'domain': '.GlobalPreferences',
          'user': kCFPreferencesCurrentUser,
          'host': kCFPreferencesCurrentHost
-         },
+        },
         {'file': '/var/root/Library/Preferences/.GlobalPreferences.plist',
          'domain': '.GlobalPreferences',
          'user': kCFPreferencesCurrentUser,
          'host': kCFPreferencesAnyHost
-         },
+        },
         {'file': '/Library/Preferences/%s.plist' % domain,
          'domain': domain,
          'user': kCFPreferencesAnyUser,
          'host': kCFPreferencesCurrentHost
-         },
+        },
         {'file': '/Library/Preferences/.GlobalPreferences.plist',
          'domain': '.GlobalPreferences',
          'user': kCFPreferencesAnyUser,
          'host': kCFPreferencesCurrentHost
-         },
+        },
     ]
     for level in levels:
         if (value == CFPreferencesCopyValue(
@@ -278,29 +246,12 @@ def get_config_level(domain, pref_name, value):
 
 
 def print_config():
-    '''Prints the current Munki configuration'''
-    print('Current Munki configuration:')
-    max_pref_name_len = max([len(pref_name) for pref_name in DEFAULT_PREFS])
-    for pref_name in sorted(DEFAULT_PREFS):
-        if pref_name == 'LastNotifiedDate':
-            # skip it
-            continue
-        else:
-            value = pref(pref_name)
-            where = get_config_level(BUNDLE_ID, pref_name, value)
-        repr_value = value
-        if is_a_string(value):
-            repr_value = repr(value)
-        print(('%' + str(max_pref_name_len) + 's: %5s %s ') % (
-            pref_name, repr_value, where))
-    # also print com.apple.SoftwareUpdate CatalogURL config if
-    # Munki is configured to install Apple updates
-    if pref('InstallAppleSoftwareUpdates'):
-        print('Current Apple softwareupdate configuration:')
-        domain = 'com.apple.SoftwareUpdate'
-        pref_name = 'CatalogURL'
-        value = CFPreferencesCopyAppValue(pref_name, domain)
-        where = get_config_level(domain, pref_name, value)
+    '''Prints the current MunkiReport configuration'''
+    print('Current MunkiReport configuration:')
+    max_pref_name_len = max([len(pref_name) for pref_name in DEFAULT_PREFS.keys()])
+    for pref_name in sorted(DEFAULT_PREFS.keys()):
+        value = pref(pref_name)
+        where = get_config_level(BUNDLE_ID, pref_name, value)
         repr_value = value
         if is_a_string(value):
             repr_value = repr(value)

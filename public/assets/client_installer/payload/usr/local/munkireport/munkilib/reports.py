@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2021 Greg Neagle.
+# Copyright 2009-2023 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -126,7 +126,7 @@ def archive_report():
         proc = subprocess.Popen(['/bin/ls', '-t1', archivepath],
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
-        output = proc.communicate()[0].decode('UTF-8')
+        output = proc.communicate()[0].decode("utf-8", errors="ignore")
         if output:
             archiveitems = [item
                             for item in str(output).splitlines()

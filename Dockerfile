@@ -1,4 +1,4 @@
-FROM node:lts as frontend
+FROM node:20.10 as frontend
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install && npm run build
@@ -36,7 +36,7 @@ RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip opcache
 
 COPY --chown=www-data:www-data . $APP_DIR
-COPY --chown=www-data:www-data --from=frontend /usr/src/app/public/ /var/munkireport/public/
+COPY --chown=www-data:www-data --from=frontend /usr/src/app/public/ $APACHE_DOCUMENT_ROOT/
 WORKDIR $APP_DIR
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf
@@ -48,8 +48,9 @@ RUN a2enmod rewrite
 
 COPY build/docker-php-entrypoint /usr/local/bin/docker-php-entrypoint
 RUN cp "build/php.d/upload.ini" "$PHP_INI_DIR/conf.d/"
+COPY build/composer-local.example.json $APP_DIR/composer.local.json
 
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
 USER www-data
 

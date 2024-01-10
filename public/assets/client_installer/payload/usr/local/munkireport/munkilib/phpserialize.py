@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-r"""
+"""
 Php serialize / unserialize implementation in Python:
 
 https://github.com/sdfsdhgjkbmnmxc/phpserialize
@@ -8,10 +8,12 @@ Author: Alexander Chekunkov
 Modified by: Arjen van Bochoven
 - Included error classes
 - Added support for objc.pyobjc_unicode strings
+- Updated for Python 3
 """
 from decimal import Decimal
 import string
 import objc
+import six
 
 
 class PhpSerializationError(ValueError):
@@ -40,7 +42,7 @@ class PHP_Class(object):
         self._properties[prop.name] = prop
 
     def __iter__(self):
-        return iter(list(self._properties.values()))
+        return iter(self._properties.values())
 
     def __len__(self):
         return len(self._properties)
@@ -111,8 +113,12 @@ def print_php_class(cls, lvl=0):
 
 def unserialize(s):
     """Unserialize python struct from php serialization format."""
-    if not isinstance(s, str) or s == "":
-        raise ValueError("Unserialize argument must be non-empty string")
+    if not s:
+        raise ValueError("Unserialize argument must be non-empty bytestring, s is %s" % type(s))
+    if isinstance(s, six.text_type):
+        s = s.encode('utf-8')
+    if not isinstance(s, six.binary_type):
+        raise ValueError("Unserialize argument must be a bytestring, s is %s" % type(s))
 
     try:
         return Unserializator(s).unserialize()
@@ -120,12 +126,12 @@ def unserialize(s):
         char = len(str(s)) - len(e.rest)
         delta = 50
         try:
-            sample = "...%s --> %s <-- %s..." % (
+            sample = u"...%s --> %s <-- %s..." % (
                 s[(char > delta and char - delta or 0) : char],
                 s[char],
                 s[char + 1 : char + delta],
             )
-            message = "%s in %s" % (e.message, sample)
+            message = u"%s in %s" % (e.message, sample)
         except Exception as e:
             raise
         raise PhpUnserializationError(message)
@@ -138,52 +144,44 @@ def serialize(struct, typecast=None):
 
     # N;
     if struct is None:
-        return "N;"
+        return b"N;"
 
     struct_type = type(struct)
     # d:<float>;
     if struct_type is float:
-        return "d:%.20f;" % struct  # 20 digits after comma
+        return b"d:%.20f;" % struct  # 20 digits after comma
 
     # d:<float>;
     if struct_type is Decimal:
-        return "d:%.20f;" % struct  # 20 digits after comma
+        return b"d:%.20f;" % struct  # 20 digits after comma
 
     # b:<0 or 1>;
     if struct_type is bool:
-        return "b:%d;" % int(struct)
+        return b"b:%d;" % int(struct)
 
     # i:<integer>;
-    if struct_type is int or struct_type is int:
-        return "i:%d;" % struct
+    if struct_type in six.integer_types:
+        return b"i:%d;" % struct
 
     # s:<string_length>:"<string>";
-    # NOTE: This will return an incorrect length in Python 3 if the string contains Unicode characters
-    # because len(str(bytes)) isnt the same as len(bytes).
-    # if struct_type is str:
-    #     return 's:%d:"%s";' % (len(struct), struct)
-
-    # Serializing string types recursively wont work because the length will change before/after utf-8 encoding
-    if struct_type is str:
-        return 's:%d:"%s";' % (len(struct.encode("utf-8")), struct)
-        #return serialize(struct.encode("utf-8"), typecast)
-
-    # Assume python 3 byte encoded string
     if struct_type is bytes:
-        return serialize(struct.decode("utf-8"), typecast)
+        return b's:%d:"%s";' % (len(struct), struct)
+
+    if struct_type is six.text_type:
+        return serialize(struct.encode("utf-8"), typecast)
 
     # a:<hash_length>:{<key><value><key2><value2>...<keyN><valueN>}
     if struct_type is dict:
-        core = "".join(
-            [serialize(k, typecast) + serialize(v, typecast) for k, v in list(struct.items())]
+        core = b"".join(
+            [serialize(k, typecast) + serialize(v, typecast) for k, v in struct.items()]
         )
-        return "a:%d:{%s}" % (len(struct), core)
+        return b"a:%d:{%s}" % (len(struct), core)
 
     if struct_type is tuple or struct_type is list:
         return serialize(dict(enumerate(struct)), typecast)
 
     if isinstance(struct, PHP_Class):
-        return 'O:%d:"%s":%d:{%s}' % (
+        return b'O:%d:"%s":%d:{%s}' % (
             len(struct.name),
             struct.name,
             len(struct),
@@ -212,7 +210,7 @@ class Unserializator(object):
         self._position += n
         if result != symbol:
             raise _PhpUnserializationError(
-                "Next is `%s` not `%s`" % (result, symbol), self.get_rest()
+                "Next is `%s` not `%s`" % (result, symbol.decode("utf-8", errors="ignore")), self.get_rest()
             )
 
     def take(self, n=1):
@@ -238,42 +236,42 @@ class Unserializator(object):
     def unserialize(self):
         t = self.take()
 
-        if t == "N":
-            self.await_sym(";")
+        if t == b"N":
+            self.await_sym(b";")
             return None
 
-        self.await_sym(":")
+        self.await_sym(b":")
 
-        if t == "i":
-            return self.take_while_not(";", int)
+        if t == b"i":
+            return self.take_while_not(b";", int)
 
-        if t == "d":
-            return self.take_while_not(";", float)
+        if t == b"d":
+            return self.take_while_not(b";", float)
 
-        if t == "b":
-            return bool(self.take_while_not(";", int))
+        if t == b"b":
+            return bool(self.take_while_not(b";", int))
 
-        if t == "s":
-            size = self.take_while_not(":", int)
-            self.await_sym('"')
+        if t == b"s":
+            size = self.take_while_not(b":", int)
+            self.await_sym(b'"')
             result = self.take(size)
-            self.await_sym('";', 2)
+            self.await_sym(b'";', 2)
             return result
 
-        if t == "a":
-            size = self.take_while_not(":", int)
+        if t == b"a":
+            size = self.take_while_not(b":", int)
             return self.parse_hash_core(size)
 
-        if t == "O":
-            object_name_size = self.take_while_not(":", int)
-            self.await_sym('"')
+        if t == b"O":
+            object_name_size = self.take_while_not(b":", int)
+            self.await_sym(b'"')
             object_name = self.take(object_name_size)
-            self.await_sym('":', 2)
-            object_length = self.take_while_not(":", int)
+            self.await_sym(b'":', 2)
+            object_length = self.take_while_not(b":", int)
             php_class = PHP_Class(object_name)
             members = self.parse_hash_core(object_length)
             if members:
-                for php_name, value in list(members.items()):
+                for php_name, value in members.items():
                     php_class.set_item(php_name, value)
             return php_class
 
@@ -281,7 +279,7 @@ class Unserializator(object):
 
     def parse_hash_core(self, size):
         result = {}
-        self.await_sym("{")
+        self.await_sym(b"{")
         is_array = True
         for i in range(size):
             k = self.unserialize()
@@ -291,5 +289,5 @@ class Unserializator(object):
                 is_array = False
         if is_array:
             result = list(result.values())
-        self.await_sym("}")
+        self.await_sym(b"}")
         return result

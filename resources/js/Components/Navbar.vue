@@ -71,30 +71,29 @@
             {{ t('nav.main.dashboard') }}
           </a>
         </li>
-        <li
-          v-else
-          class="nav-item dropdown"
-        >
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <FontAwesomeIcon :icon="faThLarge" />
-            {{ t('nav.main.dashboard_plural') }}
-          </a>
-          <div class="dashboard dropdown-menu">
+        <Dropdown v-else>
+          <template #toggle="toggleProps">
             <a
-              v-for="dashboard in dashboards"
-              :key="dashboard.url"
-              class="dropdown-item"
-              :class="[dashboard.class]"
-              :href="dashboard.url"
-            >{{ dashboard.display_name }}</a>
-          </div>
-        </li>
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-toggle="dropdown"
+              aria-expanded="false"
+              @click="toggleProps.toggle"
+            >
+              <FontAwesomeIcon :icon="faThLarge" />
+              {{ t('nav.main.dashboard_plural') }}
+            </a>
+          </template>
+
+          <a
+            v-for="dashboard in dashboards"
+            :key="dashboard.i18n"
+            class="dropdown-item"
+            :class="[dashboard.class]"
+            :href="dashboard.url"
+          >{{ dashboard.display_name }}</a>
+        </Dropdown>
 
         <!-- Reports -->
         <Dropdown>

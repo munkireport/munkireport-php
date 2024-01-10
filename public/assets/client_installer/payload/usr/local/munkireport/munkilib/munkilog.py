@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# Copyright 2009-2021 Greg Neagle.
+# Copyright 2009-2023 Greg Neagle.
 #
 # Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
@@ -87,7 +87,7 @@ def configure_syslog():
         log('LogToSyslog is enabled but socket connection failed.')
         return
 
-    syslog.setFormatter(logging.Formatter('munki: %(message)s'))
+    syslog.setFormatter(logging.Formatter("munkireport: %(message)s"))
     syslog.setLevel(logging.INFO)
     logger.addHandler(syslog)
 
@@ -123,20 +123,22 @@ def rotate_main_log():
             rotatelog(main_log)
 
 
-def reset_warnings():
-    """Rotate our warnings log."""
+def rotate_warnings():
+    """Rotate our warnings.log"""
     warningsfile = os.path.join(
         os.path.dirname(prefs.pref('LogFile')), 'warnings.log')
     if os.path.exists(warningsfile):
-        rotatelog(warningsfile)
+        if os.path.getsize(warningsfile) > 1000000:
+            rotatelog(warningsfile)
 
 
-def reset_errors():
+def rotate_errors():
     """Rotate our errors.log"""
     errorsfile = os.path.join(
         os.path.dirname(prefs.pref('LogFile')), 'errors.log')
     if os.path.exists(errorsfile):
-        rotatelog(errorsfile)
+        if os.path.getsize(errorsfile) > 1000000:
+            rotatelog(errorsfile)
 
 
 if __name__ == '__main__':

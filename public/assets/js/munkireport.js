@@ -8,6 +8,8 @@ $(document).on('appReady', function(e, lang) {
 });
 
 $(function () {
+  $('.client-tabs a.dropdown-item').first().tab('show');
+
   // client_details tab
   $('.client-tabs a.dropdown-item').on('click', function(e) {
     e.preventDefault();
