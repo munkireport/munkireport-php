@@ -1,4 +1,4 @@
-FROM node:lts as frontend
+FROM node:20.10 as frontend
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install && npm run build
@@ -21,14 +21,14 @@ RUN arch="$(dpkg --print-architecture)" && args="--with-libdir=lib/x86_64-linux-
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
 
-ENV SITENAME MunkiReport
-ENV MODULES ard, bluetooth, disk_report, munkireport, managedinstalls, munkiinfo, network, security, warranty
+ENV APP_DIR /var/munkireport
+ENV APACHE_DOCUMENT_ROOT /var/munkireport/public
 ENV AUTH_METHODS LOCAL
 ENV APP_URL http://localhost:8080
 ENV LOG_CHANNEL stderr
 
 COPY --chown=www-data:www-data . $APP_DIR
-COPY --chown=www-data:www-data --from=frontend /usr/src/app/public/ /var/munkireport/public/
+COPY --chown=www-data:www-data --from=frontend /usr/src/app/public/ $APACHE_DOCUMENT_ROOT/
 WORKDIR $APP_DIR
 
 COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer

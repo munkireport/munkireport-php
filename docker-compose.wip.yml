@@ -36,7 +36,10 @@ services:
     volumes:
       - ./.docker/db:/var/munkireport/app/db
       - ./.docker/local:/var/munkireport/local
-      - ./.docker/storage:/var/munkireport/storage
+
+      # If you are going to bind mount storage, it needs to have all the subdirectories present otherwise
+      # Laravel will complain about not having a view cache etc.
+      - ./.docker/storage/app:/var/munkireport/storage/app
   # Queue Worker (If you are using Queues)
   queue:
     image: munkireport-php:wip

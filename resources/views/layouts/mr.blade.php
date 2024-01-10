@@ -159,7 +159,7 @@ $page = url()->current();
                         <span data-i18n="nav.main.listings"></span>
                         <b class="caret"></b>
                     </a>
-                    <div class="listing dropdown-menu overflow-auto vh-100" aria-labelledby="listingMenuLink">
+                    <div class="listing dropdown-menu overflow-auto" aria-labelledby="listingMenuLink" style="max-height: 100vh">
                     @foreach($modules->getDropdownData('listings', 'show/listing', $page) as $item)
                         <a class="dropdown-item {{ $item->class }} {{ Route::is($item->url) ? " active" : "" }}" href="{{ $item->url }}" data-i18n="{{ $item->i18n }}"></a>
                     @endforeach

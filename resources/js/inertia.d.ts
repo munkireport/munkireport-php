@@ -1,7 +1,14 @@
 export {};
 declare global {
     export namespace inertia {
-        export interface Props {
+
+        /**
+         * This type models the "Shared Data" that is supplied to every Page from the Inertia Middleware, defined in
+         * app/Http/Middleware/HandleInertiaRequests.php
+         */
+        export interface SharedData {
+            appName: string;
+            csrf_token?: string;
             current_theme: string;
             user: {
                 id: number;
@@ -16,6 +23,11 @@ declare global {
             errorBags: unknown;
             errors: unknown;
             themes: string[];
+
+            dashboards: object[];
+            reports: object[];
+            listings: object[];
+            admin: object[];
         }
     }
 }

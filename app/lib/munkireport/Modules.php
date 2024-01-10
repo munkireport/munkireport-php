@@ -5,6 +5,7 @@ namespace munkireport\lib;
 use App\Packages;
 use Illuminate\Foundation\PackageManifest;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -285,10 +286,20 @@ class Modules
             $skipInactiveModules = $this->skipInactiveModules;
         }
 
-        $this->collectModuleInfo(
-            $this->moduleSearchPaths,
-            $skipInactiveModules,
-            $this->getAllowedModules($skipInactiveModules));
+        if (Storage::disk('local')->exists('modules.json')) {
+            $cache = Storage::disk('local')->get('modules.json');
+
+            if ($skipInactiveModules) {
+                $this->moduleList = Arr::only(json_decode($cache, true), $this->getAllowedModules(true));
+            } else {
+                $this->moduleList = json_decode($cache, true);
+            }
+        } else {
+            $this->collectModuleInfo(
+                $this->moduleSearchPaths,
+                $skipInactiveModules,
+                $this->getAllowedModules($skipInactiveModules));
+        }
 
         return $this;
 
@@ -467,7 +478,7 @@ class Modules
      *
      * If both of these are missing, the behaviour falls back to v5 (the link is constructed using the module name)
      * 
-     * @param string $kind 'reports' or 'listings'
+     * @param string $kind 'reports' or 'listings' or 'admin_pages'
      * @param string $baseUrl 'show/report' or 'show/listing'
      * @param string $page current page url path
      * @return array An array of (object) that contain a `url`, `name`, `class` and `i18n` property, sorted alphabetically.
@@ -522,7 +533,7 @@ class Modules
             }
         }
         
-        $active_modules = $this->getAllowedModules($skipInactiveModules = true);
+        $active_modules = $this->getAllowedModules(true);
            
         // Generate list for widget gallery
         foreach( $out as $module => $widgets){
@@ -614,12 +625,18 @@ class Modules
     }
 
     /**
-     * Collect information from all v6 modules which use the Laravel Package Auto-Discovery mechanism
-     * (composer.json extra.munkireport section)
+     * Collect module information from Laravel-style MunkiReport v6 Packages
      *
+     * The package information is stored in a backwards-compatible way so that the listings/dropdowns abstractions
+     * work just like v5.
+     *
+     * Locale keys are translated from their composer package name eg. munkireport/package to an underscored version
+     * eg 'munkireport_package' for use with i18next.
+     *
+     * @since 6.0.0
      * @return void
      */
-    private function collectPackageInformation()
+    private function collectPackageInformation(): void
     {
         $packages = new Packages();
         $modulePackages = $packages->modules();
@@ -627,9 +644,13 @@ class Modules
         foreach ($modulePackages as $mp) {
             if (Arr::has($mp->getExtra(), 'munkireport')) {
                 $meta = $mp->getExtra()['munkireport'];
-                $this->moduleList[$mp->getName()] = [
+                $this->moduleList[str_replace( '/', '_', $mp->getName())] = [
+                    'admin_pages' => Arr::get($meta, 'navigation.admin_pages', []),
                     'listings' => Arr::get($meta, 'navigation.listings', []),
-                    'path' => ''
+                    'reports' => Arr::get($meta, 'navigation.reports', []),
+                    'detail_widgets' => Arr::get($meta, 'detail_widgets', []),
+                    'widgets' => Arr::get($meta, 'widgets', []),
+                    'path' => realpath(base_path($mp->getDistUrl())),
                 ];
             }
         }
