@@ -31,20 +31,20 @@ The local authentication mechanism has changed **SUBSTANTIALLY**.
 
 Compare the features of MunkiReport Local and Laravel Local Authentication:
 
-| AUTH_LOCAL features | MunkiReport   | Laravel    |
-|:------------------- |:-------------:| :---------:|
-| .yml users          | yes           | no         |
-| config based users  | yes           | no         |
-| database users      | no            | yes        |
-| sign-up page        | no            | yes        |
-| password reset      | no            | yes        |
+| AUTH_LOCAL features | MunkiReport   |     Laravel     |
+|:------------------- |:-------------:|:---------------:|
+| .yml users          | yes           | limited support |
+| config based users  | yes           |       no        |
+| database users      | no            |       yes       |
+| sign-up page        | no            |     not yet     |
+| password reset      | no            |       yes       |
 
 #### New Stuff ####
 
-* **Sign up page** Allows you to have a registration mechanism where people apply for a login themselves.
-  E-mail verification obviously only works if you configure an SMTP server.
+* **Sign up page** ~Allows you to have a registration mechanism where people apply for a login themselves.
+  E-mail verification obviously only works if you configure an SMTP server~ Disabled!
 * **Password reset** If you have e-mail configured, allows you to provide password resets for users which are logged
-  in using LOCAL authentication.
+  in using LOCAL authentication *OR* the administrator can use `please user:reset-link` to generate a password reset link.
 * **Local DB user creation from the CLI**, for example:
 
       php please user:create
@@ -62,8 +62,7 @@ Compare the features of MunkiReport Local and Laravel Local Authentication:
 
 #### Removed ####
 
-* Unfortunately there is no support for `.yml` defined users in Laravel, although we could offer a migration tool later
-on if this becomes a huge concern.
+* Unfortunately there is limited support for `.yml` defined users in Laravel, they will be converted to database users.
 * Generating users from `/auth/create_local_user` will not be supported, you will have
   to use `please create:user` *OR* Register with a valid e-mail address.
   
@@ -135,7 +134,7 @@ in [config/saml2](../../config/saml2).
 
 #### Custom SAML Providers ####
 
-If you have requirements that arent met by the default configuration, (which should cover 90% of cases), you can create a custom SAML config by
+If you have requirements that aren't met by the default configuration, (which should cover 90% of cases), you can create a custom SAML config by
 duplicating the example config file, [config/saml2/examples/template_idp_settings.php](../../config/saml2/examples/template_idp_settings.php),
 and adjusting to your needs.
 

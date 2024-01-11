@@ -468,8 +468,6 @@ return [
     | They aren't even guaranteed to work!
     */
     'alpha_features' => [
-        // Enable the Global Search via Scout
-        'search' => env('ALPHA_FEATURE_SEARCH', False),
         // Enable Business Units rewrite
         'business_units_v2' => env('ALPHA_FEATURE_BUSINESS_UNITS_V2', False),
         // Enable Flexible Query (GraphQL)

@@ -1,13 +1,28 @@
 # Docker Setup (v6 beta) #
 
-The container image is available from GitHub container registry via:
+The container image is available from ghcr (GitHub container registry) via:
 
         docker pull ghcr.io/munkireport/munkireport-php:wip
+
+If you use docker-compose, you can have a look at
+[/docker-compose.wip.yml](/docker-compose.wip.yml) for an example configuration.
 
 ## Requirements ##
 
 * (Optional) a MariaDB or MySQL database is strongly recommended unless you are using this as a test/sandbox environment.
-* 
+* You must generate an `APP_KEY` env var. If you start the container without one, it will print one that you can use and then quit.
+  The `base64:xyz...` prefix must be included.
+* You must now provide a value for `APP_URL` which contains the URL that people will access, eg:
+  `APP_URL=https://munkireport.something.xyz`. This is used to generate links.
+
+## First Login ##
+
+* A default user, called `admin@localhost` will be created if you have never created any users.
+* A password reset link is provided in the logs which you can visit to reset the password for `admin@localhost`.
+* If you forget the password or you could not visit the reset page, you can also enter a new password by running this command in the container:
+
+    /var/munkireport/please user:reset-password "admin@localhost"
+
 
 ## Configuration ##
 

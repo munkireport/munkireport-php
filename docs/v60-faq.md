@@ -41,3 +41,18 @@ $ php please key:generate --show
 
 This is a TODO in v6.0 (wip branch)
 
+## I receive an error about the View cache not being available/not configured ##
+
+It could be that you are running the application in a container with a bind mount 
+or symlinking the `/storage` directory elsewhere. If the subdirectory structure does not exist in this directory
+eg. you never created `/storage/framework/views/`, it will not be automatically created for you.
+
+Either bind each individual subdirectory of `/storage` or create the structure in your storage directory.
+
+## Some pages complain that the Vite manifest is not available ##
+
+In version 6, some front-end assets require compiling before you can run munkireport from a git clone.
+It is recommended to use either a .zip or docker distribution if possible, but you can rebuild the frontend using
+`npm install && npm run build`.
+
+

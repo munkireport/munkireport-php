@@ -92,4 +92,21 @@ class ReportData extends MRModel
     public function scopeMachineGroupIds(Builder $query, array $machineGroupIds): Builder {
         return $query->whereIn('machine_group', $machineGroupIds);
     }
+
+    //// SCOUT
+
+    /**
+     * Implements SCOUT interface for searchable models.
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int) $this->id,
+            'serial_number' => $this->serial_number,
+            'console_user' => $this->console_user,
+            'remote_ip' => $this->remote_ip,
+        ];
+    }
 }

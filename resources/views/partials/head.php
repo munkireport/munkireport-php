@@ -2,6 +2,7 @@
  * This partial header template is kept as a backwards compatible facility for modules that were developed in v5.
  * If developing for v6, it is preferred to use the Blade layouts.
  */
+use Illuminate\Support\Facades\Vite;
 ?><!doctype html>
 <html class="no-js" lang="en">
 <head>
@@ -33,10 +34,8 @@
     <!-- Head scripts -->
     <?php if (config('frontend.javascript.use_cdn', false)): ?>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     <?php else: ?>
         <script src="<?php echo asset('assets/js/jquery.min.js'); ?>"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
     <?php endif ?>
     <script>
       // Include csrf in all requests
@@ -87,13 +86,12 @@
 		}
     }
 ?>
+    <!-- Vue3 Components Backported into jQuery Layout -->
+    <script src="<?php echo Vite::asset('resources/js/app-hybrid.ts'); ?>" type="module"></script>
 </head>
 
 <body class="head-partial" style="padding-top: 56px;">
 <?php
-    /* if( isset($_SESSION['user'])): */
-    // if Auth:: authenticated :
-
     $modules = getMrModuleObj()->loadInfo();
     $dashboard = getDashboard()->loadAll();
     $page = url()->current();
@@ -196,7 +194,7 @@
         </div><!-- div navbar-nav mr-auto (left aligned) -->
 
         <div class="navbar-nav ml-auto">
-
+            <div id="search" class="px-2"></div>
 
             <li class="dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" id="userMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -232,5 +230,3 @@
 
     </div><!-- navbar-collapse -->
 </nav><!-- nav -->
-
-<?php /* endif; isset($_SESSION['user'])) */ ?>
