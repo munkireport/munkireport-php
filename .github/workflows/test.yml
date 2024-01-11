@@ -85,6 +85,7 @@ jobs:
       - name: Prepare app config for CI
         run: |
           php -r "file_exists('.env') || copy('.env.example', '.env');"
+          cp build/composer-local.example.json composer.local.json
           php please key:generate
           mkdir -p database
           touch database/database.sqlite

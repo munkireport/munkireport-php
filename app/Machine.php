@@ -231,4 +231,21 @@ class Machine extends MRModel
         return $query->groupBy('computer_name')
             ->having('COUNT(*)', '>', '1');
     }
+
+    //// SCOUT
+
+    /**
+     * Implements SCOUT interface for searchable models.
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => (int) $this->id,
+            'serial_number' => $this->serial_number,
+            'machine_model' => $this->machine_model,
+            'hostname' => $this->hostname,
+        ];
+    }
 }

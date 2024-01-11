@@ -89,6 +89,9 @@ MunkiReport v5 frontend stack (Bootstrap/jQuery/Datatables.NET)
 
     <!-- Head scripts -->
     @stack('head_scripts')
+
+    <!-- Vue3 Components Backported into jQuery Layout -->
+    @vite(['resources/js/app-hybrid.ts'])
 </head>
 
 <body class="mr-blade-layout" style="padding-top: 56px;">
@@ -196,9 +199,7 @@ $page = url()->current();
 
             <!-- navbar-right -->
             <div class="navbar-nav ml-auto">
-                @if(config('_munkireport.alpha_features.search', false))
-                <div id="hybrid-search"></div>
-                @endif
+                <div id="search" class="px-2"></div>
 
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" id="userMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -230,6 +231,8 @@ $page = url()->current();
                     </a>
                 </li>
                 @endif
+
+
             </div><!-- div navbar-nav ml-auto (right aligned) -->
         </div><!-- navbar-collapse -->
 </nav>
@@ -339,17 +342,6 @@ $page = url()->current();
   }
 </script>
 @endif
-
-
-<script>
-  $(document).on('appUpdate', function(){
-    //$.getJSON( appUrl + '/module/notification/runCheck', function( data ) {
-    // Maybe add some counter to only run every 10 mins.
-    // CHeck if the data contains errors
-    // Check if there are desktop notifications
-    //});
-  });
-</script>
 
 @stack('scripts')
 </body>

@@ -378,6 +378,10 @@
     "report": {
         "generate": "Generate Report"
     },
+    "search": {
+        "search": "Search",
+        "noresults": "No results to display"
+    },
     "serial": "Serial Number",
     "servermetrics": {
         "tab": "Server Metrics"

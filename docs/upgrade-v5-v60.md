@@ -1,44 +1,9 @@
 # v5.x to v6.0 Upgrade Guide #
 
-## Deprecated Features ##
+## Pre-requisites ##
 
-### NOAUTH no longer available ###
-
-It was not feasible to make the `NOAUTH` authentication mechanism work with the framework authorization mechanisms, so
-it was removed from this release. Currently there is no alternative.
-
-### Local user creation via /auth/create_local_user no longer available ###
-
-You cannot use this URL to generate a local user YAML file anymore, because the local user yaml feature has been removed.
-
-If you need to create a local user interactively, you could use the `php please make:user` command, or register via
-the sign up link (if sign ups are enabled).
-
-### Local user .yaml no longer available ###
-
-Providing local users via the `local/users` directory is no longer supported.
-
-### Removed or Irrelevant Config Items ###
-
-- `INDEX_PAGE`: since the framework expects URL rewriting, this is no longer relevant.
-- `URI_PROTOCOL`: no longer needed.
-- `SUBDIRECTORY`: include the subdirectory as part of your `APP_URL`.
-
-### ReCaptcha replaced by NoCaptcha ###
-
-
-### Event filter configuration via event.yml no longer available ###
-
-In version 5.x you were able to place an event.yml file in the module config directory to make the messages widget
-filter events by module or severity. This will be replaced with a user facing event filter and has been removed for now.
-
-### Custom views via /show/custom no longer available ###
-
-This feature was not documented anywhere and has been removed.
-
-### Deprecated API ###
-
-- `mr_secure_url()` or `secure_url()` is replaced by the Laravel `url()` helper.
+* You have a backup of your database.
+* You have a backup of your configuration (.env/config/*.php etc)
 
 ## Configuration Changes ##
 
@@ -102,7 +67,7 @@ Because we now expect the user principal to be an e-mail address, the roles conf
 well as usernames. It will still respect usernames if you have some users that are not migrated to e-mail addresses.
 
 
-## Client Changes ##
+## Client Changes (Since v5.8.0) ##
 
 All client scripts are upgraded to Python 3 and the client will now be installed with a symlink to the 
 best available Python 3 interpreter.
@@ -118,7 +83,7 @@ most client scripts to work.
 
 ## Modules Changes ##
 
-A new type of module structure is available that uses [Laravel Packages](https://laravel.com/docs/8.x/packages)
+A new type of module structure is available that uses [Laravel Packages](https://laravel.com/docs/10.x/packages)
 which we will refer to as the v6 module spec.
 
 The current module style still works through a compatibility layer, so no changes are needed immediately
@@ -130,23 +95,26 @@ to make older modules work.
 
 All application errors are logged to the default application log, which lives in `storage/logs/laravel.log`.
 
+As a module developer, you can enable the deprecation log to see what parts of your module are using outdated API.
+The deprecation log will be stored at `storage/logs/deprecations.log`.
+
 ### API Keys ###
 
 The MunkiReport interface now provides you with a way to manage API Keys that you can use to interact with the REST API
-or GraphQL API without using your user credentials. This is the only way to interact with the API if you are signing in
-with an sso federated user.
+or GraphQL API without using your user credentials. This is the preferred way to access the API, 
+and the *only* way to interact with the API if you are signing in with SSO such as Entra ID or Okta.
 
 ### OpenID Connect (OIDC) via Laravel Socialite ###
 
 MunkiReport-PHP now has support for OpenID Connect.
 
-At this stage, we only test with Azure AD as the identity platform, but you are welcome to try others.
+At this stage, we only test with Entra ID as the identity platform, but you are welcome to try others.
 
-You can enable OIDC sign-in for Azure AD by including this environment variable in .env or the web application environment:
+You can enable OIDC sign-in for Entra ID by including this environment variable in .env or the web application environment:
 
     AUTH_METHODS="OIDC"
 
-You can still provide a fallback to local database authentication (in case Azure AD is not available) like so:
+You can still provide a fallback to local database authentication (in case Entra ID is not available) like so:
 
     AUTH_METHODS="OIDC,LOCAL"
 
