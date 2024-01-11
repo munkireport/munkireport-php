@@ -50,5 +50,6 @@ const createHybridApp = (options) => {
     return app
 }
 
-import Search from '@/Hybrid/Search.vue'
+// @ts-ignore
+import Search from './Hybrid/Search.vue'
 createHybridApp(Search).mount('#search')
