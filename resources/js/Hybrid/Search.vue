@@ -9,6 +9,7 @@ import {
   faSearch,
   faTimesCircle
 } from '@fortawesome/free-solid-svg-icons'
+// @ts-ignore
 import ModelIcon from '@/Components/ModelIcon.vue'
 
 const search: Ref<null | string> = ref(null);
