@@ -132,14 +132,6 @@ class ReportController extends Controller
                 return response(serialize(array('error' => 'Could not unserialize items')));
             }
 
-            // TODO: This model is not found in recent versions of MunkiReport-PHP, shoudl this be deleted?
-            // Reset messages for this client
-//            if (isset($req_items['msg'])) {
-//                $msg_obj = new Messages_model();
-//                $msg_obj->reset($request->post('serial'));
-//                unset($req_items['msg']);
-//            }
-
             // Get stored hashes from db
             $hashes = MunkiReportHash::select('name', 'hash')
                 ->where('serial_number', request('serial', ''))
@@ -351,7 +343,17 @@ class ReportController extends Controller
         $GLOBALS['alerts']['warning'][] = $msg;
     }
 
-    private function _runModel($module, $model_path, $serial_number, $data)
+    /**
+     * Process data submitted for a v5-style module where the module provides a
+     * model class called Module_model with a ::process() method.
+     *
+     * @param $module string Name of the module
+     * @param $model_path string Path to the model file to require (Not part of PHP autoloader)
+     * @param $serial_number string The serial number of the machine submitting the data.
+     * @param $data object|array The data to process, varies depending on the module.
+     * @return bool success status
+     */
+    private function _runModel(string $module, string $model_path, string $serial_number, $data): bool
     {
         require_once($model_path);
 

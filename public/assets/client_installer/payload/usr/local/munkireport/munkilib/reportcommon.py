@@ -326,7 +326,7 @@ def pref(pref_name):
     return pref_value
 
 
-def process(serial, items, ForceUpload=False):
+def process(serial, items, ForceUpload=False, xdebug_session=None):
     """Process receives a list of items, checks if they need updating and
     updates them if necessary."""
 
@@ -497,17 +497,20 @@ def process(serial, items, ForceUpload=False):
                 if chunk_count == 10 and len(items) > 0:
                     display_warning("Unable to fully upload all data after %s chunks!" % (chunk_count))
         else:
-            sendDataCurl(total_size, checkurl, serial, items, passphrase)
+            sendDataCurl(total_size, checkurl, serial, items, passphrase, xdebug_session=xdebug_session)
     else:
         display_detail("No changes")
 
 
-def sendDataCurl(total_size, checkurl, serial, items, passphrase):
+def sendDataCurl(total_size, checkurl, serial, items, passphrase, xdebug_session=None):
 
     display_detail("Sending items (%s)" % sizeof_fmt(total_size))
+    if xdebug_session is not None:
+        display_detail("XDEBUG_SESSION: %s" % xdebug_session)
+
     response = curl(
         checkurl,
-        {"serial": serial, "items": serialize(items), "passphrase": passphrase},
+        {"serial": serial, "items": serialize(items), "passphrase": passphrase, "XDEBUG_SESSION": xdebug_session},
     )
 
     # Decode response if bytes

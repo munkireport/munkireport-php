@@ -239,6 +239,10 @@ function authorized(?string $what = null)
 function authorized_for_serial(string $serial_number): bool
 {
     $machine = Machine::where('serial_number', $serial_number)->firstOrFail();
+    if (request()->path('/report/check_in')) {
+        return true; // Previously, accessing the Report controller would set $_SESSION['auth'] = 'report' which would bypass all the policy checks
+        // This is a temporary hack to allow that for one URL
+    }
     return request()->user()->can('view', $machine);
 }
 

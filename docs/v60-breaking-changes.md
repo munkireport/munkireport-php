@@ -61,3 +61,10 @@ This feature was not documented anywhere and has been removed.
 ### Deprecated API ###
 
 - `mr_secure_url()` or `secure_url()` is replaced by the Laravel `url()` helper.
+
+### Localization ###
+
+While MunkiReport v5 always used a client-side only i18n solution, Laravel also brings its own on the backend.
+This brings a new behaviour: When a locale is not set, the system locale is used. This is configurable in `config/app.php`.
+
+This means that the application does not need to default to English.

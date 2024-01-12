@@ -60,6 +60,8 @@ def main():
                       help='Uninstalls MunkiReport\'s Python 2 pkg.')
     parser.add_option('--uninstall-munkireport', action='store_true',
                       help='Fully uninstalls MunkiReport.')
+    parser.add_option('--xdebug-session', '-X', dest='xdebug_session',
+                      help='Start a remote debug session (If Xdebug is enabled on server) Pass the session')
 
     options, dummy_arguments = parser.parse_args()
   
@@ -222,7 +224,7 @@ def main():
             reportcommon.display_detail("Requesting %s" % key)
             items[key] = {'path':val}
 
-        reportcommon.process(serial, items, ForceUpload)
+        reportcommon.process(serial, items, ForceUpload, xdebug_session=options.xdebug_session)
 
     reportcommon.finish_run()
 

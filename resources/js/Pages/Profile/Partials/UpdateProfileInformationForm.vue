@@ -19,7 +19,7 @@ const form = useForm({
     email: props.user.email,
     photo: null,
     locale: props.user.locale,
-    theme: props.current_theme,
+    theme: props.user.theme,
 });
 
 const verificationLinkSent = ref(null);
