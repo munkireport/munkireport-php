@@ -197,3 +197,8 @@ svg .nv-label text
     margin-right: 20px;
 }
 
+/* scrollable navbar */
+.navbar-nav .dropdown-menu {
+  max-height: 80vh;
+  overflow-y: scroll;
+}
