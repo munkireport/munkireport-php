@@ -14,6 +14,10 @@ const copy = {
             dest: 'public/assets/js/popper.min.js'
         },
         {
+            src: 'node_modules/popper.js/dist/umd/popper.min.js.map',
+            dest: 'public/assets/js/popper.min.js.map'
+        },
+        {
             src: 'node_modules/bootstrap/dist/js/bootstrap.min.js',
             dest: 'public/assets/js/bootstrap.min.js'
         },
@@ -55,6 +59,7 @@ const copy = {
             src: 'node_modules/marked/marked.min.js',
             dest: 'public/assets/js/marked.min.js'
         },
+        // Moment does not have a sourcemap
         {
             src: 'node_modules/moment/min/moment.min.js',
             dest: 'public/assets/js/moment.min.js'
@@ -66,6 +71,10 @@ const copy = {
         {
             src: 'node_modules/nvd3/build/nv.d3.min.js',
             dest: 'public/assets/js/nv.d3.min.js'
+        },
+        {
+            src: 'node_modules/nvd3/build/nv.d3.min.js.map',
+            dest: 'public/assets/js/nv.d3.min.js.map'
         },
 
         // DataTables.NET with Bootstrap 4 styles

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, withDefaults } from 'vue';
+import {ref, defineProps, withDefaults, provide} from 'vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import Navbar from '@/Components/Navbar.vue'
 import Footer from '@/Components/Footer.vue'
@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'MunkiReport 6.0',
   theme: 'Default',
 })
-
 
 </script>
 

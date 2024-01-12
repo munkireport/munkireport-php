@@ -28,6 +28,8 @@ const photoInput = ref(null);
 const selectLocale = ref(null);
 const themeSelect = ref(null);
 
+const emit = defineEmits(['themeSelect']);
+
 const updateProfileInformation = () => {
     if (photoInput.value) {
         form.photo = photoInput.value.files[0];
@@ -81,6 +83,10 @@ const clearPhotoFileInput = () => {
         photoInput.value.value = null;
     }
 };
+
+const updateTheme = () => {
+  emit('themeSelect', form.theme)
+}
 </script>
 
 <template>
@@ -136,6 +142,7 @@ const clearPhotoFileInput = () => {
             <select class="form-control" id="themeSelection" ref="themeSelect" v-model="form.theme" @change="updateTheme"
                     :class="{ 'is-invalid': !!form.errors.theme }"
             >
+              <option value="">(None) System Default</option>
               <option v-for="theme in themes" :key="theme" :value="theme">{{ theme }}</option>
             </select>
           </div>

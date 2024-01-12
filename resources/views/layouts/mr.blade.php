@@ -76,9 +76,9 @@ MunkiReport v5 frontend stack (Bootstrap/jQuery/Datatables.NET)
         appUrl = "{{ url('/') }}",
         default_theme = "{{ config('_munkireport.default_theme') }}",
         businessUnitsEnabled = {{ config('_munkireport.enable_business_units') ? 'true' : 'false' }};
-      isAdmin = true;
-      isManager = true;
-      isArchiver = true;
+      isAdmin = <?php echo \Auth::user()['role'] == 'admin' ? 'true' : 'false'; ?>;
+      isManager = <?php echo \Auth::user()['role'] == 'manager' ? 'true' : 'false'; ?>;
+      isArchiver = <?php echo \Auth::user()['role'] == 'archiver' ? 'true' : 'false'; ?>;
     </script>
 
     @isset($scripts)

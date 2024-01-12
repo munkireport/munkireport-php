@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use munkireport\lib\Themes;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -24,7 +25,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'locale' => [
                 'string'
             ],
-            'theme' => ['string']
+            'theme' => ['nullable', 'string']
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -39,12 +40,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'locale' => $input['locale'] ?? 'en',
+                'theme' => $input['theme']
             ])->save();
         }
 
         if (isset($input['theme'])) {
-            // Session is not available in this context?
-//            session()->set('theme', $input['theme']);
+            $themeObj = new Themes();
+            if(in_array($input['theme'], $themeObj->get_list()))
+            session()->put('theme', $input['theme']);
         }
 
         // TODO:
