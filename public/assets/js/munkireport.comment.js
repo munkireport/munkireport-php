@@ -129,7 +129,7 @@ $(document).on('appReady', function(e, lang) {
 				data.html = data.html || 'No comments'
 				me.html(data.html)
 					.after($('<button>')
-						.addClass('btn btn-default hidden-print')
+						.addClass('btn btn-default btn-outline-secondary')
 						.data('section', section)
 						.click(addComment)
 						.text('Edit'))
