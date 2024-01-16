@@ -1,12 +1,9 @@
 @extends('layouts.blank')
 
 @push('stylesheets')
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-tagsinput.css') }}" />
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('assets/js/bootstrap-tagsinput.min.js') }}"></script>
-    <script src="{{ asset('assets/js/typeahead.bundle.min.js') }}"></script>
 @endpush
 
 @section('content')

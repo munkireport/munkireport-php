@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import laravel from 'laravel-vite-plugin';
 import gql from 'vite-plugin-simple-gql';
 import vue from '@vitejs/plugin-vue';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
+import copy from 'rollup-plugin-copy'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import staticCopyFiles from './vite.copy';
 // import * as path from "path";
@@ -28,10 +28,10 @@ export default defineConfig({
         gql(),
         basicSsl(),
 
-      // This is quite ugly but allows us to keep MunkiReport v5 compatible libraries in the same build tool as v6 and
-      // preserve the ability to manage their versions through package.json.
-      // Note that v5 usually didn't have a transpiler. Dependencies were just added to head/body as needed.
-        viteStaticCopy(staticCopyFiles)
+        // This is quite ugly but allows us to keep MunkiReport v5 compatible libraries in the same build tool as v6 and
+        // preserve the ability to manage their versions through package.json.
+        // Note that v5 usually didn't have a transpiler. Dependencies were just added to head/body as needed.
+        copy(staticCopyFiles)
     ],
     optimizeDeps: {
         exclude: [
