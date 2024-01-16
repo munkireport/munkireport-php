@@ -5,6 +5,7 @@
 - Composer 2.2.x now required
 - Blade Component Dashboards now default layout type, old style dashboard.php view has a warning applied.
 - Jetstream views are used instead of custom ones for user profile editing and password update.
+- Client Summary Widgets are partially converted to use blade components.
 
 ### [6.0.0-beta.3](https://github.com/munkireport/munkireport-php/compare/v6.0.0-beta.3...wip) (Unreleased)
 

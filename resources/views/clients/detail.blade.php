@@ -11,8 +11,6 @@
     <script src="{{ asset('assets/js/bootstrap-tagsinput.min.js') }}"></script>
 {{--    <script src="{{ asset('assets/js/bootstrap4-tagsinput.js') }}">--}}
     <script src="{{ asset('assets/js/typeahead.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/marked.min.js') }}"></script>
-    <script src="{{ asset('assets/js/munkireport.comment.js') }}"></script>
 @endpush
 
 @section('content')

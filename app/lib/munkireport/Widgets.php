@@ -97,6 +97,8 @@ class Widgets
      * The output array is mapped into the same format as a dashboard widget so that all widget data
      * appears the same, even though client detail widgets are declared using a totally different structure in v5.
      *
+     * In v6, the `view` key is not required (supply one of `view` or `component`+`version`+`module`)
+     *
      * @param array $data Widget data, including the widget name.
      * @param string|null $name Optional name to override the widget to render.
      * @return array Widget info which will be used to render the widget.
@@ -107,7 +109,10 @@ class Widgets
             'widget' => $data['widget'] ?? $name,
             'vars' => $data['view_vars'] ?? [],
             'path' => $data['view_path'],
-            'file' => $data['view'],
+            'file' => $data['view'] ?? null,
+            'version' => $data['version'] ?? 5,
+            'module' => $data['module'] ?? null,
+            'component' => $data['component'] ?? null,
         ];
 
 //        $view = $data['view'];

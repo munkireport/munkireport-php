@@ -50,7 +50,7 @@ class Modules
     public function __construct()
     {
         // Populate allowedModules if hide_inactive_modules is true
-        if(conf('hide_inactive_modules')){
+        if(config('_munkireport.hide_inactive_modules', false)){
             $this->skipInactiveModules = True;
         }
         
@@ -60,9 +60,9 @@ class Modules
             $moduleSearchPaths = conf('module_search_paths');
         }
         // And then local modules
-        $moduleSearchPaths[] = conf('local') . 'modules/';
+        $moduleSearchPaths[] = config('_munkireport.local') . 'modules/';
         // And then built-in modules
-        $moduleSearchPaths[] = conf('module_path');
+        $moduleSearchPaths[] = config('_munkireport.module_path');
         
         foreach ($moduleSearchPaths as $path) {
             if(is_dir($path)){
@@ -148,7 +148,14 @@ class Modules
 
         $this->moduleList['comment'] = [
             'detail_widgets' => [
-                    'comment_detail' => [ 'view' => 'comment_detail_widget'],
+                'comment_detail' => [
+                    'version' => 6,
+                    'component' => 'widget.detail.comments',
+//                    'view' => 'comment_detail_widget',
+                    'id' => 'comment-widget',
+                    'icon' => 'comment-o',
+                    'i18n_title' => 'client.comment'
+                ]
             ],
             'path' => realpath(__DIR__ . '../'),
             'core' => true,
@@ -275,6 +282,7 @@ class Modules
      * Load Module info
      *
      * Load info from provides.php
+     * - v6.0.0: Added loading from module cache to speed up page loads.
      *
      * @param boolean $allModules If true, don't mind $skipInactiveModules
      */
