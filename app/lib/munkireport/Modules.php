@@ -106,7 +106,10 @@ class Modules
 
         $this->moduleList['machine'] = [
             'detail_widgets' => [
-                'machine_info_1' => ['view' => 'machine_detail_widget1'],
+                'machine_info_1' => [
+                    'version' => 6,
+                    'component' => 'widget.detail.machine-detail',
+                ],
                 'machine_info_2' => ['view' => 'machine_detail_widget2'],
                 'hardware_detail' => ['view' => 'hardware_detail_widget'],
                 'software_detail' => ['view' => 'software_detail_widget'],
