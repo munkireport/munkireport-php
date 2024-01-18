@@ -30,6 +30,11 @@
 </div>
 
 @push('scripts')
+@isset($js)
+    <script>
+      {!! $js !!}
+    </script>
+@endisset
 @isset($js_link)
     @foreach(is_array($js_link) ? $js_link : [$js_link] as $link)
     <script src="{{ url($link) }}"></script>
