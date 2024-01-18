@@ -9,8 +9,8 @@
 
 
 const layout = [
-  {"x":0,"y":0,"w":4,"h":5,"i":"0","widget":"widget-disk-report"},
-  {"x":4,"y":0,"w":8,"h":10,"i":"1","widget":"widget-event-messages"},
+  {"x":0,"y":0,"w":4,"h":5,"i":0,"widget":"DiskReportWidget"},
+  {"x":4,"y":0,"w":8,"h":10,"i":1,"widget":"EventsWidget"},
 ];
 
 export default layout;

@@ -1,15 +1,19 @@
 <div class="col-lg-4"
      @isset($id)id="{{ $id }}"@endisset
 >
-    <h4 class="alert alert-info">
-        @isset($icon)
-            <i class="fa fa-{{ $icon }}"></i>
-        @endisset
-        <span @isset($i18n_title)data-i18n="{{ $i18n_title }}"@endisset
-            @isset($class)class="{{ $class }}"@endisset
+    <div class="card shadow-sm">
+        <div class="card-header">
+
+                @isset($icon)
+                    <i class="fa fa-{{ $icon }}"></i>
+                @endisset
+                <span @isset($i18n_title)data-i18n="{{ $i18n_title }}"@endisset
+                @isset($class)class="{{ $class }}"@endisset
         ></span>
-    </h4>
-    <table @isset($table_id) id="{{ $table_id }}"@endisset class="table table-condensed table-striped">
+        </div>
+
+        <div class="card-body" style="padding: 0">
+    <table @isset($table_id) id="{{ $table_id }}"@endisset class="table">
         @isset($table)
             @foreach($table as $row)
             <tr>
@@ -27,6 +31,8 @@
             @endforeach
         @endisset
     </table>
+        </div>
+    </div>
 </div>
 
 @push('scripts')

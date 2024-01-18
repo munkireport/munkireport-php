@@ -58,12 +58,6 @@ $(document).on('appReady', function(e, lang) {
 
 	// -------------------------------- end datatables
 
-	// Set table classes
-	$('table').addClass('table table-condensed table-striped');
-
-	// Set h4 classes on headings
-	$('#summary h4').addClass('alert alert-info');
-
 	// Get client data
 	$.getJSON( appUrl + '/clients/get_data/' + serialNumber, function( data ) {
 

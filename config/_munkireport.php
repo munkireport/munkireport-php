@@ -472,5 +472,7 @@ return [
         'business_units_v2' => env('ALPHA_FEATURE_BUSINESS_UNITS_V2', False),
         // Enable Flexible Query (GraphQL)
         'flexible_query' => env('ALPHA_FEATURE_FLEXIBLE_QUERY', false),
+        // Enable Vue Dashboards
+        'vue_dashboards' => env('ALPHA_FEATURE_VUE_DASHBOARDS', false),
     ]
 ];

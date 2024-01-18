@@ -83,6 +83,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/show/dashboard/default', 'DashboardsController@default');
     Route::get('/show/dashboard/{dashboard?}', 'DashboardsController@show');
     Route::get('/dashboards/default', 'DashboardsController@default');
+
+    // Experimental client-side dashboards
+    if (config('_munkireport.alpha_features.vue_dashboards', false)) {
+        Route::get('/v6/dashboard', 'DashboardsController@v2');
+    }
+
     Route::get('/dashboards/{dashboard?}', 'DashboardsController@show');
 
     Route::get('/show/listing/{module}/{name?}', 'ShowController@listing');

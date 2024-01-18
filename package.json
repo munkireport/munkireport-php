@@ -12,6 +12,7 @@
     "dependencies": {
         "@codemirror/lang-sql": "^6.5.5",
         "@codemirror/theme-one-dark": "^6.1.2",
+        "@derpierre65/vue3-dragable-grid-layout": "^1.9.7",
         "@fortawesome/fontawesome-svg-core": "^6.4.0",
         "@fortawesome/free-brands-svg-icons": "^5.15.4",
         "@fortawesome/free-regular-svg-icons": "^5.15.4",

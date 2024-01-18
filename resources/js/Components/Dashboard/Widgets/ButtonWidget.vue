@@ -1,3 +1,25 @@
+<script lang="ts" setup>
+import {defineProps} from 'vue'
+
+export interface WidgetThreshold {
+  label: string;
+  classes?: string;
+  link?: string;
+}
+
+export interface Props {
+  tooltip?: string;
+  icon: string;
+  title: string;
+  thresholds: WidgetThreshold[];
+  values: number[];
+  listingUrl?: string;
+}
+
+const props = defineProps<Props>()
+
+</script>
+
 <template>
   <div class="card h-100">
     <div class="card-header" :title="tooltip">
@@ -7,6 +29,7 @@
     </div>
     <div class="card-body d-flex align-items-stretch">
       <a v-for="(threshold, i) in thresholds"
+         :key="threshold.label"
          :href="threshold.link"
          class="btn btn-success flex-fill mx-1 d-flex flex-column"
          :class="['threshold-' + i, threshold.classes]">
@@ -22,21 +45,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "ButtonWidget",
-  props: {
-    tooltip: String,
-    icon: String,
-    title: String,
-    listingUrl: String,
-    thresholds: Array,
-    values: Array,
-  }
-}
-</script>
-
-<style scoped>
-
-</style>

@@ -18,12 +18,12 @@ class DashboardsController extends Controller
      * This controller action would have been for a Vue/SPA dashboards layout.
      * This is parked for a future release
      */
-//    public function index() {
-//        Inertia::setRootView('layouts.inertia');
-//        return Inertia::render('Dashboards/Index', [
-//            'dashboard_default_layout' => config('dashboard.default_layout')
-//        ]);
-//    }
+    public function v2() {
+        Inertia::setRootView('layouts.inertia');
+        return Inertia::render('Dashboards/Index', [
+            'dashboard_default_layout' => config('dashboard.default_layout')
+        ]);
+    }
 
     /**
      * This controller action returns an experimental blade component based dashboard.

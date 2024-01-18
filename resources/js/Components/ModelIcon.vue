@@ -33,8 +33,17 @@ const formFactor = computed(() => {
 </script>
 
 <template>
-  <FontAwesomeIcon v-if="formFactor === 'desktop'" :icon="faDesktop" />
-  <FontAwesomeIcon v-else-if="formFactor === 'laptop'" :icon="faLaptop" />
-  <FontAwesomeIcon v-else :icon="faDesktop" />
+  <FontAwesomeIcon
+    v-if="formFactor === 'desktop'"
+    :icon="faDesktop"
+  />
+  <FontAwesomeIcon
+    v-else-if="formFactor === 'laptop'"
+    :icon="faLaptop"
+  />
+  <FontAwesomeIcon
+    v-else
+    :icon="faDesktop"
+  />
 </template>
 

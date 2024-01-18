@@ -1,7 +1,7 @@
 <div class="col-lg-4"
      @isset($id)id="{{ $id }}"@endisset
 >
-    <h4>
+    <h4 class="alert alert-info">
         @isset($icon)
             <i class="fa fa-{{ $icon }}"></i>
         @endisset
