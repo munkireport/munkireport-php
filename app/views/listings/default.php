@@ -119,6 +119,9 @@
                   <?php if(isset($not_null_column)):?>
                      d.mrColNotEmpty = "<?=$not_null_column?>";
                   <?php endif?>
+                  <?php if(isset($not_blank_column)):?>
+                     d.mrColNotEmptyBlank = "<?=$not_blank_column?>";
+                  <?php endif?>
                   mr.listingFilter.filter(d, columnFilters);
                 }
             },
