@@ -1,3 +1,62 @@
+<!-- #### CSP Patch Start #### -->
+
+<?php
+global $nonce;
+
+$nonce = base64_encode(random_bytes(16));
+
+$_SESSION['g_nonce'] = $nonce; 
+
+// Register a callback to process the output buffer
+ob_start(function($output) use ($nonce) {
+    return generateCSPHeader($output, $nonce);
+});
+
+function generateCSPHeader($output, $nonce)
+{
+
+    $nonce_value = trim($nonce); 
+
+	// Original CSP components
+	$default_src = "default-src 'self' www.google.com static.cloudflareinsights.com fonts.gstatic.com maps.googleapis.com fonts.googleapis.com;";
+	$img_src = "img-src 'self' data: https://* www.w3.org statici.icloud.com cdsassets.apple.com km.support.apple.com;";
+	$connect_src = "connect-src 'self' maps.googleapis.com fonts.googleapis.com packagist.org;";
+	$frame_ancestors = "frame-ancestors 'self';";
+	$frame_src = "frame-src 'self' https://www.google.com;";
+	$style_src = "style-src 'self' www.google.com static.cloudflareinsights.com fonts.gstatic.com maps.googleapis.com fonts.googleapis.com 'unsafe-inline';";
+	$script_src_base = "script-src 'self' https://www.google.com/recaptcha/api.js static.cloudflareinsights.com fonts.gstatic.com fonts.googleapis.com https://www.gstatic.com/recaptcha/ https://ajax.cloudflare.com 'unsafe-eval' ";
+	$script_src_base = $script_src_base . " 'nonce-$nonce_value' ";
+	$object_src = "object-src 'none' ;";
+	$base_uri = "base-uri 'self';";  // Add base-uri directive
+
+	// Regular expression to find inline scripts
+	// preg_match_all('/<script>(.*?)<\/script>/is', $output, $matches);
+	preg_match_all('/<script\b[^>]*>(.*?)<\/script>/is', $output, $matches);
+
+	$hashes = [];
+	foreach ($matches[1] as $script) {
+		$hash = base64_encode(hash('sha256', $script, true));
+		$hashes[] = "'sha256-$hash'";
+	}
+
+	// Append hashes to script-src
+	if (!empty($hashes)) {
+		$script_src = $script_src_base . " " . implode(' ', $hashes) . ";";
+	} else {
+		$script_src = $script_src_base . ";";
+	}
+
+	// Combine all CSP directives
+	$csp_header = "$default_src $img_src $connect_src $frame_ancestors $frame_src $style_src $script_src $object_src $base_uri";
+
+	// Add the CSP header
+	header("Content-Security-Policy: $csp_header");
+
+	return $output;
+}
+?>
+
+<!-- #### CSP Patch End #### -->
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -46,7 +105,7 @@
 
 	<script src="<?php echo conf('subdirectory'); ?>assets/js/jquery.js"></script>
 
-	<script>
+	<script nonce="<?php echo htmlspecialchars($nonce);?>">
 		// Include csrf in all requests
 		$.ajaxSetup({
 			headers: {
