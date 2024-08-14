@@ -103,6 +103,8 @@
       //});
   });
   </script>
-
+   <?php
+    ob_end_flush(); // End output buffering and flush the output
+  ?>
 </body>
 </html>
