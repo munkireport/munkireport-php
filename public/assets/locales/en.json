@@ -203,6 +203,23 @@
     },
     "loading": "Loading data from server",
     "machine": {
+        "admin": {
+            "title": "Machine Module",
+            "image_cache_info": "Apple Image Cache Information",
+            "cache_status": "Cache Status",
+            "cache_file_count": "Number of Files",
+            "cache_size": "Total Size",
+            "purge_cache": "Purge Cache",
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "confirm_purge": "Are you sure you want to purge the Apple image cache? This will delete all cached device images.",
+            "purging": "Purging cache...",
+            "purge_success": "Cache purged successfully",
+            "purge_failed": "Failed to purge cache",
+            "refreshing": "Refreshing Mactracker data...",
+            "refresh_success": "Mactracker data refreshed successfully",
+            "refresh_failed": "Failed to refresh Mactracker data"
+        },
         "arch": "Arch",
         "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
@@ -253,7 +270,6 @@
         "date_downloaded": "Date Downloaded",
         "date_updated": "Date Updated",
         "detail_widgets": "Client Detail Widgets",
-        "in_search_path": "Module in Search Path",
         "install_command": "Install Command",
         "install_info": "To install this module, run the following Composer commands from within your MunkiReport directory:",
         "install_more_info": "For more information about installing modules, visit the",
@@ -301,7 +317,9 @@
             "es": "Español",
             "fr": "Francais",
             "nl": "Nederlands",
-            "ru": "Русский"
+            "ru": "Русский",
+            "he": "עברית",
+            "ar": "العربية"
         },
         "main": {
             "admin": "Admin",
@@ -355,9 +373,7 @@
         "pdo": "PDO Extension",
         "pdodrivers": "PDO Database drivers",
         "php": "PHP",
-        "post_max_size": "POST Max Size",
         "soap": "SOAP Extension",
-        "upload_max_filesize": "Upload Max Size",
         "version": "Version"
     },
     "physical_memory": "Memory",
