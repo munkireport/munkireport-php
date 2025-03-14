@@ -203,6 +203,23 @@
     },
     "loading": "Loading data from server",
     "machine": {
+        "admin": {
+            "title": "Machine Module",
+            "image_cache_info": "Apple Image Cache Information",
+            "cache_status": "Cache Status",
+            "cache_file_count": "Number of Files",
+            "cache_size": "Total Size",
+            "purge_cache": "Purge Cache",
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "confirm_purge": "Are you sure you want to purge the Apple image cache? This will delete all cached device images.",
+            "purging": "Purging cache...",
+            "purge_success": "Cache purged successfully",
+            "purge_failed": "Failed to purge cache",
+            "refreshing": "Refreshing Mactracker data...",
+            "refresh_success": "Mactracker data refreshed successfully",
+            "refresh_failed": "Failed to refresh Mactracker data"
+        },
         "arch": "Arch",
         "base_model_widget_title": "Base Model Breakdown",
         "cores": "Cores",
