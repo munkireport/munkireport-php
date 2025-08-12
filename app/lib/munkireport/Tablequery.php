@@ -190,18 +190,31 @@ class Tablequery
         if ($search_cols) {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val) {
-                if (preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val)) {
-                    // Special case, use unquoted
-                    $compstr = $val;
-                } elseif(preg_match('/[%_]+/', $val)) {
-                    $bindings[] = $val;
-                    $compstr = " LIKE ?";
+                $valTrim = trim($val);
+                if (preg_match('/^IS\s+NULL$/i', $valTrim)) {
+                    // Handle IS NULL without binding
+                    $compstr = ' IS NULL';
+                } elseif (preg_match('/^IS\s+NOT\s+NULL$/i', $valTrim)) {
+                    // Handle IS NOT NULL without binding
+                    $compstr = ' IS NOT NULL';
+                } elseif (preg_match('/^!=\s*(.+)$/', $valTrim, $m)) {
+                    // Handle not equals for strings/numbers
+                    $bindings[] = $m[1];
+                    $compstr = ' != ?';
+                } elseif (preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $valTrim)) {
+                    // Special case, numeric comparison or BETWEEN, use unquoted
+                    $compstr = $valTrim;
+                } elseif (preg_match('/[%_]+/', $valTrim)) {
+                    // LIKE with wildcard(s)
+                    $bindings[] = $valTrim;
+                    $compstr = ' LIKE ?';
                 } else {
-                    $bindings[] = $val;
-                    $compstr = " = ?";
+                    // Default to equals
+                    $bindings[] = $valTrim;
+                    $compstr = ' = ?';
                 }
 
-                $sWhere .= $formatted_columns[$pos].$compstr." OR ";
+                $sWhere .= $formatted_columns[$pos] . $compstr . " OR ";
             }
             $sWhere = substr_replace($sWhere, "", -3);
             $sWhere .= ')';
