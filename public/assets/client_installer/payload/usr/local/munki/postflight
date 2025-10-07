@@ -5,15 +5,15 @@ LAUNCHD="com.github.munkireport.runner"
 LAUNCHD_PLIST="/Library/LaunchDaemons/${LAUNCHD}.plist"
 SUBMIT_SCRIPT="/usr/local/munkireport/munkireport-runner"
 
-rm -f "$TOUCH_FILE_PATH"
-touch "$TOUCH_FILE_PATH"
+/bin/rm -f "$TOUCH_FILE_PATH"
+/usr/bin/touch "$TOUCH_FILE_PATH"
 
 if [[ -f "$LAUNCHD_PLIST" ]]; then
-  if ! launchctl list | grep -q "$LAUNCHD"; then
-    launchctl bootstrap system "$LAUNCHD_PLIST" 2>/dev/null || \
-    launchctl load -w "$LAUNCHD_PLIST" 2>/dev/null || true
+  if ! /bin/launchctl list | /usr/bin/grep -q "$LAUNCHD"; then
+    /bin/launchctl bootstrap system "$LAUNCHD_PLIST" 2>/dev/null || \
+    /bin/launchctl load -w "$LAUNCHD_PLIST" 2>/dev/null || true
   fi
-  if ! launchctl list | grep -q "$LAUNCHD"; then
+  if ! /bin/launchctl list | /usr/bin/grep -q "$LAUNCHD"; then
     [[ -x "$SUBMIT_SCRIPT" ]] && "$SUBMIT_SCRIPT"
   fi
 else
