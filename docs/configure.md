@@ -59,5 +59,7 @@ Munkireport will **not** set the passphrase on the client through the install sc
 - `SITENAME`: The site name which will appear in the title bar of your browser, Default: `MunkiReport`.
 - `AUTH_METHODS`: A comma separated list of supported Authentication methods. Any combination of:
     - `NOAUTH`: No authentication required
+    - `ENV`: Environment variable Authentication
+    - `LOCAL` : Local Users defined as .yml in the `users` folder
     - `LDAP`: LDAP Authentication
     - `AD`: Active Directory Authentication
