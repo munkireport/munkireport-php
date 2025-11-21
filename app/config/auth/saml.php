@@ -25,6 +25,7 @@ return [
   ],
   'disable_sso'       => env('AUTH_SAML_DISABLE_SSO', false),
   'debug'             => env('AUTH_SAML_DEBUG', false),
+  'set_proxy_vars'    => env('AUTH_SAML_SET_PROXY_VARS', false),
   'security'          => [
     'nameIdEncrypted'            => env('AUTH_SAML_SECURITY_NAME_ID_ENCRYPTED', false),
     'authnRequestsSigned'        => env('AUTH_SAML_SECURITY_AUTHN_REQUESTS_SIGNED', false),

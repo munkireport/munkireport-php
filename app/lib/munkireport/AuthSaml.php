@@ -109,7 +109,9 @@ class AuthSaml extends AbstractAuth
     // Initiate Single Sign On
     private function sso()
     {
-        OneLogin_Saml2_Utils::setProxyVars(true);
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
         $auth->login(
             $returnTo = null,
@@ -122,7 +124,9 @@ class AuthSaml extends AbstractAuth
     // Retrieve Data from IDP
     private function acs()
     {
-        OneLogin_Saml2_Utils::setProxyVars(true);
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
         if (isset($_SESSION) && isset($_SESSION['AuthNRequestID'])) {
             $requestID = $_SESSION['AuthNRequestID'];
@@ -178,7 +182,9 @@ class AuthSaml extends AbstractAuth
             return;
         }
 
-        OneLogin_Saml2_Utils::setProxyVars(true);
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         $returnTo = url('auth/saml/sls');
@@ -203,7 +209,9 @@ class AuthSaml extends AbstractAuth
 
     private function sls()
     {
-        OneLogin_Saml2_Utils::setProxyVars(true);
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         if (isset($_SESSION) && isset($_SESSION['LogoutRequestID'])) {
