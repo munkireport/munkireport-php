@@ -57,7 +57,7 @@ DEFAULT_PREFS = {
     'LogToSyslog': False, 
     'Passphrase': None,
     'scriptTimeOut': 30,
-    'UseAdditionalHttpHeaders': False,
+    'UseMunkiAdditionalHttpHeaders': False,
 }
 
 

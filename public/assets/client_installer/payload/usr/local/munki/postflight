@@ -1,43 +1,21 @@
-#!/usr/local/munki/munki-python
+#!/bin/bash
 
-import os
-import subprocess
-import sys
+TOUCH_FILE_PATH="/Users/Shared/.com.github.munkireport.run"
+LAUNCHD="com.github.munkireport.runner"
+LAUNCHD_PLIST="/Library/LaunchDaemons/${LAUNCHD}.plist"
+SUBMIT_SCRIPT="/usr/local/munkireport/munkireport-runner"
 
-TOUCH_FILE_PATH = '/Users/Shared/.com.github.munkireport.run'
-LAUNCHD = 'com.github.munkireport.runner'
-LAUNCHD_PATH = '/Library/LaunchDaemons/{}.plist'.format(LAUNCHD)
-SUBMIT_SCRIPT = '/usr/local/munkireport/munkireport-runner'
+/bin/rm -f "$TOUCH_FILE_PATH"
+/usr/bin/touch "$TOUCH_FILE_PATH"
 
-def write_touch_file():
-    if os.path.exists(TOUCH_FILE_PATH):
-        os.remove(TOUCH_FILE_PATH)
-
-    if not os.path.exists(TOUCH_FILE_PATH):
-        with open(TOUCH_FILE_PATH, 'a'):
-            os.utime(TOUCH_FILE_PATH, None)
-
-def ensure_launchd_loaded():
-    cmd =[
-        '/bin/launchctl',
-        'list'
-    ]
-    loaded_launchds = subprocess.check_output(cmd).decode('utf-8', 'ignore')
-    # load the launchd if it's not loaded and is present on disk
-    if LAUNCHD not in loaded_launchds and os.path.exists(LAUNCHD_PATH):
-        cmd = [
-            '/bin/launchctl',
-            'load',
-            LAUNCHD_PATH
-        ]
-        subprocess.check_call(cmd)
-
-def main():
-    write_touch_file()
-    ensure_launchd_loaded()
-    # If the launchd isn't present, call the submit script old school
-    if not os.path.exists(LAUNCHD_PATH):
-        subprocess.check_call(SUBMIT_SCRIPT)
-
-if __name__ == '__main__':
-    main()
+if [[ -f "$LAUNCHD_PLIST" ]]; then
+  if ! /bin/launchctl list | /usr/bin/grep -q "$LAUNCHD"; then
+    /bin/launchctl bootstrap system "$LAUNCHD_PLIST" 2>/dev/null || \
+    /bin/launchctl load -w "$LAUNCHD_PLIST" 2>/dev/null || true
+  fi
+  if ! /bin/launchctl list | /usr/bin/grep -q "$LAUNCHD"; then
+    [[ -x "$SUBMIT_SCRIPT" ]] && "$SUBMIT_SCRIPT"
+  fi
+else
+  [[ -x "$SUBMIT_SCRIPT" ]] && "$SUBMIT_SCRIPT"
+fi

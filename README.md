@@ -78,3 +78,5 @@ MunkiReport makes use of these fine software packages:
 * [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons
 * [adLDAP](https://github.com/Adldap2/Adldap2) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
+
+

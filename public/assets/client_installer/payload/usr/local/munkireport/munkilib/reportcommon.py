@@ -105,7 +105,7 @@ def curl(url, values):
     if pref("FollowHTTPRedirects"):
         options["follow_redirects"] = int(pref("FollowHTTPRedirects"))
 
-    if pref("UseAdditionalHttpHeaders"):
+    if pref("UseMunkiAdditionalHttpHeaders"):
         custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
         if custom_headers:
             options["additional_headers"] = dict()
