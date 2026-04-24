@@ -206,13 +206,25 @@ class Tablequery
             $sWhere = substr_replace($sWhere, "", -3);
             $sWhere .= ')';
         } elseif ($cfg['search']) {
-            $sWhere = $where ? $where . " AND (" : "WHERE (";
-            foreach ($formatted_columns as $col) {
-                $bindings[] = '%'.$cfg['search'].'%';
-                $sWhere .= $col." LIKE ? OR ";
+            // Support multi-value search: split on commas, semicolons, or any whitespace
+            // (spaces, tabs, newlines). Paste a list however you have it — it just works.
+            $search_terms = preg_split('/[\s,;]+/', trim($cfg['search']));
+            $search_terms = array_filter($search_terms, function($t) { return $t !== ''; });
+
+            if (!empty($search_terms)) {
+                $sWhere = $where ? $where . " AND (" : "WHERE (";
+                $term_clauses = array();
+                foreach ($search_terms as $term) {
+                    $col_clauses = array();
+                    foreach ($formatted_columns as $col) {
+                        $bindings[] = '%'.$term.'%';
+                        $col_clauses[] = $col." LIKE ?";
+                    }
+                    $term_clauses[] = '(' . implode(' OR ', $col_clauses) . ')';
+                }
+                $sWhere .= implode(' OR ', $term_clauses);
+                $sWhere .= ')';
             }
-            $sWhere = substr_replace($sWhere, "", -3);
-            $sWhere .= ')';
         }
 
 
