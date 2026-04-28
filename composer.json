@@ -58,7 +58,7 @@
     "munkireport/disk_report": "^5.0",
     "munkireport/sophos": "^3.0",
     "onelogin/php-saml": "^3.0",
-    "vlucas/phpdotenv": "^4.0",
+    "vlucas/phpdotenv": "^5.0",
     "munkireport/munkiinfo": "^3.0",
     "munkireport/munkireport": "^5.0",
     "munkireport/homebrew_info": "^1.0",
