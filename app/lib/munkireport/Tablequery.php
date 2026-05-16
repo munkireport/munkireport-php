@@ -190,10 +190,17 @@ class Tablequery
         if ($search_cols) {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val) {
-                if (preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val)) {
-                    // Special case, use unquoted
-                    $compstr = $val;
-                } elseif(preg_match('/[%_]+/', $val)) {
+                // Numeric comparison: "<n>", "> n", "= n", "<= n", ">= n", "!= n"
+                if (preg_match('/^\s*(<=|>=|!=|<>|<|>|=)\s*(\d+)\s*$/', $val, $m)) {
+                    $operator = $m[1] === '<>' ? '!=' : $m[1];
+                    $bindings[] = (int) $m[2];
+                    $compstr = ' ' . $operator . ' ?';
+                // BETWEEN N AND M
+                } elseif (preg_match('/^\s*BETWEEN\s+(\d+)\s+AND\s+(\d+)\s*$/i', $val, $m)) {
+                    $bindings[] = (int) $m[1];
+                    $bindings[] = (int) $m[2];
+                    $compstr = ' BETWEEN ? AND ?';
+                } elseif (preg_match('/[%_]+/', $val)) {
                     $bindings[] = $val;
                     $compstr = " LIKE ?";
                 } else {
