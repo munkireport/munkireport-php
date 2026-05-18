@@ -1,7 +1,7 @@
 {
   "config": {
     "allow-plugins": {
-      "wikimedia/composer-merge-plugin": false
+      "wikimedia/composer-merge-plugin": true
     },
     "optimize-autoloader": true
   },
