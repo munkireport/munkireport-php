@@ -151,6 +151,7 @@ class Modules
                 }
             }
         }
+        asort($modules);
         return $modules;
     }
 

@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.4-apache
 
 ENV APP_DIR /var/munkireport
 
@@ -30,7 +30,7 @@ COPY . $APP_DIR
 
 WORKDIR $APP_DIR
 
-COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.9.5 /usr/bin/composer /usr/local/bin/composer
 
 RUN composer install --no-dev && \
     composer dumpautoload -o

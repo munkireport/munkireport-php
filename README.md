@@ -28,28 +28,26 @@ System Requirements
 
 ### Serverside:
 
-* A webserver (runs fine with Apache, IIS and nginx)
-* php version 8.1 or higher with pdo-sqlite3 and libxml
+* A webserver (runs fine with Apache, IIS, and nginx)
+* php version 8.2 or higher with pdo-sqlite3 and libxml
 
 ### Clientside
 
-* a Modern webbrowser
+* A modern web browser
+* MacAdmins Python 3.10 or higher
 
-Mailing lists
+Support
 ---
 
-For questions about using MunkiReport or setting up MunkiReport, you can use:
+For security-related issues, please use the private mailing list by emailing concerns and issues to `munkireport-security@ googlegroups.com`
 
-https://groups.google.com/group/munkireport
+Otherwise, the MunkiReport community can be found on the Mac Admins Slack:
 
-For developers who want to contribute to the project:
+https://www.macadmins.org
 
-https://groups.google.com/group/munkireport-dev
+For questions about using MunkiReport or setting up MunkiReport, join us in the `#munkireport` channel.
 
-For security related issues, please use the private mailinglist:
-
-https://groups.google.com/group/munkireport-security
-
+For developers who want to contribute to the project, join us in the `#munkireport-dev` channel.
 
 Contributing
 ---
@@ -76,8 +74,6 @@ MunkiReport makes use of these fine software packages:
 * [nvd3](https://github.com/nvd3-community/nvd3) for graphs
 * [Moment.js](http://momentjs.com) for displaying time
 * [Bootstrap 3.0](http://getbootstrap.com) the main webframework
-* [Font Awesome](http://fortawesome.github.io/Font-Awesome/) for icons
+* [Font Awesome v4](http://fortawesome.github.io/Font-Awesome/) for icons
 * [adLDAP](https://github.com/Adldap2/Adldap2) for authenticating against AD
 * [i18next](http://i18next.com) js library for localization
-
-

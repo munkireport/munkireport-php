@@ -543,7 +543,7 @@ abstract class KISS_Model
         if ($rs) {
             foreach ($rs as $key => $val) {
                 if (array_key_exists($key, $this->rs)) {
-                    $this->rs[$key] = $this->is_scalar_or_null($this->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val);
+                    $this->rs[$key] = $this->is_scalar_or_null($this->rs[$key]) ? $val : unserialize($this->COMPRESS_ARRAY ? gzinflate($val) : $val, ['allowed_classes' => false]);
                 }
             }
         }
