@@ -4,7 +4,7 @@ use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\D
 use munkireport\lib\User;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.8.0.4284';
+$GLOBALS['version'] = '5.8.1.4323';
 
 // Return version without commit count
 function get_version()
@@ -501,6 +501,13 @@ function storage_path($append = "")
  **/
 function store_event($serial, $module = '', $type = '', $msg = 'no_message', $data = '')
 {
+    $types = array("danger", "warning", "success", "info");
+    if (! in_array($type, $types)) {
+        $type = "danger";
+    }
+    $module = preg_replace("/[^A-Za-z0-9_\-\ .‘]/", '', $module);
+    $msg = preg_replace("/[^A-Za-z0-9_\-\ .‘]/", '', $msg);
+
     Event_model::updateOrCreate(
         [
             'serial_number' => $serial,

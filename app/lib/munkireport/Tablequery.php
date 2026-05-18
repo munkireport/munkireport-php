@@ -190,10 +190,15 @@ class Tablequery
         if ($search_cols) {
             $sWhere = $where ? $where . " AND (" : "WHERE (";
             foreach ($search_cols as $pos => $val) {
-                if (preg_match('/([<>=] \d+)|BETWEEN\s+\d+\s+AND\s+\d+$/', $val)) {
-                    // Special case, use unquoted
-                    $compstr = $val;
-                } elseif(preg_match('/[%_]+/', $val)) {
+                if (preg_match('/^([<>=!]+)\s*(\d+(?:\.\d+)?)$/', $val, $m)) {
+                    $operator = $this->dirify($m[1], '!=<>');
+                    $bindings[] = $m[2];
+                    $compstr = " $operator ?";
+                } elseif (preg_match('/^BETWEEN\s+(\d+)\s+AND\s+(\d+)$/i', $val, $m)) {
+                    $bindings[] = $m[1];
+                    $bindings[] = $m[2];
+                    $compstr = " BETWEEN ? AND ?";
+                } elseif (preg_match('/[%_]+/', $val)) {
                     $bindings[] = $val;
                     $compstr = " LIKE ?";
                 } else {
@@ -206,13 +211,25 @@ class Tablequery
             $sWhere = substr_replace($sWhere, "", -3);
             $sWhere .= ')';
         } elseif ($cfg['search']) {
-            $sWhere = $where ? $where . " AND (" : "WHERE (";
-            foreach ($formatted_columns as $col) {
-                $bindings[] = '%'.$cfg['search'].'%';
-                $sWhere .= $col." LIKE ? OR ";
+            // Support multi-value search: split on commas, semicolons, or any whitespace
+            // (spaces, tabs, newlines). Paste a list however you have it — it just works.
+            $search_terms = preg_split('/[\s,;]+/', trim($cfg['search']));
+            $search_terms = array_filter($search_terms, function($t) { return $t !== ''; });
+
+            if (!empty($search_terms)) {
+                $sWhere = $where ? $where . " AND (" : "WHERE (";
+                $term_clauses = array();
+                foreach ($search_terms as $term) {
+                    $col_clauses = array();
+                    foreach ($formatted_columns as $col) {
+                        $bindings[] = '%'.$term.'%';
+                        $col_clauses[] = $col." LIKE ?";
+                    }
+                    $term_clauses[] = '(' . implode(' OR ', $col_clauses) . ')';
+                }
+                $sWhere .= implode(' OR ', $term_clauses);
+                $sWhere .= ')';
             }
-            $sWhere = substr_replace($sWhere, "", -3);
-            $sWhere .= ')';
         }
 
 

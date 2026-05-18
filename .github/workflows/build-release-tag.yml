@@ -42,7 +42,7 @@ jobs:
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           # Normally, this would be composer.lock but we haven't committed that.
@@ -65,7 +65,7 @@ jobs:
           tar cfz munkireport-php.tar.gz * .env.example
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: munkireport-php-with-deps
           path: munkireport-php.zip

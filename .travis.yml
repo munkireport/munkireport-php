@@ -1,6 +1,6 @@
 language: php
 php:
-  - '7.4'
+  - '8.4'
 mysql:
   database: travis_ci_munkireport_php_test
   username: root

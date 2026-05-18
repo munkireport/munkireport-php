@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.4-apache
 
 ENV APP_DIR /var/munkireport
 
@@ -12,7 +12,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
+RUN arch="$(dpkg --print-architecture)" && args="--with-libdir=lib/x86_64-linux-gnu/" && \
+    case "$arch" in \
+        *arm*) args="" ;; \
+    esac && \
+    docker-php-ext-configure ldap "$args" && \
     docker-php-ext-install -j$(nproc) curl pdo_mysql soap ldap zip
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -26,7 +30,7 @@ COPY . $APP_DIR
 
 WORKDIR $APP_DIR
 
-COPY --from=composer:2.2.6 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.9.5 /usr/bin/composer /usr/local/bin/composer
 
 RUN composer install --no-dev && \
     composer dumpautoload -o

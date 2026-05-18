@@ -1,4 +1,37 @@
-### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (June 20, 2023)  🌋
+### [5.8.1](https://github.com/munkireport/munkireport-php/compare/v5.8.1...5.x) (May 18, 2026) 🪁
+
+Maintenance and security release - please read the release notes for 5.8.0
+
+MunkiReport requires PHP 8.2 or new and has been tested with PHP 8.3 and PHP 8.4. 
+
+Special thanks to @pwn2day of the MacAdmins Slack who wrote a security report and helped us resolve these issues.
+
+SECURITY UPDATES
+- Stored XSS in `app/controllers/Report.php` (@pwn2day on MacAdmins Slack)
+- Unsafe HTML Rendering in `event` module's `messages_widget.php` (@pwn2day on MacAdmins Slack)
+- SQL Injection in `app/lib/munkireport/Tablequery.php` (@pwn2day on MacAdmins Slack and @pich4ya #1573 )
+- Unsafe Deserialization in `system/kissmvc_core.php` (@pwn2day on MacAdmins Slack)
+
+NEW FEATURES
+- Automatically removes MunkiReport's Python 2.7 if it is installed
+- MunkiReport now works with Mac Admins Python 3.10 or higher
+- Bash based `postflight` script for Munki 7 (#1564 @sphen13)
+- Module Marketplace now alerts to new versions of MunkiReport
+- MunkiReport now runs independently of Munki runs with its own LaunchDaemon
+- Able to search for multiple matches at once in listing views (#1571 @kfattic)
+- Donut and piechart widget templates (#1568 @precursorca)
+
+FIXES
+- `cache` directory permissions
+- Fixes cross site security issue
+- Machine descriptions and Mac icons in client tab
+- `composer update` error with `prompts` package
+- Module Marketplace not rendering due to errors
+- Fixes `UseMunkiAdditionalHttpHeaders` and `AdditionalHttpHeaders` preference keys not working
+- Fixes issue with spaces in URLs on Apache (#1537 @sphen13)
+
+
+### [5.8.0](https://github.com/munkireport/munkireport-php/compare/v5.8.0...5.x) (June 20, 2023) 🐝
 
 MDOYVR 2023 Release: MunkiReport is now Python 3 based
 
@@ -31,6 +64,7 @@ Maintenance release - please read the release notes for 5.7.0
 
 FIXES
 Update sentinelone to v6.x
+
 
 ### [5.7.0](https://github.com/munkireport/munkireport-php/compare/v5.6.5...5.x) (February 09, 2022) 🐍
 

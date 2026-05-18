@@ -57,7 +57,7 @@ DEFAULT_PREFS = {
     'LogToSyslog': False, 
     'Passphrase': None,
     'scriptTimeOut': 30,
-    'UseAdditionalHttpHeaders': False,
+    'UseMunkiAdditionalHttpHeaders': False,
 }
 
 
@@ -171,7 +171,7 @@ def set_pref(pref_name, pref_value):
         pass
 
 
-def pref(pref_name):
+def pref(pref_name, BUNDLE_ID = BUNDLE_ID):
     """Return a preference. Since this uses CFPreferencesCopyAppValue,
     Preferences can be defined several places. Precedence is:
         - MCX/configuration profile
