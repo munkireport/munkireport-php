@@ -18,6 +18,7 @@ import optparse
 import re
 import objc # Used only for version printing
 import shutil
+import time
 
 def get_version():
     return reportcommon.pref('Version')
@@ -37,6 +38,37 @@ def get_receipt_info():
         
     return out
 
+def check_launchd():
+
+    # If Munki postflight trigger file exists, run MunkiReport
+    # If no trigger file, assume hour trigger:
+    #   Check for Munki, run MunkiReport if Munki not installed.
+    #   If Munki installed, check the MunkiReport exit touch file to see if it was touched in the last 1.5 hours:
+    #     If not touched, run MunkiReport assuming unhealthy Munki install.
+    #     If touched, assume healthy Munki install and that the last MunkiReport run was triggered by Munki trigger file.
+
+    # If Munki's postflight trigger file exists, run MunkiReport
+    if os.path.isfile("/Users/Shared/.com.github.munkireport.run"):
+        return True
+
+    # If Munki not installed, run MunkiReport
+    if os.path.isfile("/usr/local/munki/managedsoftwareupdate") == False:
+        return True
+
+    # If MunkiReport exit file exists
+    munkireport_exit_file = "/private/tmp/.com.github.munkireport.lastrun"
+    if os.path.isfile(munkireport_exit_file):
+        # Check if MunkiReport exit file was last touched over 1.5 hours ago (5400 seconds)
+        if int(time.time() - os.path.getmtime(munkireport_exit_file)) > 5400:
+            # Run MunkiReport
+            return True
+        else:
+            return False
+    else:
+        # Run MunkiReport if it does not exist
+        return True
+
+
 def main():
     '''Main'''
 
@@ -55,6 +87,8 @@ def main():
                       help='Forces all the cache files to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
     parser.add_option('--force', '-F', dest="force_modules",
                       help='Forces the specified module\'s cache file to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
+    parser.add_option('--launchd', action='store_true',
+                      help='Used by launchd LaunchDaemon for scheduled/background runs.')
 
     parser.add_option('--remove-python2', action='store_true',
                       help='Uninstalls MunkiReport\'s Python 2 pkg.')
@@ -145,6 +179,14 @@ def main():
     if prefs.pref('LogToSyslog'):
         munkilog.configure_syslog()
 
+    # Check if we're running because of MunkiReport's daemon
+    if options.launchd:
+
+        # Check how we're running MunkiReport (timed vs Munki postflight)
+        if check_launchd() == False:
+            print ('MunkiReport is not able to be run via the damon at this time. Try running it manually.')
+            exit(0)
+
     # Check if we are to force upload module cache file(s)
     if options.forceall:
         ForceUpload = "FORCE_UPLOAD_ALL"
@@ -205,6 +247,12 @@ def main():
     report_info['runstate'] = 'done'
     report_info['uptime'] = reportcommon.get_uptime()
     report_info_plist = FoundationPlist.writePlistToString(report_info)
+
+    # Write results to cache, for debugging only
+    cachedir = '%s/scripts/cache' % os.path.dirname(os.path.realpath(__file__))
+    output_plist = os.path.join(cachedir, 'mr-runner.plist')
+    FoundationPlist.writePlist(report_info, output_plist)
+
     items = {'machine': \
         {'hash':hashlib.md5(hw_info_plist).hexdigest(), 'data':hw_info_plist}, \
             'reportdata': \

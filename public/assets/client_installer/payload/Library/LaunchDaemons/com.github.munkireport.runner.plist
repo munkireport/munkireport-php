@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Label</key>
-	<string>com.github.munkireport.runner</string>
-	<key>Program</key>
-	<string>/usr/local/munkireport/munkireport-runner</string>
-	<key>RunAtLoad</key>
-	<true/>
 	<key>KeepAlive</key>
 	<dict>
 		<key>PathState</key>
@@ -16,5 +10,16 @@
 			<true/>
 		</dict>
 	</dict>
+	<key>Label</key>
+	<string>com.github.munkireport.runner</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/local/munkireport/munkireport-runner</string>
+		<string>--launchd</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StartInterval</key>
+	<integer>3600</integer>
 </dict>
 </plist>

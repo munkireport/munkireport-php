@@ -71,7 +71,11 @@ def display_detail(msg, *args):
 
 
 def finish_run():
-    remove_run_file()    
+    remove_run_file()
+
+    # Touch MunkiReport exit file
+    open('/private/tmp/.com.github.munkireport.lastrun','w')
+
     display_detail("## Finished run")
 
     # Rotate main log if needed, max size is ~1MB
@@ -106,7 +110,9 @@ def curl(url, values):
         options["follow_redirects"] = int(pref("FollowHTTPRedirects"))
 
     if pref("UseMunkiAdditionalHttpHeaders"):
-        custom_headers = prefs.pref(constants.ADDITIONAL_HTTP_HEADERS_KEY)
+        custom_headers = prefs.pref("AdditionalHttpHeaders")
+        # Check in MunkiReport prefs (check here first because of
+        # a kinda bug that's been around for years)
         if custom_headers:
             options["additional_headers"] = dict()
             for header in custom_headers:
@@ -116,11 +122,24 @@ def curl(url, values):
                         "header_value"
                     )
         else:
-            raise CurlError(
-                -1,
-                "UseMunkiAdditionalHttpHeaders defined, "
-                "but not found in Munki preferences",
-            )
+            custom_headers = prefs.pref("AdditionalHttpHeaders", "ManagedInstalls")
+            # Check in Munki prefs if there isn't anything,
+            # because this is how it should work
+            if custom_headers:
+                options["additional_headers"] = dict()
+                for header in custom_headers:
+                    m = re.search(r"^(?P<header_name>.*?): (?P<header_value>.*?)$", header)
+                    if m:
+                        options["additional_headers"][m.group("header_name")] = m.group(
+                            "header_value"
+                        )
+
+            else:
+                raise CurlError(
+                    -1,
+                    "UseMunkiAdditionalHttpHeaders defined, "
+                    "but not found in Munki or MunkiReport preferences",
+                )
 
     # Build Purl with initial settings
     connection = Purl.alloc().initWithOptions_(options)
@@ -183,12 +202,7 @@ def curl(url, values):
 
 def get_hardware_info():
     """Uses system profiler to get hardware info for this machine."""
-    # Apple Silicon Macs running Python 2 through Rosetta 2 mis-report this data
-    # Check if we're on an Apple Silicon Mac and force it to run system_profiler as Apple Silicon
-    if "arm64" in get_cpuarch():
-        cmd = ["/usr/bin/arch", "-arm64", "/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
-    else:
-        cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
+    cmd = ["/usr/sbin/system_profiler", "SPHardwareDataType", "-xml"]
     proc = subprocess.Popen(
         cmd,
         shell=False,
@@ -204,6 +218,15 @@ def get_hardware_info():
         sp_dict = plist[0]
         items = sp_dict["_items"]
         sp_hardware_dict = items[0]
+
+        # Set the machine description
+        machine_desc = get_description()
+        if machine_desc:
+            sp_hardware_dict["machine_desc"] = re.sub(r'[^"a-zA-Z0-9 (),-]', '', machine_desc)
+
+        # Add CPU architecture
+        sp_hardware_dict["cpu_arch"] = ''.join(re.findall(r'RELEASE_([iA-Z1-9]+)(_\d+)?', os.uname()[3])[0]).lower()
+
         return sp_hardware_dict
     except BaseException:
         return {}
@@ -291,6 +314,50 @@ def get_uptime():
     sec = int(re.sub(r".*sec = (\d+),.*", "\\1", output.decode("utf-8", errors="ignore")))
     up = int(time.time() - sec)
     return up if up > 0 else -1
+
+
+def get_description():
+    """Gets the Mac model description."""
+    cpu_arch = os.uname()[3].lower()
+
+    try:
+        # Do things for Intel Mac
+        if 'x86_64' in cpu_arch or 'i386' in cpu_arch:
+
+            if os.path.isfile('/System/Library/PrivateFrameworks/ServerInformation.framework/Resources/en.lproj/SIMachineAttributes.plist'):
+                # Post-10.13 location
+                cmd = ['/usr/sbin/sysctl', '-n', 'hw.model']
+                output = subprocess.check_output(cmd)
+                output = re.sub(r'[^"a-zA-Z0-9,]', '', output.decode("utf-8", errors="ignore"))
+                machine_descs = FoundationPlist.readPlist('/System/Library/PrivateFrameworks/ServerInformation.framework/Resources/en.lproj/SIMachineAttributes.plist')
+
+                if output in machine_descs and "_LOCALIZABLE_" in machine_descs[output] and "marketingModel" in machine_descs[output]["_LOCALIZABLE_"]:
+                    return str(machine_descs[output]["_LOCALIZABLE_"]["marketingModel"])
+                else:
+                    return False
+
+            elif os.path.isfile('/System/Library/PrivateFrameworks/ServerInformation.framework/Versions/A/Resources/English.lproj/SIMachineAttributes.plist'):
+                # Pre-10.13 location
+                cmd = ['/usr/sbin/sysctl', '-n', 'hw.model']
+                output = subprocess.check_output(cmd)
+                output = re.sub(r'[^"a-zA-Z0-9,]', '', output.decode("utf-8", errors="ignore"))
+                machine_descs = FoundationPlist.readPlist('/System/Library/PrivateFrameworks/ServerInformation.framework/Versions/A/Resources/English.lproj/SIMachineAttributes.plist')
+
+                if output in machine_descs and "_LOCALIZABLE_" in machine_descs[output] and "marketingModel" in machine_descs[output]["_LOCALIZABLE_"]:
+                    return str(machine_descs[output]["_LOCALIZABLE_"]["marketingModel"])
+                else:
+                    return False
+
+            else:
+                return False
+
+        else:
+            cmd = ['/usr/sbin/ioreg', '-ar', '-k', 'product-name']
+            output = subprocess.check_output(cmd)
+            plist = FoundationPlist.readPlistFromString(output)
+            return str(plist[0]["product-name"].decode("utf-8", errors="ignore"))
+    except:
+        return False
 
 
 def set_pref(pref_name, pref_value):

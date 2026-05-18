@@ -137,14 +137,14 @@ echo "# Preparing ${MUNKIPATH}"
 /bin/mkdir -p "${MUNKIPATH}munkilib"
 /bin/mkdir -p "${MUNKIPATH}scripts/cache"
 /bin/mkdir -p "${INSTALLROOT}/Library/MunkiReport/Logs"
-/bin/chmod 600 "${MUNKIPATH}scripts/cache/" # drw------- root wheel
+/bin/chmod 700 "${MUNKIPATH}scripts/cache/" # drwx------ root wheel
 
 # Create preflight.d symlinks
 /bin/rm -rf "${MUNKIPATH}preflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}preflight.d"
 /bin/rm -rf "${MUNKIPATH}postflight.d" && /bin/ln -s "scripts" "${MUNKIPATH}postflight.d"
 
 # Make symlink to macadmins python3 https://github.com/macadmins/python
-/bin/rm -rf "${MUNKIPATH}munkireport-python3"; /bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/bin/python3" "${MUNKIPATH}munkireport-python3"
+/bin/rm -rf "${MUNKIPATH}munkireport-python3"; /bin/ln -s "/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/Resources/Python.app/Contents/MacOS/Python" "${MUNKIPATH}munkireport-python3"
 
 # Add the MunkiReport folder to the machine's path
 /bin/mkdir -p "${INSTALLROOT}/private/etc/paths.d/"
@@ -262,37 +262,35 @@ if [[ "\$3" == "/" ]]; then
 	# If installing on the Mac, not building
 
 	TARGET=""
+	/bin/rm -rf /private/tmp/.com.github.munkireport.lastrun
 	/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist
 	/bin/launchctl load /Library/LaunchDaemons/com.github.munkireport.runner.plist
 
-	# Check for and alert about MunkiReport's Python 2
+	# Check for and remove MunkiReport's Python 2
 	if [[ -f "/usr/local/munkireport/munkireport-python2" ]] || [[ -f "/Library/MunkiReport/Python.framework/Versions/2.7/bin/python" ]]; then
-		echo " "
-		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-		echo " "
-		echo "MunkiReport's Python 2 is installed on this Mac!"
-		echo "It is no longer used by MunkiReport and should be removed"
-		echo "Remove it with 'sudo rm -r /usr/local/munkireport/munkireport-python2 /Library/MunkiReport/Python.framework/Versions/2.7/'"
-		echo " "
-		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-		echo " "
+		# Remove MunkiReport's Python 2
+		echo "Removing MunkiReport's Python 2..."
+		/bin/rm -rf /usr/local/munkireport/munkireport-python2 || true
+		/bin/rm -rf /Library/MunkiReport/Python.framework/Versions/2.7/ || true
+		/bin/rm -rf /private/var/db/receipts/com.github.munkireport-python2.bom || true
+		/bin/rm -rf /private/var/db/receipts/com.github.munkireport-python2.plist || true
 	fi
 
-	# Check if we have Mac Admin Python 3.10 installed
-	if [[ ! -f "/Library/ManagedFrameworks/Python/Python3.framework/Versions/3.10/bin/python3.10" ]] ; then
+	# Check if we have Mac Admin Python 3.10+ installed
+	if [[ ! -f "/Library/ManagedFrameworks/Python/Python3.framework/Versions/Current/Resources/Python.app/Contents/MacOS/Python" ]] ; then
 		echo " "
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 		echo " "
-		echo "No Python 3.10 detected! MunkiReport requires the Mac Admins Python 3.10 pkg"
+		echo "No Python 3.10+ detected! MunkiReport requires the Mac Admins Python 3.10+ pkg"
 		echo "Please download and install it from:"
-		echo "https://github.com/macadmins/python/releases/tag/v3.10.9.80716"
+		echo "https://github.com/macadmins/python/releases/"
 		echo " "
 		echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 		echo " "
 	fi
 
 	# Set permissions on cache directory
-	/bin/chmod 600 /usr/local/munkireport/scripts/cache/ # drw------- root wheel
+	/bin/chmod 700 /usr/local/munkireport/scripts/cache/ # drwx------ root wheel
 
 else
 	TARGET="\$3"
@@ -332,6 +330,8 @@ EOF
 		# Set munkireport version file
 		/usr/bin/touch "${MUNKIPATH}munkireport-${VERSION}"
 		/usr/bin/defaults write ${PREFPATH} Version ${VERSIONLONG}
+
+		/bin/rm -rf /private/tmp/.com.github.munkireport.lastrun
 
 		echo "Loading MunkiReport LaunchDaemon"
 		/bin/launchctl unload /Library/LaunchDaemons/com.github.munkireport.runner.plist &>/dev/null

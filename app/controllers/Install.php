@@ -72,6 +72,11 @@ class Install extends Controller
             $use_modules = func_get_args();
         }
 
+        // Add machine module as an override, then sort module array and remove duplicates
+        array_push($use_modules, "machine");
+        asort($use_modules);
+        $use_modules = array_unique($use_modules);
+
         // Collect install scripts from modules
         foreach ($this->moduleManager->getModuleList() as $module => $modulePath) {
 
@@ -99,19 +104,19 @@ class Install extends Controller
         // Get etag header
         $etagHeader = ( isset($_SERVER["HTTP_IF_NONE_MATCH"]) ? trim($_SERVER["HTTP_IF_NONE_MATCH"]) : false );
 
-        // generate the etag from content
+        // Generate the etag from content
         $etag = md5($content);
 
-        //set etag-header
+        // Set etag-header
         header("Etag: ".$etag);
 
-        // if last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
+        // If last modified date is same as "HTTP_IF_MODIFIED_SINCE", send 304 then exit
         if ($etag === $etagHeader) {
             header("HTTP/1.1 304 Not Modified");
             exit;
         }
 
-        // new content modified, so output content
+        // New content modified, so output content
         echo $content;
         exit;
     }
