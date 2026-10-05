@@ -1,3 +1,19 @@
+### [5.8.2](https://github.com/munkireport/munkireport-php/compare/v5.8.2...5.x) (October 1, 2026) 🎹
+
+Maintenance release
+
+MunkiReport requires PHP 8.2 or newer and has been tested with PHP 8.3, 8.4, and 8.5. 
+
+SECURITY UPDATES
+- Updated Composer requirements to latest versions supported by MunkiReport
+
+NEW FEATURES
+- Support for PHP 8.5
+- Module Marketplace now has sortable columns (@sphen13)
+
+FIXES
+- Fixes issue with Network IP limiting not working with SAML
+
 ### [5.8.1](https://github.com/munkireport/munkireport-php/compare/v5.8.1...5.x) (May 18, 2026) 🪁
 
 Maintenance and security release - please read the release notes for 5.8.0
