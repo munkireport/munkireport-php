@@ -4,8 +4,7 @@ namespace munkireport\controller;
 
 use \Controller, \View;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Local;
-
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 class Install extends Controller
 {
@@ -128,7 +127,7 @@ class Install extends Controller
 
     public function get_paths()
     {
-        $adapter = new Local(PUBLIC_ROOT.'assets/client_installer/payload/');
+        $adapter = new LocalFilesystemAdapter(PUBLIC_ROOT.'assets/client_installer/payload/');
         $filesystem = new Filesystem($adapter);
         $contents = $filesystem->listContents('', true);
         foreach($contents as $fileObj){
@@ -140,11 +139,18 @@ class Install extends Controller
 
     private function get_target_path(&$fileObj)
     {
-        if($fileObj['filename'] == 'postflight'){
-            return $fileObj['dirname'] . '/' . conf('postflight_script');
-        }
-        if($fileObj['filename'] == 'report_broken_client'){
-            return $fileObj['dirname'] . '/' . conf('report_broken_client_script');
+        if(str_contains($fileObj['path'], "/")){
+            $path_array = explode( '/', $fileObj['path']);
+            $filename = end($path_array);
+            array_pop($path_array);
+            $filedir = implode("/", $path_array);
+
+            if($filename == 'postflight'){
+                return $filedir . '/' . conf('postflight_script');
+            }
+            if($filename == 'report_broken_client'){
+                return $filedir . '/' . conf('report_broken_client_script');
+            }
         }
         return $fileObj['path'];
     }
@@ -154,7 +160,8 @@ class Install extends Controller
         if($fileObj['type'] != 'file'){
             return false;
         }
-        if($fileObj['basename'][0] == '.'){
+        $basename = basename($fileObj->path());
+        if($basename[0] == '.'){
             return false;
         }
         // Don't accept @ in path - Synology I'm looking at you

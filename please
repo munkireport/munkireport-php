@@ -21,9 +21,15 @@ initConfig();
 configAppendFile(APP_ROOT . 'app/config/app.php');
 configAppendFile(APP_ROOT . 'app/config/db.php', 'connection');
 
-$container = new Container;
 $dispatcher = new Dispatcher;
 $version = "MunkiReport"; // Laravel version
+// Extend Container to satisfy ConfiguresPrompts' runningUnitTests() call
+$container = new class extends Container {
+    public function runningUnitTests(): bool
+    {
+        return false;
+    }
+};
 
 $app = new Application($container, $dispatcher, $version);
 

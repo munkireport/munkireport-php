@@ -187,6 +187,11 @@ class Auth extends Controller
 
     public function saml($endpoint = 'sso')
     {
+        if(array_key_exists('network', conf('auth'))) {
+           $authWhitelist = new AuthWhitelist(conf('auth')['network']);
+           $authWhitelist->check_ip(getRemoteAddress());
+        }
+
         $saml_config = $this->authHandler->getConfig('saml');
         if($saml_config){
             $this->authorized();
