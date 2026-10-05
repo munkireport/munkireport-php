@@ -4,6 +4,7 @@ namespace munkireport\lib;
 use \OneLogin\Saml2\Auth as OneLogin_Saml2_Auth;
 use \OneLogin\Saml2\Settings as OneLogin_Saml2_Settings;
 use \OneLogin\Saml2\Error as OneLogin_Saml2_Error;
+use \OneLogin\Saml2\Utils as OneLogin_Saml2_Utils;
 use \Exception, \View;
 use \Illuminate\Filesystem\Filesystem;
 
@@ -108,6 +109,9 @@ class AuthSaml extends AbstractAuth
     // Initiate Single Sign On
     private function sso()
     {
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
         $auth->login(
             $returnTo = null,
@@ -120,6 +124,9 @@ class AuthSaml extends AbstractAuth
     // Retrieve Data from IDP
     private function acs()
     {
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
         if (isset($_SESSION) && isset($_SESSION['AuthNRequestID'])) {
             $requestID = $_SESSION['AuthNRequestID'];
@@ -175,6 +182,9 @@ class AuthSaml extends AbstractAuth
             return;
         }
 
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         $returnTo = url('auth/saml/sls');
@@ -199,6 +209,9 @@ class AuthSaml extends AbstractAuth
 
     private function sls()
     {
+        if ($this->config['set_proxy_vars']) {
+            OneLogin_Saml2_Utils::setProxyVars(true);
+        }
         $auth = new OneLogin_Saml2_Auth($this->config);
 
         if (isset($_SESSION) && isset($_SESSION['LogoutRequestID'])) {

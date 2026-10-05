@@ -44,6 +44,16 @@
 
     $(document).on('appReady', function(e, lang) {
 
+        // Sort module versions numerically instead of as strings
+        $.extend($.fn.dataTable.ext.type.order, {
+            "module-version-asc": function (a, b) {
+                return compareModuleVersions(a, b);
+            },
+            "module-version-desc": function (a, b) {
+                return compareModuleVersions(b, a);
+            }
+        });
+
         // Get JSON and generate table
         $.ajax({
             type: "GET",
@@ -51,7 +61,8 @@
             dataType: 'json',
             success: function (obj, textstatus) {
                     var row_count = 0;
-                    $('#marketplace-table').DataTable({
+                    var pending_package_requests = 0;
+                    var marketplace_table = $('#marketplace-table').DataTable({
                         data: obj,
                         "order": [[ 0, "asc" ]],
                         columns: [ // What colums to put the data into
@@ -59,14 +70,14 @@
                             { "data" : "enabled"},
                             { "data" : "installed"},
                             { "data" : "installed_version"},
-                            { "data" : "latest_version"},
-                            { "data" : "update_available"},
+                            { "data" : "latest_version", "type" : "module-version"},
+                            { "data" : "update_available", "type" : "num"},
                             { "data" : "maintainer"},
                             { "data" : "custom_override"},
                             { "data" : "core"},
-                            { "data" : "core"},
+                            { "data" : "monthly_downloads", "defaultContent" : "", "type" : "num"},
                             { "data" : "date_downloaded"},
-                            { "data" : "date_updated"},
+                            { "data" : "date_updated", "type" : "num"},
                             { "data" : "module_location"},
                             { "data" : "in_search_path"},
                             { "data" : "url"}
@@ -78,44 +89,50 @@
 
                             var module=$('td:eq(0)', nRow).text();
                             var installed=$('td:eq(2)', nRow).text();
-                            var latest_ver=$('td:eq(4)', nRow).text();
                             var maintainer=$('td:eq(6)', nRow).text();
 
                             // Get monthly downloads, live versions, and uninstalled modules
                             $('td:eq(9)', nRow).text(""); // Blank out the row
                             if (maintainer && maintainer !== ""){
+                                pending_package_requests++;
+
                                 // Get the package JSON from Packagist API
                                 // JSON is updated once every 12 hours
-                                $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status){
-                                    $('td:eq(9)', nRow).text(data['package']['downloads']['monthly'])
+                                $.getJSON('https://packagist.org/packages/' + maintainer + '/' + module + '.json', function(data, status) {
+                                    marketplace_table.cell(nRow, 9).data(data['package']['downloads']['monthly']);
 
-                                    var pkg_details = data['package']['versions']
-                                    var latest_ver = "0"
-                                    var is_beta = false
+                                    var pkg_details = data['package']['versions'];
+                                    var latest_ver = "0";
+                                    var update_time = "";
+                                    var is_beta = false;
                                     var installed_ver=$('td:eq(3)', nRow).text();
 
                                     // Get latest version number
                                     for (const pkg in pkg_details) {
-                                        compare_version = pkg_details[pkg]['version'].replace(/[^\d.b-]/g, '')
+                                        var compare_version = pkg_details[pkg]['version'].replace(/[^\d.b-]/g, '');
 
                                         if (!compare_version.includes("-") && compare_version !== '' && compareVersions(latest_ver, '<', compare_version)) {
-                                            latest_ver = pkg_details[pkg]['version'].replace(/[^0-9b.]/g, '')
-                                            update_time = pkg_details[pkg]['time']
+                                            latest_ver = pkg_details[pkg]['version'].replace(/[^0-9b.]/g, '');
+                                            update_time = pkg_details[pkg]['time'];
                                             // Check if it's a beta/pre-release module
                                             if (pkg_details[pkg]['version_normalized'].includes("beta")){
-                                                is_beta = true
+                                                is_beta = true;
                                             } else {
-                                                is_beta = false
+                                                is_beta = false;
                                             }
                                         }
                                     };
 
                                     // Set last update time
-                                    $('td:eq(11)', nRow).html('<span title="'+moment(update_time).fromNow()+'">'+moment(update_time).format('llll')+'</span>');
+                                    if (update_time) {
+                                        marketplace_table.cell(nRow, 11).data(moment(update_time).unix());
+                                        $('td:eq(11)', nRow).html('<span title="'+moment(update_time).fromNow()+'">'+moment(update_time).format('llll')+'</span>');
+                                    }
 
                                     // Check if update is available
                                     if (installed_ver != "" && latest_ver != "" && compareVersions(installed_ver, '<', latest_ver)) {
-                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^0-9b.]/g, ''))
+                                        marketplace_table.cell(nRow, 4).data('v'+latest_ver.replace(/[^0-9b.]/g, ''));
+                                        marketplace_table.cell(nRow, 5).data(1);
 
                                         if (is_beta){
                                             $('td:eq(5)', nRow).html(mr.label((i18n.t('yes')+" - "+i18n.t('beta')), 'warning'))
@@ -124,13 +141,19 @@
                                         }
 
                                     } else {
-                                        $('td:eq(4)', nRow).text('v'+latest_ver.replace(/[^0-9b.]/g, ''))
+                                        marketplace_table.cell(nRow, 4).data('v'+latest_ver.replace(/[^0-9b.]/g, ''));
+                                        marketplace_table.cell(nRow, 5).data(0);
                                         $('td:eq(5)', nRow).html(i18n.t('no'))
                                     }
 
                                     // Set modal if not installed
                                     if(installed == "No"){
                                         $('td:eq(0)', nRow).html('<div class="machine"><a onclick="getInstall(\''+maintainer+'/'+module+':^'+latest_ver.replace(/[^\d.-]/g, '')+'\')" class="btn btn-default btn-xs">'+module+'</a></div>')
+                                    }
+                                }).always(function() {
+                                    pending_package_requests--;
+                                    if (pending_package_requests === 0) {
+                                        marketplace_table.draw(false);
                                     }
                                 });
                             }
@@ -320,6 +343,20 @@
                 alert(obj.msg);
             }
         });
+    }
+
+    // Compare module versions for DataTables ordering
+    function compareModuleVersions(v1, v2) {
+        v1 = v1 || '';
+        v2 = v2 || '';
+
+        if (compareVersions(v1, '<', v2)) {
+            return -1;
+        }
+        if (compareVersions(v1, '>', v2)) {
+            return 1;
+        }
+        return 0;
     }
 
     // Function to compare versions

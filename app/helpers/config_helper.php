@@ -12,14 +12,13 @@ function initDotEnv()
 {
   try {
       $envfile = defined('MUNKIREPORT_SETTINGS') ? MUNKIREPORT_SETTINGS : '.env';
-      $dotenv = Dotenv::createMutable(APP_ROOT, $envfile);
+      $dotenv = Dotenv::createUnsafeMutable(APP_ROOT, $envfile);
       $dotenv->load();
   } catch (InvalidPathException $e) {
       // .env is missing, but not really an issue since configuration is specified here anyway.
   } catch (InvalidFileException $e) {
       die($e->getMessage());
   }
-
 }
 
 function loadAuthConfig()
@@ -66,7 +65,7 @@ function initConfig()
  */
 function configAppendArray($configArray, $namespace = '')
 {
-	if($namespace){
+  if($namespace){
     $GLOBALS['conf'] += [$namespace => $configArray];
   }
   else{
@@ -82,8 +81,8 @@ function configAppendArray($configArray, $namespace = '')
  */
 function configAppendFile($configPath, $namespace = '')
 {
-	$config = require $configPath;
-	configAppendArray($config, $namespace);
+    $config = require $configPath;
+    configAppendArray($config, $namespace);
 }
 
 /**
@@ -94,7 +93,7 @@ function configAppendFile($configPath, $namespace = '')
  **/
 function conf($cf_item, $default = '')
 {
-	return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
+    return array_key_exists($cf_item, $GLOBALS['conf']) ? $GLOBALS['conf'][$cf_item] : $default;
 }
 
 function local_conf($item)

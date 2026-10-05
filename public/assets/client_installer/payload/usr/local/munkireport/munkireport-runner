@@ -68,6 +68,7 @@ def check_launchd():
         # Run MunkiReport if it does not exist
         return True
 
+
 def main():
     '''Main'''
 
@@ -86,7 +87,6 @@ def main():
                       help='Forces all the cache files to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
     parser.add_option('--force', '-F', dest="force_modules",
                       help='Forces the specified module\'s cache file to upload to the server. SHOULD NOT BE USED IN PRODUCTION!!')
-
     parser.add_option('--launchd', action='store_true',
                       help='Used by launchd LaunchDaemon for scheduled/background runs.')
 

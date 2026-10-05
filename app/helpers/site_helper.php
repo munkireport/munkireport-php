@@ -4,7 +4,8 @@ use munkireport\models\Machine_group, munkireport\lib\Modules, munkireport\lib\D
 use munkireport\lib\User;
 
 // Munkireport version (last number is number of commits)
-$GLOBALS['version'] = '5.8.1.4323';
+$GLOBALS['version'] = '5.8.2.4331';
+
 
 // Return version without commit count
 function get_version()
@@ -142,9 +143,17 @@ function dumpQuery($queryobj){
 }
 
 function add_mysql_opts(&$conn){
-  $conn['options'] = [
-    PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
-  ];
+    if ((PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION) <= "8.4" ) {
+        // PHP 7.4-8.4
+        $conn['options'] = [
+            PDO::MYSQL_ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+        ];
+    } else {
+        // PHP 8.5+
+        $conn['options'] = [
+            Pdo\Mysql::ATTR_INIT_COMMAND => sprintf('SET NAMES %s COLLATE %s', $conn['charset'], $conn['collation'])
+        ];
+    }
   if($conn['ssl_enabled']){
     foreach(['key', 'cert', 'ca', 'capath', 'cipher'] as $ssl_opt){
       if($conn['ssl_'. $ssl_opt]){
