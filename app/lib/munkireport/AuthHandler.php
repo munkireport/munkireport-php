@@ -10,6 +10,7 @@ class AuthHandler
     // Authentication mechanisms we handle => classname
     private $mechanisms = [
         'noauth' => 'AuthNoauth',
+        'env' => 'AuthEnv',
         'local' => 'AuthLocal',
         'ldap' => 'AuthLDAP',
         'AD' => 'AuthAD',
