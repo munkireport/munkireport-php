@@ -14,6 +14,7 @@ NEW FEATURES
 FIXES
 - Fixes issue with Network IP limiting not working with SAML
 
+
 ### [5.8.1](https://github.com/munkireport/munkireport-php/compare/v5.8.1...5.x) (May 18, 2026) 🪁
 
 Maintenance and security release - please read the release notes for 5.8.0
