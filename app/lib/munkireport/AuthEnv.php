@@ -4,7 +4,7 @@ namespace munkireport\lib;
 
 class AuthEnv extends AbstractAuth
 {
-    private $config;
+    private $config, $login, $authStatus;
 
     public function __construct($config)
     {
@@ -13,6 +13,19 @@ class AuthEnv extends AbstractAuth
     
     public function login($login, $password)
     {
+        $this->login = getenv($this->config['env_user_var']);
+
+        if ($this->config['env_user_deny_empty'] && empty($this->login)) {
+            if ($this->login === '') {
+                $this->authStatus = 'unauthorized';
+            } elseif ($this->login === false) {
+                $this->authStatus = 'failed';
+            }
+
+            return false;
+        }
+
+        $this->authStatus = 'success';
         return true;
     }
     
@@ -23,12 +36,12 @@ class AuthEnv extends AbstractAuth
 
     public function getAuthStatus()
     {
-        return 'success';
+        return $this->authStatus;
     }
     
     public function getUser()
     {
-        return getenv($this->config['env_user_var']);
+        return $this->login;
     }
 
     public function getGroups()

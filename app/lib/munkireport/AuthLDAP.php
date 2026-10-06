@@ -4,7 +4,7 @@ namespace munkireport\lib;
 
 class AuthLDAP extends AbstractAuth
 {
-    private $config, $groups, $login, $auth_status;
+    private $config, $groups, $login, $authStatus;
 
     public function __construct($config)
     {
